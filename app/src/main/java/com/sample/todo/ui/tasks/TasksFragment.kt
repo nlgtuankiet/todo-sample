@@ -21,7 +21,6 @@ import timber.log.Timber
 import javax.inject.Inject
 
 // TODO fix bug when user double click navigation icon
-// TODO @MainThread inline fun <T> LiveData<T>.observe(
 class TasksFragment : DaggerFragment() {
     @Inject
     lateinit var messageManager: MessageManager
