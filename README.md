@@ -1,4 +1,7 @@
-# Android sample
+# Android sample  
+<img src="https://cdn-images-1.medium.com/max/2560/1*SX3bqTUGMW2UUhG4-ETbbw.png"/>  
+<p align="center">Illustration by <a href="https://twitter.com/VPoltrack">Virginia Poltrack</a></p>
+
 [![CircleCI](https://circleci.com/gh/nlgtuankiet/todo-sample/tree/master.svg?style=svg&circle-token=a1d00b1b6633e578cbb4a0ece939f13b5b37dbd0)](https://circleci.com/gh/nlgtuankiet/todo-sample/tree/master)
 [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
@@ -11,11 +14,6 @@ Coding style
 The standard style that described in https://developer.android.com/kotlin/style-guide  
 This project uses a handy gradle plugin that will automatically format your code  
 Use `./gradlew spotlessApply` to apply  
-
-
-Overall architecture
------------------
-// insert image
 
 Android Architecture Components
 -----------------
