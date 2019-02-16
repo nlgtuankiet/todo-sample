@@ -1,0 +1,122 @@
+CREATE TABLE task (
+  id TEXT NOT NULL PRIMARY KEY, title TEXT NOT NULL,
+  description TEXT, completed INTEGER NOT NULL
+);
+
+selectAll:
+SELECT *
+FROM task;
+
+-- TODO bug: https://github.com/square/sqldelight/issues/1218
+-- CREATE VIRTUAL TABLE task_fts USING fts4(
+--   title TEXT NOT NULL, description TEXT,
+--   content = task
+-- );
+--
+-- CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_task_fts_BEFORE_UPDATE BEFORE UPDATE ON task BEGIN DELETE FROM task_fts WHERE docid=old.rowid; END;
+-- CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_task_fts_BEFORE_DELETE BEFORE DELETE ON task BEGIN DELETE FROM task_fts WHERE docid=old.rowid; END;
+-- CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_task_fts_AFTER_UPDATE AFTER UPDATE ON task BEGIN INSERT INTO task_fts(docid, title, description) VALUES (new.rowid, new.title, new.description); END;
+-- CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_task_fts_AFTER_INSERT AFTER INSERT ON task BEGIN INSERT INTO task_fts(docid, title, description) VALUES (new.rowid, new.title, new.description); END;
+--
+-- countSearchResult :
+-- SELECT
+--   Count(*)
+-- FROM
+--   task
+--   JOIN task_fts ON (task.rowid = task_fts.docid)
+-- WHERE
+--   task_fts MATCH : query;
+--
+--
+-- searchResult:
+-- SELECT
+--             snippet(task_fts) AS snippet,
+--             task.id AS id,
+--             task.title AS title
+--         FROM
+--             task JOIN task_fts ON (task.rowid = task_fts.docid)
+--         WHERE
+--             task_fts. MATCH :query;
+
+countTasks:
+SELECT Count(*)
+FROM   task;
+
+countActiveTasks:
+SELECT Count(*)
+FROM   task
+WHERE completed = 0;
+
+countCompletedTasks:
+SELECT Count(*)
+FROM   task
+WHERE completed = 1;
+
+selectTaskMini:
+SELECT id,
+       title,
+       completed
+FROM   task
+LIMIT  :limit OFFSET :offset;
+
+selectActiveTaskMini:
+SELECT id,
+       title,
+       completed
+FROM   task
+WHERE  completed = 0
+LIMIT  :limit OFFSET :offset;
+
+selectCompletedTaskMini:
+SELECT id,
+       title,
+       completed
+FROM   task
+WHERE  completed = 1
+LIMIT  :limit OFFSET :offset;
+
+selectTaskById:
+SELECT *
+FROM   task
+WHERE  id = ?;
+
+insert:
+INSERT INTO task
+VALUES ?;
+
+lastInsertRowId:
+SELECT last_insert_rowid();
+
+changes:
+SELECT changes();
+
+update:
+UPDATE task
+SET title = ?2,
+    description = ?3,
+    completed = ?4
+WHERE task.id = ?1;
+
+updateComplete:
+UPDATE task
+SET completed = ?2
+WHERE task.id = ?1;
+
+
+
+taskStatistics:
+SELECT *
+FROM   (SELECT Count(*) AS taskCount
+        FROM   task),
+       (SELECT Count(*) AS completedTaskCount
+        FROM   task
+        WHERE  completed = 1),
+       (SELECT Count(*) AS activeTaskCount
+        FROM   task
+        WHERE  completed = 0);
+
+delete:
+DELETE
+FROM task
+WHERE id = ?;
+

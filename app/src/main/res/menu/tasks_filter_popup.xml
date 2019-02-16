@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/all"
+        android:title="@string/tasks_filter_all_header" />
+    <item
+        android:id="@+id/active"
+        android:title="@string/tasks_filter_active_header" />
+    <item
+        android:id="@+id/completed"
+        android:title="@string/tasks_filter_completed_header" />
+</menu>

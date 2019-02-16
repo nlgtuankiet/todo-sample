@@ -1,0 +1,144 @@
+version: 2
+
+references:
+  cache_key: &cache_key
+    key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum  "app/build.gradle.kts" }}-{{ checksum "buildSrc/build.gradle.kts" }}-{{ checksum "core/build.gradle.kts" }}-{{ checksum "data/build.gradle.kts" }}-{{ checksum "domain/build.gradle.kts" }}-{{ checksum "testShared/build.gradle.kts" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+
+jobs:
+  devBuild:
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xmx1024m"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+      TERM: dumb
+    steps:
+      - checkout
+      - restore_cache:
+          <<: *cache_key
+      - run:
+          name: chmod permissions
+          command: chmod +x ./gradlew
+      - run:
+          name: Decrypt release.keystore
+          command: openssl aes-256-cbc -k $KEYSTORE_DECRYPT_PASSWORD -d -in release.keystore.encrypted -out release.keystore -md sha256
+      - run:
+          name: Decrypt google-services.json
+          command: openssl aes-256-cbc -k $GOOGLE_SERVICES_JSON_DECRYPT_PASSWORD -d -in app/google-services.json.encrypted -out app/google-services.json -md sha256
+      - run:
+          name: Decrypt service-account-key.json
+          command: openssl aes-256-cbc -k $SERVICE_ACCOUNT_PASSWORD -d -in app/service-account-key.json.encrypted -out app/service-account-key.json -md sha256
+      - run:
+          name: Download Dependencies
+          command: ./gradlew dependencies
+      - save_cache:
+          <<: *cache_key
+          paths:
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+      - run:
+          name: Run test + check style
+          command: ./gradlew check
+      - run:
+          name: Deploy to Google Play (beta channel)
+          command: ./gradlew publishReleaseBundle
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+      - store_test_results:
+          path: app/build/test-results
+      - store_artifacts:
+          path: domain/build/reports
+          destination: reports
+      - store_test_results:
+          path: domain/build/test-results
+  masterBuild:
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xmx1024m"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+      TERM: dumb
+    steps:
+      - checkout
+      - restore_cache:
+          <<: *cache_key
+      - run:
+          name: chmod permissions
+          command: chmod +x ./gradlew
+      - run:
+          name: Decrypt release.keystore
+          command: openssl aes-256-cbc -k $KEYSTORE_DECRYPT_PASSWORD -d -in release.keystore.encrypted -out release.keystore -md sha256
+      - run:
+          name: Decrypt google-services.json
+          command: openssl aes-256-cbc -k $GOOGLE_SERVICES_JSON_DECRYPT_PASSWORD -d -in app/google-services.json.encrypted -out app/google-services.json -md sha256
+      - run:
+          name: Decrypt service-account-key.json
+          command: openssl aes-256-cbc -k $SERVICE_ACCOUNT_PASSWORD -d -in app/service-account-key.json.encrypted -out app/service-account-key.json -md sha256
+      - run:
+          name: Download Dependencies
+          command: ./gradlew dependencies
+      - save_cache:
+          <<: *cache_key
+          paths:
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+      - run:
+          name: Promote beta to production
+          command: ./gradlew promoteReleaseArtifact --from-track beta --track production
+      - run:
+          name: Update listing
+          command: ./gradlew publishListing
+  pullRequestBuild:
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xmx1024m"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+      TERM: dumb
+    steps:
+      - checkout
+      - restore_cache:
+          <<: *cache_key
+      - run:
+          name: chmod permissions
+          command: chmod +x ./gradlew
+      - run:
+          name: Download Dependencies
+          command: ./gradlew dependencies
+      - save_cache:
+          <<: *cache_key
+          paths:
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+      - run:
+          name: Run test + check style
+          command: ./gradlew check
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+      - store_test_results:
+          path: app/build/test-results
+      - store_artifacts:
+          path: domain/build/reports
+          destination: reports
+      - store_test_results:
+          path: domain/build/test-results
+workflows:
+  version: 2
+  mainFlow:
+    jobs:
+      - devBuild:
+          filters:
+            branches:
+              only: development
+      - masterBuild:
+          filters:
+            branches:
+              only: master
+      - pullRequestBuild:
+          filters:
+            branches:
+              ignore:
+                - master
+                - development

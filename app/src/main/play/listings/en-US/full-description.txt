@@ -1,0 +1,2 @@
+Open source app, showcasing Android Architecture
+Github: https://github.com/nlgtuankiet/todo-sample

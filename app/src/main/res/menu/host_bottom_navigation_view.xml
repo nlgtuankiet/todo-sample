@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <group android:checkableBehavior="none">
+        <item
+            android:icon="@drawable/host_bottom_navigation_view_tasks_icon"
+            tools:selected="true"
+            android:id="@id/tasks_nav_controller"
+            android:title="Tasks" />
+        <item
+            android:icon="@drawable/host_bottom_navigation_view_search_icon"
+            android:id="@id/search_nav_controller"
+            android:title="Search" />
+        <item
+            android:icon="@drawable/host_bottom_navigation_view_statistics_icon"
+            android:id="@id/stat_nav_controller"
+            android:title="About" />
+        <item
+            android:icon="@drawable/host_bottom_navigation_view_settings_icon"
+            android:id="@id/setting_nav_controller"
+            android:title="Setting" />
+    </group>
+</menu>

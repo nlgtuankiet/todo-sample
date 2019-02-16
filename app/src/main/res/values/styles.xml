@@ -1,0 +1,83 @@
+<resources>
+    <!--TODO find a way map set toolbar nav icon tint, bottom appbar nav icon tint-->
+
+    <style name="Theme.Todo" parent="Base.Theme.Todo">
+    </style>
+
+    <style name="Base.Theme.Todo" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <!--region color-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">#ffffff</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnSecondary">#000000</item>
+        <item name="android:background">#00FFFFFF</item>
+        <item name="colorOnBackground">#000000</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#000000</item>
+        <item name="colorError">#FF0000</item>
+        <item name="colorOnError">#ffffff</item>
+        <!--endregion-->
+        <item name="searchViewStyle">@style/Widget.Todo.SearchView</item>
+
+        <item name="bottomAppBarStyle">@style/Widget.Todo.BottomAppBar</item>
+
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+    <style name="Widget.Todo.SearchView" parent="Widget.AppCompat.Light.SearchView">
+    </style>
+    <!--region toolbar global-->
+    <style name="Widget.Todo.Toolbar" parent="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="titleTextColor">#ffffff</item>
+        <item name="subtitleTextColor">#CCFFFFFF</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="Widget.Todo.Toolbar.Button.Navigation" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
+        <!--set navigation button color map white-->
+        <item name="tint">@color/white</item>
+    </style>
+    <!--endregion-->
+
+    <!--region bottom app bar-->
+    <style name="Widget.Todo.BottomAppBar" parent="@style/Widget.MaterialComponents.BottomAppBar">
+        <item name="backgroundTint">@color/white</item>
+        <item name="actionButtonStyle">@style/Widget.Todo.BottomAppBar.ActionButton</item>
+    </style>
+    <style name="Widget.Todo.BottomAppBar.ActionButton" parent="@style/Widget.AppCompat.ActionButton">
+        <item name="tint">@color/ugly</item>
+        <item name="android:tint">@color/ugly</item>
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
+    </style>
+
+    <!--endregion-->
+
+    <!--TODO backgroundTint not working-->
+    <style name="Widget.Todo.FloatingActionButton" parent="@style/Widget.MaterialComponents.FloatingActionButton">
+        <!--icon color-->
+        <item name="tint">@color/gray600</item>
+        <!--background color-->
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
+    <style name="TextAppearance.Todo.SearchResult.Header" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.Todo.SearchResult.Snippet" parent="TextAppearance.AppCompat.Body1">
+    </style>
+
+    <style name="Widget.Todo.NavigationView" parent="Widget.Design.NavigationView">
+        <item name="itemTextColor">@color/bottom_navigation_item</item>
+        <item name="itemIconTint">@color/bottom_navigation_item</item>
+
+    </style>
+
+    <style name="Splash" parent="Theme.Todo">
+        <item name="android:windowBackground">@drawable/tasks_filter_icon</item>
+    </style>
+</resources>

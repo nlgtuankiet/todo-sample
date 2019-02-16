@@ -1,0 +1,8 @@
+.gradle/
+.idea/
+build/
+*.iml
+local.properties
+release.keystore
+/app/google-services.json
+/app/service-account-key.json
