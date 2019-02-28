@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import com.sample.todo.R
 import com.sample.todo.databinding.HostActivityBinding
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.NavHostFragment
 import com.sample.todo.util.extension.setupMainNavGraph
 import dagger.android.support.DaggerAppCompatActivity
 import timber.log.Timber
@@ -32,16 +33,28 @@ class HostActivity : DaggerAppCompatActivity(), HasTopNavigation {
         binding = DataBindingUtil.setContentView<HostActivityBinding>(this, R.layout.host_activity)
             .apply {
                 viewModel = hostViewModel
-                setLifecycleOwner(this@HostActivity)
+                lifecycleOwner = this@HostActivity
+
             }
-        setupMainNavGraph(R.navigation.tasks_graph, mapOf(
-            R.id.tasks_nav_controller to R.id.tasksFragment,
-            R.id.search_nav_controller to R.id.searchFragment,
-            R.id.stat_nav_controller to R.id.statisticsFragment,
-            R.id.setting_nav_controller to R.id.settingFragment
-        ))
+        binding
+        setupMainNavGraph(
+            R.navigation.tasks_graph, mapOf(
+                R.id.tasks_nav_controller to R.id.tasksFragment,
+                R.id.search_nav_controller to R.id.searchFragment,
+                R.id.about_nav_controller to R.id.aboutFragment
+            )
+        )
         hostViewModel.currentNavControllerId.observe(this) {
-            currentController = findNavController(it)
+            val navHost = supportFragmentManager.findFragmentByTag(
+                when (it) {
+                    R.id.search_nav_controller -> "search"
+                    R.id.tasks_nav_controller -> "tasks"
+                    R.id.about_nav_controller -> "about"
+                    else -> TODO()
+                }
+            ) as? NavHostFragment ?: TODO()
+            currentController = navHost.navController
+            Timber.d("currentNavControllerId.observe: ${currentController.hashCode()}")
         }
     }
 
@@ -51,7 +64,8 @@ class HostActivity : DaggerAppCompatActivity(), HasTopNavigation {
     }
 
     override fun onBackPressed() {
-        val poped = currentController.popBackStack()
+        Timber.d("onBackPressed currentController: ${currentController.hashCode()}")
+        val poped = currentController.navigateUp()
         Timber.d("onBackPressed poped=$poped")
         if (!poped) finish()
     }

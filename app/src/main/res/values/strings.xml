@@ -29,5 +29,36 @@
     <string name="sample1">Miusov, as a man man of breeding and deilcacy, could not but feel some inwrd qualms, when he reached the Father Superior\'s with Ivan: he felt ashamed of havin lost his temper. He felt that he ought to have disdaimed that despicable wretch, Fyodor Pavlovitch, too much to have been upset by him in Father Zossima\'s cell, and so to have forgotten himself. "Teh monks were not to blame, in any case," he reflceted, on the steps. "And if they're decent people here (and the Father Superior, I understand, is a nobleman) why not be friendly and courteous withthem? I won't argue, I'll fall in with everything, I'll win them by politness, and show them that I've nothing to do with that Aesop, thta buffoon, that Pierrot, and have merely been takken in over this affair, just as they have."Miusov, as a man man of breeding and deilcacy, could not but feel some inwrd qualms, when he reached the Father Superior\'s with Ivan: he felt ashamed of havin lost his temper. He felt that he ought to have disdaimed that despicable wretch, Fyodor Pavlovitch, too much to have been upset by him in Father Zossima\'s cell, and so to have forgotten himself. "Teh monks were not to blame, in any case," he reflceted, on the steps. "And if they're decent people here (and the Father Superior, I understand, is a nobleman) why not be friendly and courteous withthem? I won't argue, I'll fall in with everything, I'll win them by politness, and show them that I've nothing to do with that Aesop, thta buffoon, that Pierrot, and have merely been takken in over this affair, just as they have."Miusov, as a man man of breeding and deilcacy, could not but feel some inwrd qualms, when he reached the Father Superior\'s with Ivan: he felt ashamed of havin lost his temper. He felt that he ought to have disdaimed that despicable wretch, Fyodor Pavlovitch, too much to have been upset by him in Father Zossima\'s cell, and so to have forgotten himself. "Teh monks were not to blame, in any case," he reflceted, on the steps. "And if they're decent people here (and the Father Superior, I understand, is a nobleman) why not be friendly and courteous withthem? I won't argue, I'll fall in with everything, I'll win them by politness, and show them that I've nothing to do with that Aesop, thta buffoon, that Pierrot, and have merely been takken in over this affair, just as they have."</string>
     <string name="sample2">He determined to drop his litigation with the monastry, and relinguish his claims to the wood-cuting and fishery rihgts at once. He was the more ready to do this becuase the rights had becom much less valuable, and he had indeed the vaguest idea where the wood and river in quedtion were.</string>
     <string name="empty"></string>
+    <string name="title_settings">Settings Module</string>
 
+
+    <!--notification info-->
+    <string name="notification_channel_seed_database_name">Seed Database Information</string>
+    <string name="notification_channel_seed_database_description">Information related to seed database process</string>
+    <string name="notification_channel_download_module_name">Download Module Information</string>
+    <string name="notification_channel_download_module_description">Information related to download module process</string>
+
+
+    <!--download module notification-->
+    <string name="download_module_notification_title">Download module: %s</string>
+    <string name="download_module_notification_installed">Installed</string>
+    <string name="download_module_notification_install_failed">Install failed</string>
+    <string name="download_module_notification_installing">Installing</string>
+    <string name="download_module_notification_sending_request">Sending request</string>
+    <string name="download_module_notification_percent_downloaded">%d%%</string>
+    <string name="download_module_notification_downloaded">Downloaded</string>
+    <string name="download_module_notification_downloading">Downloading</string>
+    <string name="download_module_notification_unknown_error">Unknown error</string>
+    <string name="download_module_notification_pending">Pending</string>
+    <string name="download_module_notification_canceling">Canceling</string>
+    <string name="download_module_notification_canceled">Canceled</string>
+
+    <!--seed database notification-->
+    <string name="seed_database_module_title">Seed database</string>
+    <string name="seed_database_notification_prepare">Prepare to seed %d task(s) in %d</string>
+    <string name="seed_database_notification_cancel_action_title">Cancel</string>
+    <string name="seed_database_notification_stopped">Stopped</string>
+    <string name="seed_database_notification_seed_done">Seeded %d task(s)</string>
+    <string name="seed_database_notification_seed_process">%d%%</string>
+    <string name="title_seed_database">Seed Database</string>
 </resources>

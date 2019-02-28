@@ -9,7 +9,7 @@ import kotlin.String
 object Versions {
     const val android_arch_navigation: String = "1.0.0-alpha11" 
 
-    const val android_arch_work: String = "1.0.0-beta01" 
+    const val android_arch_work: String = "1.0.0-rc02"
 
     const val activity_ktx: String = "1.0.0-alpha03" 
 
@@ -43,7 +43,7 @@ object Versions {
 
     const val aapt2: String = "3.5.0-alpha02-5228738" 
 
-    const val com_android_tools_build_gradle: String = "3.5.0-alpha02"
+    const val com_android_tools_build_gradle: String = "3.3.0"
 
     const val lint_gradle: String = "26.5.0-alpha02" 
 

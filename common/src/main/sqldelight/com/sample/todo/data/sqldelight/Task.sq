@@ -1,13 +1,17 @@
-CREATE TABLE task (
-  id TEXT NOT NULL PRIMARY KEY, title TEXT NOT NULL,
-  description TEXT, completed INTEGER NOT NULL
-);
+CREATE TABLE IF NOT EXISTS task (id TEXT NOT NULL, title TEXT NOT NULL, description TEXT, completed INTEGER NOT NULL, PRIMARY KEY(id));
+CREATE INDEX index_task_completed ON task (completed);
+CREATE VIRTUAL TABLE IF NOT EXISTS task_fts USING FTS4(title TEXT NOT NULL, description TEXT, content=task);
+CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_task_fts_BEFORE_UPDATE BEFORE UPDATE ON task BEGIN DELETE FROM task_fts WHERE docid=OLD.rowid; END;
+CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_task_fts_BEFORE_DELETE BEFORE DELETE ON task BEGIN DELETE FROM task_fts WHERE docid=OLD.rowid; END;
+CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_task_fts_AFTER_UPDATE AFTER UPDATE ON task BEGIN INSERT INTO task_fts(docid, title, description) VALUES (NEW.rowid, NEW.title, NEW.description); END;
+CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_task_fts_AFTER_INSERT AFTER INSERT ON task BEGIN INSERT INTO task_fts(docid, title, description) VALUES (NEW.rowid, NEW.title, NEW.description); END;
+
 
 selectAll:
 SELECT *
 FROM task;
 
--- TODO bug: https://github.com/square/sqldelight/issues/1218
+-- TODO bug: https://github.com/square/sqldelight/issues/1218pl
 -- CREATE VIRTUAL TABLE task_fts USING fts4(
 --   title TEXT NOT NULL, description TEXT,
 --   content = task

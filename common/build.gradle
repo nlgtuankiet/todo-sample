@@ -1,14 +1,33 @@
+
 plugins {
-    kotlin("multiplatform")
-    id("com.squareup.sqldelight")
+    id 'org.jetbrains.kotlin.multiplatform'
+    id 'com.squareup.sqldelight'
 }
 
 // TODO work around https://youtrack.jetbrains.com/issue/KT-27170
-configurations.create("compileClasspath")
+//configurations.create("compileClasspath")
+
+//sqldelight {
+//    packageName = "com.sample.todo.data.sqldelight"
+//    className = "TodoSqlDelightDatabase"
+//}
+
+//sqldelight {
+//
+//    get("TodoSqlDelightDatabase") {
+//        packageName = "com.sample.todo.data.sqldelight"
+////        sourceFolders = ["sqldelight"]
+//        schemaOutputDirectory = file("src/main/sqldelight/migrations")
+//    }
+//}
+//apply(from = File("sqldelight.gradle"))
 
 sqldelight {
-    packageName = "com.sample.todo.data.sqldelight"
-    className = "TodoSqlDelightDatabase"
+    TodoSqlDelightDatabase {
+        packageName = "com.sample.todo.data.sqldelight"
+        sourceFolders = ["sqldelight"]
+        schemaOutputDirectory = file("src/main/sqldelight/migrations")
+    }
 }
 
 kotlin {

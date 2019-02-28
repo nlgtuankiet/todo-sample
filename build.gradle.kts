@@ -14,10 +14,11 @@ buildscript {
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
         maven("https://plugins.gradle.org/m2/")
         maven("https://dl.bintray.com/mockito/maven")
+        maven("https://oss.sonatype.org/content/repositories/snapshots/")
     }
     dependencies {
         // classpath for kapt
-        classpath("com.squareup.sqldelight:gradle-plugin:1.0.3")
+        classpath("com.squareup.sqldelight:gradle-plugin:1.1.0-SNAPSHOT")
         classpath(Libs.com_android_tools_build_gradle)
         classpath(Libs.kotlin_gradle_plugin)
         classpath(Libs.navigation_safe_args_gradle_plugin)
@@ -44,17 +45,18 @@ allprojects {
         mavenCentral()
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
         maven("https://dl.bintray.com/mockito/maven")
+        maven("https://oss.sonatype.org/content/repositories/snapshots/")
         jcenter()
     }
 }
 
 
 
-buildScan {
-    termsOfServiceUrl = "https://gradle.com/terms-of-service"
-    termsOfServiceAgree = "yes"
-    publishAlways()
-}
+//buildScan {
+//    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+//    termsOfServiceAgree = "yes"
+////    publishAlways()
+//}
 
 
 

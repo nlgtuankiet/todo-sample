@@ -7,6 +7,8 @@ include(":data")
 include(":common")
 include(":data-preference")
 include(":data-core")
+include(":settings")
+include(":seed-database")
 
 
 enableFeaturePreview("GRADLE_METADATA")

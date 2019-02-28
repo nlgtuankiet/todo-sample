@@ -5,11 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import com.sample.todo.R
 import com.sample.todo.core.BaseViewModel
 import com.sample.todo.util.extension.setValueIfNew
+import timber.log.Timber
 import javax.inject.Inject
 
 class HostViewModel @Inject constructor() : BaseViewModel() {
 
     fun onTopNavigationSelected(navControllerId: Int) {
+        Timber.d("onTopNavigationSelected(navControllerId=$navControllerId)")
         _currentNavControllerId.setValueIfNew(navControllerId)
     }
 

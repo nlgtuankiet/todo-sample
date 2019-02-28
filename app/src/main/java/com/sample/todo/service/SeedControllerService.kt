@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.WorkManager
-import com.sample.todo.worker.seeddatabase.SeedDatabase2Worker
+import com.sample.todo.worker.seeddatabase.SeedDatabaseWorker
 import dagger.android.DaggerIntentService
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,9 +33,8 @@ class SeedControllerService : DaggerIntentService("SeedControllerService") {
     }
 
     fun stopSeedDatabaseWorker() {
-        val result = workManager.cancelUniqueWork(SeedDatabase2Worker.WORK_MANE).result.get()
+        val result = workManager.cancelUniqueWork(SeedDatabaseWorker.WORK_MANE).result.get()
         Timber.d("stopSeedDatabaseWorker with result: $result")
-        SeedDatabase2Worker.notifyWorkCanceled(this, notificationManager)
     }
 
     override fun onDestroy() {

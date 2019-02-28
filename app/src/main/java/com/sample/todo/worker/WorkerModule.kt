@@ -7,7 +7,7 @@ import dagger.Provides
 
 @Module(
     includes = [
-        WorkerBindingModule::class,
+        ListenableWorkerFactoryBindingModule::class,
         WorkerFactoryBindingModule::class
     ]
 )

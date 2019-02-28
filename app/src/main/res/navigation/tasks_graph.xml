@@ -56,4 +56,12 @@
         android:id="@+id/settingFragment"
         android:name="com.sample.todo.ui.setting.SettingFragment"
         android:label="SettingFragment" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.sample.todo.ui.about.AboutFragment"
+        android:label="AboutFragment" >
+        <action
+            android:id="@+id/action_aboutFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
+    </fragment>
 </navigation>

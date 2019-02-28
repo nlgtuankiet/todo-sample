@@ -16,6 +16,12 @@ android {
         minSdkVersion(21)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    buildTypes {
+        getByName("release") {
+            isDebuggable = Config.isReleaseDebugable
+            isMinifyEnabled = false
+        }
+    }
 }
 
 dependencies {
@@ -51,6 +57,8 @@ dependencies {
     implementation("com.squareup.sqldelight:android-paging-extensions:1.0.3")
     testImplementation("com.squareup.sqldelight:sqlite-driver:1.0.3")
     testImplementation("org.xerial:sqlite-jdbc:3.25.2")
+
+    implementation("com.google.android.play:core:1.3.4")
 
     testImplementation(Libs.room_testing)
 

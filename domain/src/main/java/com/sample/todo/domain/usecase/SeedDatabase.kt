@@ -2,7 +2,7 @@ package com.sample.todo.domain.usecase
 
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.repository.PreferenceRepository
-import com.thedeanda.lorem.Lorem
+import com.sample.todo.domain.util.lorem.Lorem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Random

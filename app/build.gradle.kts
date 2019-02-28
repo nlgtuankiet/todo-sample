@@ -42,8 +42,8 @@ android {
         applicationId = "com.sample.todo"
         minSdkVersion(21)
         targetSdkVersion(28)
-        versionCode = 1
-        versionName = "1.1.2"
+        versionCode = 56
+        versionName = "1.1.22"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -62,8 +62,8 @@ android {
             } else {
                 signingConfigs.getByName("debug")
             }
-            isDebuggable = false
-            isMinifyEnabled = false
+            isDebuggable = Config.isReleaseDebugable
+            isMinifyEnabled = true
             isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -76,6 +76,9 @@ android {
             isIncludeAndroidResources = true
         }
     }
+    dynamicFeatures.add(":settings")
+    dynamicFeatures.add(":seed-database")
+
 }
 
 play {
@@ -130,7 +133,6 @@ dependencies {
     // paging
     implementation(Libs.paging_runtime_ktx)
     implementation(Libs.paging_rxjava2_ktx)
-
     // room
     implementation(Libs.room_coroutines)
     implementation(Libs.room_rxjava2)
@@ -164,6 +166,7 @@ dependencies {
     testImplementation(Libs.mockito_kotlin)
     testImplementation(Libs.paging_common)
     testImplementation(project(":testShared"))
+    implementation("com.google.android.play:core:1.3.4")
 }
 
 kapt {

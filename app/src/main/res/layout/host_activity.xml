@@ -24,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <fragment
+                android:tag="tasks"
                 android:id="@+id/tasks_nav_controller"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
@@ -42,6 +43,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <fragment
+                android:tag="search"
                 android:id="@+id/search_nav_controller"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
@@ -53,14 +55,15 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:goneUnless="@{viewModel.currentNavControllerId == R.id.stat_nav_controller}"
+            app:goneUnless="@{viewModel.currentNavControllerId == R.id.about_nav_controller}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <fragment
-                android:id="@+id/stat_nav_controller"
+                android:tag="about"
+                android:id="@+id/about_nav_controller"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -68,23 +71,23 @@
                 />
         </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:goneUnless="@{viewModel.currentNavControllerId == R.id.setting_nav_controller}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <!--<FrameLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--app:goneUnless="@{viewModel.currentNavControllerId == R.id.setting_nav_controller}"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent">-->
 
-            <fragment
-                android:id="@+id/setting_nav_controller"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:defaultNavHost="false"
-                />
-        </FrameLayout>
+            <!--<fragment-->
+                <!--android:id="@+id/setting_nav_controller"-->
+                <!--android:name="androidx.navigation.fragment.NavHostFragment"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:defaultNavHost="false"-->
+                <!--/>-->
+        <!--</FrameLayout>-->
 
         <!--<com.google.android.material.bottomnavigation.BottomNavigationView-->
             <!--app:onNavigationItemSelectedListener="@{(menu) -> viewModel.onNavigationItemSelected(menu.itemId)}"-->

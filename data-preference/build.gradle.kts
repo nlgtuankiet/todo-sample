@@ -16,6 +16,12 @@ android {
         minSdkVersion(21)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    buildTypes {
+        getByName("release") {
+            isDebuggable = Config.isReleaseDebugable
+            isMinifyEnabled = false
+        }
+    }
 }
 
 dependencies {

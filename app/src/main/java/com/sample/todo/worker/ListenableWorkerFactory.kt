@@ -4,6 +4,6 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 
-interface ChildWorkerFactory {
+interface ListenableWorkerFactory {
     fun create(appContext: Context, workerParams: WorkerParameters): ListenableWorker
 }

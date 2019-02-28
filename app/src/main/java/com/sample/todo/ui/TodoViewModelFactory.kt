@@ -7,6 +7,10 @@ import javax.inject.Provider
 
 // TODO scope?
 class TodoViewModelFactory @Inject constructor(
+    providers: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
+) : BassViewModelFactory(providers)
+
+abstract class BassViewModelFactory(
     private val providers: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

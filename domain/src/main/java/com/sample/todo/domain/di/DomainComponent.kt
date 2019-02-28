@@ -13,6 +13,7 @@ import com.sample.todo.domain.usecase.SeedDatabase
 import com.sample.todo.domain.usecase.SetTaskFilterType
 import com.sample.todo.domain.usecase.UpdateComplete
 import com.sample.todo.domain.usecase.UpdateTask
+import com.sample.todo.domain.util.lorem.Lorem
 import dagger.BindsInstance
 import dagger.Component
 
@@ -34,6 +35,7 @@ abstract class DomainComponent {
     abstract fun SetTaskFilterType(): SetTaskFilterType
     abstract fun UpdateComplete(): UpdateComplete
     abstract fun UpdateTask(): UpdateTask
+    abstract fun provideLore(): Lorem
 
     @Component.Builder
     interface Builder {

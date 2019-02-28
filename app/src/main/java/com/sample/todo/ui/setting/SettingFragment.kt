@@ -1,5 +1,6 @@
 package com.sample.todo.ui.setting
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,10 @@ class SettingFragment : DaggerFragment() {
             viewModel = settingViewModel
             lifecycleOwner = viewLifecycleOwner
             bottomNavigationView.setupWith(this@SettingFragment)
+            openSettingsActivityButton.setOnClickListener {
+                    val intent = Intent(requireContext(), Class.forName("com.sample.todo.settings.ui.SettingsActivity"))
+                    startActivity(intent)
+            }
         }
         settingViewModel.apply {
             showSeedInputDialogEvent.observeEvent(viewLifecycleOwner) {
