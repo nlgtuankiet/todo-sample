@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.sample.todo.worker.seeddatabase">
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="true"
+        dist:title="@string/title_seed_database">
+        <dist:fusing dist:include="true" />
+    </dist:module>
+</manifest>
+
