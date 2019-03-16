@@ -1,19 +1,19 @@
 package com.sample.todo.data.sqldelight
 
 import androidx.paging.PagedList
-import androidx.paging.toObservable
+import androidx.paging.toFlowable
 import com.sample.todo.data.Mapper
 import com.sample.todo.data.TaskDataSource
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.domain.model.SearchResult
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskMini
-import com.sample.todo.domain.model.TaskStat
+import com.sample.todo.domain.model.TaskStatistics
 import com.squareup.sqldelight.Transacter
 import com.squareup.sqldelight.android.paging.QueryDataSourceFactory
 import com.squareup.sqldelight.runtime.rx.asObservable
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import javax.inject.Inject
 
 @DataScope
@@ -25,7 +25,7 @@ class TaskSqlDelightDataSource @Inject constructor(
     private val selectTaskMiniMapper: Mapper<SelectTaskMini, TaskMini>,
     private val selectActiveTaskMiniMapper: Mapper<SelectActiveTaskMini, TaskMini>,
     private val selectCompletedTaskMiniMapper: Mapper<SelectCompletedTaskMini, TaskMini>,
-    private val sqlDelightTaskStatisticsMapper: Mapper<SqlDelightTaskStatistics, TaskStat>
+    private val sqlDelightTaskStatisticsMapper: Mapper<SqlDelightTaskStatistics, TaskStatistics>
 ) : TaskDataSource {
     override suspend fun findTaskById(taskId: String): Task? {
         return taskQueries.selectTaskById(taskId).executeAsOneOrNull()
@@ -60,8 +60,10 @@ class TaskSqlDelightDataSource @Inject constructor(
         }
     }
 
-    override fun taskStat(): Observable<TaskStat> {
-        return taskQueries.taskStatistics().asObservable(Schedulers.io())
+    override fun getTaskStatisticsFlowable(): Flowable<TaskStatistics> {
+        return taskQueries.taskStatistics()
+            .asObservable()
+            .toFlowable(BackpressureStrategy.LATEST)
             .map { query ->
                 query.executeAsOne().let {
                     sqlDelightTaskStatisticsMapper.map(it)
@@ -69,9 +71,10 @@ class TaskSqlDelightDataSource @Inject constructor(
             }
     }
 
-    override fun findByIdFlowable(id: String): Observable<List<Task>> {
+    override fun findByIdFlowable(id: String): Flowable<List<Task>> {
         return taskQueries.selectTaskById(id)
-            .asObservable(Schedulers.io())
+            .asObservable()
+            .toFlowable(BackpressureStrategy.LATEST)
             .map {
                 it.executeAsList().map {
                     sqlDelightTaskMapper.map(it)
@@ -89,46 +92,48 @@ class TaskSqlDelightDataSource @Inject constructor(
         }
     }
 
-    override fun tasksCountLive(): Observable<Long> {
+    override fun tasksCountLive(): Flowable<Long> {
         return taskQueries.countTasks()
-            .asObservable(Schedulers.io())
+            .asObservable()
+            .toFlowable(BackpressureStrategy.LATEST)
+
             .map {
                 it.executeAsOne()
             }
     }
 
-    override fun getTaskMini(pageSize: Int): Observable<PagedList<TaskMini>> {
+    override fun getTaskMiniFlowablePaged(pageSize: Int): Flowable<PagedList<TaskMini>> {
         return QueryDataSourceFactory(
             queryProvider = taskQueries::selectTaskMini,
             countQuery = taskQueries.countTasks()
         ).map {
             selectTaskMiniMapper.map(it)
         }
-            .toObservable(pageSize)
+            .toFlowable(pageSize)
     }
 
-    override fun getCompletedTaskMini(pageSize: Int): Observable<PagedList<TaskMini>> {
+    override fun getCompletedTaskMiniFlowablePaged(pageSize: Int): Flowable<PagedList<TaskMini>> {
         return QueryDataSourceFactory(
             queryProvider = taskQueries::selectCompletedTaskMini,
             countQuery = taskQueries.countCompletedTasks()
         ).map {
             selectCompletedTaskMiniMapper.map(it)
-        }.toObservable(pageSize)
+        }.toFlowable(pageSize)
     }
 
-    override fun getActiveTaskMini(pageSize: Int): Observable<PagedList<TaskMini>> {
+    override fun getActiveTaskMiniFlowablePaged(pageSize: Int): Flowable<PagedList<TaskMini>> {
         return QueryDataSourceFactory(
             queryProvider = taskQueries::selectActiveTaskMini,
             countQuery = taskQueries.countActiveTasks()
         ).map {
             selectActiveTaskMiniMapper.map(it)
-        }.toObservable(pageSize)
+        }.toFlowable(pageSize)
     }
 
-    override fun getSearchResultPaged(
+    override fun getSearchResultFlowablePaged(
         query: String,
         pageSize: Int
-    ): Observable<PagedList<SearchResult>> {
+    ): Flowable<PagedList<SearchResult>> {
         return QueryDataSourceFactory(
             queryProvider = taskQueries::selectTaskMini,
             countQuery = taskQueries.countTasks()
@@ -138,7 +143,7 @@ class TaskSqlDelightDataSource @Inject constructor(
                 snippets = it.title,
                 title = it.title
             )
-        }.toObservable(pageSize)
+        }.toFlowable(pageSize)
     }
 
     override suspend fun deleteTask(id: String): Long {

@@ -12,7 +12,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.sample.todo.databinding.SettingSeedInputFragmentBinding
 import com.sample.todo.util.extension.observeEvent
-import com.sample.todo.worker.seeddatabase.SeedDatabase2Worker
+import com.sample.todo.worker.seeddatabase.SeedDatabaseWorker
 import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
 
@@ -36,9 +36,9 @@ class SeedInputFragment : DaggerDialogFragment() {
         seedInputViewModel.run {
             requestSeedDatabaseEvent.observeEvent(viewLifecycleOwner) { parameter ->
                 workManager.enqueueUniqueWork(
-                    SeedDatabase2Worker.WORK_MANE,
+                    SeedDatabaseWorker.WORK_MANE,
                     ExistingWorkPolicy.REPLACE,
-                    OneTimeWorkRequestBuilder<SeedDatabase2Worker>()
+                    OneTimeWorkRequestBuilder<SeedDatabaseWorker>()
                         .setInputData(parameter.toData())
                         .build()
                 )

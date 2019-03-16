@@ -3,7 +3,7 @@ package com.sample.todo.domain.di
 import com.sample.todo.domain.repository.PreferenceRepository
 import com.sample.todo.domain.repository.TaskRepository
 import com.sample.todo.domain.usecase.GetTask
-import com.sample.todo.domain.usecase.GetTaskFilterType
+import com.sample.todo.domain.usecase.GetTaskFilterTypeFlowable
 import com.sample.todo.domain.usecase.GetTaskMiniList
 import com.sample.todo.domain.usecase.GetTaskStatFlowable
 import com.sample.todo.domain.usecase.GetTasksCountFlowable
@@ -13,6 +13,7 @@ import com.sample.todo.domain.usecase.SeedDatabase
 import com.sample.todo.domain.usecase.SetTaskFilterType
 import com.sample.todo.domain.usecase.UpdateComplete
 import com.sample.todo.domain.usecase.UpdateTask
+import com.sample.todo.domain.util.lorem.Lorem
 import dagger.BindsInstance
 import dagger.Component
 
@@ -24,7 +25,7 @@ import dagger.Component
 @DomainScope
 abstract class DomainComponent {
     abstract fun GetTask(): GetTask
-    abstract fun GetTaskFilterTypeLiveData(): GetTaskFilterType
+    abstract fun GetTaskFilterTypeLiveData(): GetTaskFilterTypeFlowable
     abstract fun GetTaskMiniList(): GetTaskMiniList
     abstract fun GetTasksCountLive(): GetTasksCountFlowable
     abstract fun GetTaskStatLive(): GetTaskStatFlowable
@@ -34,6 +35,7 @@ abstract class DomainComponent {
     abstract fun SetTaskFilterType(): SetTaskFilterType
     abstract fun UpdateComplete(): UpdateComplete
     abstract fun UpdateTask(): UpdateTask
+    abstract fun provideLore(): Lorem
 
     @Component.Builder
     interface Builder {

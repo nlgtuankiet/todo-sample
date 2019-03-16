@@ -1,0 +1,566 @@
+package com.sample.todo.domain.util.lorem
+
+import javax.inject.Inject
+import kotlin.random.Random
+
+class LoremImpl @Inject constructor() : Lorem {
+    private val words = """
+a
+ac
+accommodare
+accumsan
+accusata
+ad
+adhuc
+adipisci
+adipiscing
+adolescens
+adversarium
+aenean
+aeque
+affert
+agam
+alia
+alienum
+aliquam
+aliquet
+aliquid
+aliquip
+altera
+alterum
+amet
+an
+ancillae
+animal
+ante
+antiopam
+aperiri
+appareat
+appetere
+aptent
+arcu
+assueverit
+at
+atomorum
+atqui
+auctor
+audire
+augue
+autem
+bibendum
+blandit
+brute
+causae
+cetero
+ceteros
+civibus
+class
+commodo
+commune
+comprehensam
+conceptam
+conclusionemque
+condimentum
+congue
+consectetuer
+consectetur
+consequat
+consetetur
+constituam
+constituto
+consul
+contentiones
+conubia
+convallis
+convenire
+corrumpit
+cras
+cu
+cubilia
+cum
+curabitur
+curae
+cursus
+dapibus
+debet
+decore
+definiebas
+definitionem
+definitiones
+delectus
+delenit
+delicata
+deseruisse
+deserunt
+deterruisset
+detracto
+detraxit
+diam
+dicam
+dicant
+dicat
+dicit
+dico
+dicta
+dictas
+dictum
+dictumst
+dicunt
+dignissim
+dis
+discere
+disputationi
+dissentiunt
+docendi
+doctus
+dolor
+dolore
+dolorem
+dolores
+dolorum
+doming
+donec
+dui
+duis
+duo
+ea
+eam
+efficiantur
+efficitur
+egestas
+eget
+ei
+eirmod
+eius
+elaboraret
+electram
+eleifend
+elementum
+elit
+elitr
+eloquentiam
+enim
+eos
+epicurei
+epicuri
+equidem
+erat
+eripuit
+eros
+errem
+error
+erroribus
+eruditi
+esse
+est
+et
+etiam
+eu
+euismod
+eum
+euripidis
+evertitur
+ex
+expetenda
+expetendis
+explicari
+fabellas
+fabulas
+facilis
+facilisi
+facilisis
+falli
+fames
+fastidii
+faucibus
+felis
+fermentum
+ferri
+feugait
+feugiat
+finibus
+fringilla
+fugit
+fuisset
+fusce
+gloriatur
+graece
+graeci
+graecis
+graeco
+gravida
+gubergren
+habemus
+habeo
+habitant
+habitasse
+hac
+harum
+has
+hendrerit
+himenaeos
+hinc
+his
+homero
+honestatis
+iaculis
+id
+idque
+ignota
+iisque
+imperdiet
+impetus
+in
+inani
+inceptos
+inciderint
+indoctum
+inimicus
+instructior
+integer
+intellegat
+intellegebat
+interdum
+interesset
+interpretaris
+invenire
+invidunt
+ipsum
+iriure
+iudicabit
+ius
+iusto
+iuvaret
+justo
+labores
+lacinia
+lacus
+laoreet
+latine
+laudem
+lectus
+legere
+legimus
+leo
+liber
+libero
+libris
+ligula
+litora
+lobortis
+lorem
+luctus
+ludus
+luptatum
+maecenas
+magna
+magnis
+maiestatis
+maiorum
+malesuada
+malorum
+maluisset
+mandamus
+massa
+mattis
+mauris
+maximus
+mazim
+mea
+mediocrem
+mediocritatem
+mei
+mel
+meliore
+melius
+menandri
+mentitum
+metus
+mi
+minim
+mnesarchum
+moderatius
+molestiae
+molestie
+mollis
+montes
+morbi
+movet
+mucius
+mus
+mutat
+nam
+nascetur
+natoque
+natum
+ne
+nec
+necessitatibus
+neglegentur
+neque
+netus
+nibh
+nihil
+nisi
+nisl
+no
+nobis
+noluisse
+nominavi
+non
+nonumes
+nonumy
+noster
+nostra
+nostrum
+novum
+nulla
+nullam
+numquam
+nunc
+ocurreret
+odio
+offendit
+omittam
+omittantur
+omnesque
+oporteat
+option
+oratio
+orci
+ornare
+ornatus
+partiendo
+parturient
+patrioque
+pellentesque
+penatibus
+per
+percipit
+pericula
+periculis
+perpetua
+persecuti
+persequeris
+persius
+pertinacia
+pertinax
+petentium
+pharetra
+phasellus
+placerat
+platea
+platonem
+ponderum
+populo
+porro
+porta
+porttitor
+posidonium
+posse
+possim
+possit
+postea
+postulant
+posuere
+potenti
+praesent
+pretium
+pri
+primis
+principes
+pro
+prodesset
+proin
+prompta
+propriae
+pulvinar
+purus
+putent
+quaeque
+quaerendum
+quaestio
+qualisque
+quam
+quas
+quem
+qui
+quidam
+quis
+quisque
+quo
+quod
+quot
+recteque
+referrentur
+reformidans
+regione
+reprehendunt
+reprimique
+repudiandae
+repudiare
+reque
+rhoncus
+ridens
+ridiculus
+risus
+rutrum
+sadipscing
+saepe
+sagittis
+sale
+salutatus
+sanctus
+saperet
+sapien
+sapientem
+scelerisque
+scripserit
+scripta
+sea
+sed
+sem
+semper
+senectus
+senserit
+sententiae
+signiferumque
+similique
+simul
+singulis
+sit
+sociis
+sociosqu
+sodales
+solet
+sollicitudin
+solum
+sonet
+splendide
+suas
+suavitate
+sumo
+suscipiantur
+suscipit
+suspendisse
+tacimates
+taciti
+tale
+tamquam
+tantas
+tation
+te
+tellus
+tempor
+tempus
+theophrastus
+tibique
+tincidunt
+torquent
+tortor
+tota
+tractatos
+tristique
+tritani
+turpis
+ubique
+ullamcorper
+ultrices
+ultricies
+unum
+urbanitas
+urna
+usu
+ut
+utamur
+utinam
+utroque
+varius
+vehicula
+vel
+velit
+venenatis
+veniam
+verear
+veri
+veritus
+vero
+verterem
+vestibulum
+viderer
+vidisse
+vim
+viris
+vis
+vitae
+vituperata
+vituperatoribus
+vivamus
+vivendo
+viverra
+vix
+vocent
+vocibus
+volumus
+voluptaria
+voluptatibus
+voluptatum
+volutpat
+vulputate
+wisi
+    """.trimIndent().split("\n")
+
+    override fun getTitle(min: Int, max: Int): String {
+        return getWords(min, max, true)
+    }
+
+    override fun getParagraphs(min: Int, max: Int): String {
+        val count = getCount(min, max)
+        val sb = StringBuilder()
+        for (j in 0 until count) {
+            val sentences = Random.nextInt(5) + 2 // 2 to 6
+            for (i in 0 until sentences) {
+                var first = getWords(1, 1, false)
+                first = first.substring(0, 1).toUpperCase() + first.substring(1)
+                sb.append(first)
+
+                sb.append(getWords(2, 20, false))
+                sb.append(".  ")
+            }
+            sb.append("\n")
+        }
+        return sb.toString().trim { it <= ' ' }
+    }
+
+    private fun getWords(min: Int, max: Int, title: Boolean): String {
+        val count = getCount(min, max)
+        return getWords(count, title)
+    }
+    private fun getWords(count: Int, title: Boolean): String {
+        val sb = StringBuilder()
+        val size = words.size
+        var wordCount = 0
+        while (wordCount < count) {
+            var word = words[Random.nextInt(size)]
+            if (title) {
+                if (wordCount == 0 || word.length > 3) {
+                    word = word.substring(0, 1).toUpperCase() + word.substring(1)
+                }
+            }
+            sb.append(word)
+            sb.append(" ")
+            wordCount++
+        }
+        return sb.toString().trim { it <= ' ' }
+    }
+
+    private fun getCount(inputMin: Int, inputMax: Int): Int {
+        var min = inputMin
+        var max = inputMax
+        if (min < 0)
+            min = 0
+        if (max < min)
+            max = min
+        return if (max != min) Random.nextInt(max - min) + min else min
+    }
+}

@@ -1,10 +1,5 @@
 import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-//import com.android.build.gradle.kts.BaseExtension
-//import org.apache.commons.io.output.TeeOutputStream
-//import org.jetbrains.kotlin.gradle.dsl.Coroutines
-//import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
-//import org.jetbrains.kotlin.gradle.internal.CacheImplementation
 
 buildscript {
     repositories {
@@ -14,9 +9,9 @@ buildscript {
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
         maven("https://plugins.gradle.org/m2/")
         maven("https://dl.bintray.com/mockito/maven")
+        maven("https://oss.sonatype.org/content/repositories/snapshots/")
     }
     dependencies {
-        // classpath for kapt
         classpath("com.squareup.sqldelight:gradle-plugin:1.0.3")
         classpath(Libs.com_android_tools_build_gradle)
         classpath(Libs.kotlin_gradle_plugin)
@@ -37,26 +32,22 @@ plugins {
     `build-scan`
 }
 
-
 allprojects {
     repositories {
         google()
         mavenCentral()
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
         maven("https://dl.bintray.com/mockito/maven")
+        maven("https://oss.sonatype.org/content/repositories/snapshots/")
         jcenter()
     }
 }
 
-
-
-buildScan {
-    termsOfServiceUrl = "https://gradle.com/terms-of-service"
-    termsOfServiceAgree = "yes"
-    publishAlways()
-}
-
-
+//buildScan {
+//    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+//    termsOfServiceAgree = "yes"
+////    publishAlways()
+//}
 
 subprojects {
     apply(plugin = "com.diffplug.gradle.spotless")
@@ -84,7 +75,6 @@ subprojects {
         }
     }
 }
-
 
 gradle.projectsEvaluated {
     todoReport()

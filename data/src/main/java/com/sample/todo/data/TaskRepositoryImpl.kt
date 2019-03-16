@@ -7,9 +7,9 @@ import com.sample.todo.domain.model.SearchResult
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskFilterType
 import com.sample.todo.domain.model.TaskMini
-import com.sample.todo.domain.model.TaskStat
+import com.sample.todo.domain.model.TaskStatistics
 import com.sample.todo.domain.repository.TaskRepository
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
@@ -22,34 +22,34 @@ class TaskRepositoryImpl @Inject constructor(
         return taskDataSource.deleteTask(id)
     }
 
-    override fun getTaskWithId(id: String): Observable<List<Task>> {
+    override fun getTaskWithIdFlowable(id: String): Flowable<List<Task>> {
         return taskDataSource.findByIdFlowable(id)
     }
 
-    override fun getTaskMini(
+    override fun getTaskMiniFlowablePaged(
         taskFilterType: TaskFilterType,
         pageSize: Int
-    ): Observable<PagedList<TaskMini>> {
+    ): Flowable<PagedList<TaskMini>> {
         return when (taskFilterType) {
-            TaskFilterType.ALL -> taskDataSource.getTaskMini(pageSize)
-            TaskFilterType.COMPLETED -> taskDataSource.getCompletedTaskMini(pageSize)
-            TaskFilterType.ACTIVE -> taskDataSource.getActiveTaskMini(pageSize)
+            TaskFilterType.ALL -> taskDataSource.getTaskMiniFlowablePaged(pageSize)
+            TaskFilterType.COMPLETED -> taskDataSource.getCompletedTaskMiniFlowablePaged(pageSize)
+            TaskFilterType.ACTIVE -> taskDataSource.getActiveTaskMiniFlowablePaged(pageSize)
         }.checkAllMatched
     }
 
-    override fun getSearchResult(
+    override fun getSearchResultFlowablePaged(
         query: String,
         pageSize: Int
-    ): Observable<PagedList<SearchResult>> {
-        return taskDataSource.getSearchResultPaged(query, pageSize)
+    ): Flowable<PagedList<SearchResult>> {
+        return taskDataSource.getSearchResultFlowablePaged(query, pageSize)
     }
 
-    override fun getTaskCount(): Observable<Long> {
+    override fun getTaskCount(): Flowable<Long> {
         return taskDataSource.tasksCountLive()
     }
 
-    override fun getTaskStatistics(): Observable<TaskStat> {
-        return taskDataSource.taskStat()
+    override fun getTaskStatisticsFlowable(): Flowable<TaskStatistics> {
+        return taskDataSource.getTaskStatisticsFlowable()
     }
 
     override suspend fun update(task: Task): Long {

@@ -6,7 +6,6 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.sample.todo.domain.TestData
-import com.sample.todo.domain.exception.DeleteTaskFailException
 import com.sample.todo.domain.exception.InvalidTaskIdException
 import com.sample.todo.domain.model.TaskId
 import com.sample.todo.domain.repository.TaskRepository
@@ -33,30 +32,30 @@ class DeleteTaskTest {
     }
 
     @Test
-    fun `success`() = runBlocking {
+    fun `return true when success`() = runBlocking {
         val taskId = TestData.tasks.first().id.run { TaskId(this) }
         `when`(taskRepository.deleteTask(taskId.value)) doReturn 1
 
-        val result = useCase.invoke(taskId)
+        val actual = useCase.invoke(taskId)
 
-        assertTrue(result.isSuccess)
+        assertEquals(true, actual)
     }
 
     @Test
-    fun `fail when there is no task to delete`() = runBlocking {
+    fun `return false when there is no task to delete`() = runBlocking {
         val taskId = TestData.tasks.first().id.run { TaskId(this) }
         `when`(taskRepository.deleteTask(taskId.value)) doReturn 0
 
-        val result = useCase.invoke(taskId)
+        val actual = useCase.invoke(taskId)
 
-        assertTrue(result.exceptionOrNull() is DeleteTaskFailException)
+        assertEquals(false, actual)
     }
 
     @Test
     fun `fail when pass invalid TaskId`() = runBlocking {
         val taskId: TaskId = TestData.invalidTaskId
 
-        val result = useCase.invoke(taskId)
+        val result = kotlin.runCatching { useCase.invoke(taskId) }
 
         assertTrue(result.exceptionOrNull() is InvalidTaskIdException)
         verifyNoMoreInteractions(taskRepository)
@@ -68,7 +67,7 @@ class DeleteTaskTest {
         val exception = RuntimeException("test")
         `when`(taskRepository.deleteTask(taskId.value)) doThrow exception
 
-        val result = useCase.invoke(taskId)
+        val result = kotlin.runCatching { useCase.invoke(taskId) }
 
         assertEquals(exception, result.exceptionOrNull())
     }

@@ -3,7 +3,6 @@ package com.sample.todo.ui.setting
 import androidx.lifecycle.ViewModel
 import com.sample.todo.di.FragmentScoped
 import com.sample.todo.di.ViewModelKey
-import com.sample.todo.ui.bottomnavigation.BottomNavigationModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -15,8 +14,7 @@ abstract class SettingModule {
     @ContributesAndroidInjector(
         modules = [
             SettingBindingModule::class,
-            SeedInputModule::class,
-            BottomNavigationModule::class
+            SeedInputModule::class
         ]
     )
     abstract fun contributeSettingFragment(): SettingFragment

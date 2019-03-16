@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -80,26 +80,13 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_margin="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:onClick="@{() -> viewModel.onSaveButtonClick()}"
-                android:theme="@style/Widget.Todo.FloatingActionButton"
-                app:backgroundTint="@color/white"
-                app:srcCompat="@drawable/save_24dp"
-                app:tint="@color/bottomAppBarIconColor" />
-
             <com.sample.todo.ui.widget.FadingSnackbar
                 android:id="@+id/snack_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#00FFFFFF"
                 android:paddingBottom="64dp"
-                android:visibility="gone"
-                app:layout_anchor="@id/fab" />
+                android:visibility="gone" />
 
             <ProgressBar
                 android:id="@+id/progress_bar"
@@ -108,15 +95,5 @@
                 android:layout_gravity="center"
                 app:goneUnless="@{viewModel.isLoading}" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/host_bottom_navigation_view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

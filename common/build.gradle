@@ -1,0 +1,37 @@
+plugins {
+    id 'org.jetbrains.kotlin.multiplatform'
+    id 'com.squareup.sqldelight'
+}
+
+sqldelight {
+    packageName = "com.sample.todo.data.sqldelight"
+    className = "TodoSqlDelightDatabase"
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(Libs.com_squareup_sqldelight_runtime)
+                implementation(Libs.kotlin_stdlib)
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation(Libs.kotlin_test_common)
+                implementation(Libs.kotlin_test_annotations_common)
+            }
+        }
+        jvm("android").compilations["main"].defaultSourceSet {
+            dependencies {
+                api(Libs.com_squareup_sqldelight_runtime)
+            }
+        }
+        jvm("android").compilations["test"].defaultSourceSet {
+            dependencies {
+                implementation(Libs.kotlin_test)
+                implementation(Libs.kotlin_test_junit)
+            }
+        }
+    }
+}

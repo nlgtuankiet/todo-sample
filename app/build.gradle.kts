@@ -42,8 +42,8 @@ android {
         applicationId = "com.sample.todo"
         minSdkVersion(21)
         targetSdkVersion(28)
-        versionCode = 1
-        versionName = "1.1.2"
+        versionCode = 56
+        versionName = "1.1.22"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -62,8 +62,8 @@ android {
             } else {
                 signingConfigs.getByName("debug")
             }
-            isDebuggable = false
-            isMinifyEnabled = false
+            isDebuggable = Config.isReleaseDebugable
+            isMinifyEnabled = true
             isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -76,6 +76,8 @@ android {
             isIncludeAndroidResources = true
         }
     }
+    dynamicFeatures.add(":settings")
+
 }
 
 play {
@@ -91,79 +93,64 @@ play {
 // TODO Assisted Inject compileOnly or implementation?
 // TODO Lifecycle (ViewModel and LiveData) research lifecycle-livedata-ktx lifecycle-viewmodel-ktx
 dependencies {
-    androidTestImplementation(Libs.mockito_android)
-    androidTestImplementation(Libs.mockito_core)
     androidTestImplementation(Libs.androidx_test_core)
     androidTestImplementation(Libs.androidx_test_ext_junit)
     androidTestImplementation(Libs.androidx_test_rules)
     androidTestImplementation(Libs.androidx_test_runner)
     androidTestImplementation(Libs.core_testing)
     androidTestImplementation(Libs.espresso_core)
+    androidTestImplementation(Libs.mockito_android)
+    androidTestImplementation(Libs.mockito_core)
     androidTestImplementation(Libs.mockito_kotlin)
-    androidTestImplementation(project(":testShared"))
-
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    compileOnly(Libs.assisted_inject_annotations_dagger2)
     implementation(Libs.activity_ktx)
     implementation(Libs.appcompat)
+    implementation(Libs.com_google_android_play_core)
     implementation(Libs.constraintlayout)
     implementation(Libs.core_ktx)
     implementation(Libs.crashlytics)
-
+    implementation(Libs.dagger_android_support)
+    implementation(Libs.epoxy)
+    implementation(Libs.epoxy_databinding)
+    implementation(Libs.epoxy_paging)
     implementation(Libs.firebase_core)
     implementation(Libs.fragment_ktx)
     implementation(Libs.fragment_testing)
     implementation(Libs.kotlin_stdlib_jdk8)
     implementation(Libs.kotlinx_coroutines_android)
     implementation(Libs.kotlinx_coroutines_core)
-//    implementation(Libs.leakcanary_android)
-//    implementation(Libs.leakcanary_support_fragment)
-
+    implementation(Libs.lifecycle_livedata_ktx)
+    implementation(Libs.lifecycle_reactivestreams_ktx)
+    implementation(Libs.lifecycle_viewmodel_ktx)
     implementation(Libs.lorem)
     implementation(Libs.material)
+    implementation(Libs.mvrx)
     implementation(Libs.navigation_fragment_ktx)
     implementation(Libs.navigation_ui_ktx)
-
-    implementation(Libs.lifecycle_livedata_ktx)
-    implementation(Libs.lifecycle_viewmodel_ktx)
-    implementation(Libs.lifecycle_reactivestreams_ktx)
-
-    // paging
     implementation(Libs.paging_runtime_ktx)
     implementation(Libs.paging_rxjava2_ktx)
-
-    // room
     implementation(Libs.room_coroutines)
     implementation(Libs.room_rxjava2)
-    kapt(Libs.room_compiler)
-
+    implementation(Libs.rxandroid)
+    implementation(Libs.rxjava)
     implementation(Libs.stetho)
     implementation(Libs.timber)
     implementation(Libs.work_runtime_ktx)
     implementation(Libs.work_testing)
-
-
-    implementation(Libs.rxandroid)
-    implementation(Libs.rxjava)
-    testImplementation(Libs.rxjava)
-
     implementation(project(":core"))
-    implementation(project(":domain"))
     implementation(project(":data"))
-
-    // Inject
-    implementation(Libs.dagger_android_support)
-    compileOnly(Libs.assisted_inject_annotations_dagger2)
+    implementation(project(":domain"))
     kapt(Libs.assisted_inject_processor_dagger2)
     kapt(Libs.dagger_android_processor)
     kapt(Libs.dagger_compiler)
-
-//    releaseImplementation(Libs.leakcanary_android_no_op)
-    testImplementation(Libs.robolectric)
+    kapt(Libs.epoxy_processor)
+    kapt(Libs.room_compiler)
     testImplementation(Libs.core_testing)
     testImplementation(Libs.junit_junit)
     testImplementation(Libs.mockito_kotlin)
     testImplementation(Libs.paging_common)
-    testImplementation(project(":testShared"))
+    testImplementation(Libs.robolectric)
+    testImplementation(Libs.rxjava)
 }
 
 kapt {

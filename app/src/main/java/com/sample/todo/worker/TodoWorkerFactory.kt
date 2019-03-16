@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class TodoWorkerFactory @Inject constructor(
-    private val workerFactories: Map<Class<out ListenableWorker>, @JvmSuppressWildcards Provider<ChildWorkerFactory>>
+    private val workerFactories: Map<Class<out ListenableWorker>, @JvmSuppressWildcards Provider<ListenableWorkerFactory>>
 ) : WorkerFactory() {
     override fun createWorker(
         appContext: Context,

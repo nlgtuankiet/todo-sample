@@ -2,7 +2,7 @@ package com.sample.todo.domain.usecase
 
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.repository.PreferenceRepository
-import com.thedeanda.lorem.Lorem
+import com.sample.todo.domain.util.lorem.Lorem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Random
@@ -28,11 +28,11 @@ class SeedDatabase @Inject constructor(
                     )
                 )
             }
-            val insertResult = insertAllTasks(tasks)
+            val insertResult = kotlin.runCatching { insertAllTasks(tasks) }
             if (insertResult.isFailure) {
                 return@withContext SeedDatabaseResult.Retry
             }
-            val updatedValue = preferenceRepository.increaseTotalTaskSeeded(insertResult.getOrNull()?.toInt()!!)
+            val updatedValue = preferenceRepository.increaseTotalTaskSeeded(numberOfTask)
             totalTaskSeeded = updatedValue
         }
         return@withContext SeedDatabaseResult.Success

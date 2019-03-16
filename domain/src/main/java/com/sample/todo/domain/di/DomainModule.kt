@@ -3,6 +3,6 @@ package com.sample.todo.domain.di
 import dagger.Module
 
 @Module(
-    includes = [LoremModule::class]
+    includes = [LoremBindingModule::class]
 )
 interface DomainModule

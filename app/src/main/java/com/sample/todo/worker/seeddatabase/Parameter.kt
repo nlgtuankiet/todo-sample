@@ -5,15 +5,15 @@ import com.sample.todo.util.getOrThrow
 
 data class Parameter(
     val isBrandNew: Boolean = true,
-    val totalTasks: Int? = null,
-    val maxTitleLength: Int? = null,
-    val maxDescriptionParagraph: Int? = null
+    val totalTasks: Long = 10,
+    val itemPerTrunk: Long = 1000,
+    val minTitleLength: Int = 1,
+    val maxTitleLength: Int = 3,
+    val minDescriptionParagraph: Int = 1,
+    val maxDescriptionParagraph: Int = 3
 ) {
     // TODO implement and test
     fun validate(): Parameter {
-        if (isBrandNew) {
-            if (totalTasks == null) throw IllegalArgumentException("isBrandNew is true but totalTasks is null")
-        }
         return this
     }
 
@@ -21,7 +21,10 @@ data class Parameter(
         val values = mutableMapOf<String, Any?>().apply {
             put("isBrandNew", isBrandNew)
             put("totalTasks", totalTasks)
+            put("itemPerTrunk", itemPerTrunk)
+            put("minTitleLength", minTitleLength)
             put("maxTitleLength", maxTitleLength)
+            put("minDescriptionParagraph", minDescriptionParagraph)
             put("maxDescriptionParagraph", maxDescriptionParagraph)
         }
         return Data.Builder()
@@ -33,13 +36,19 @@ data class Parameter(
         fun fromData(data: Data): Parameter {
             data.keyValueMap.run {
                 val isBrandNew: Boolean = getOrThrow(key = "isBrandNew", allowNull = false)
-                val totalTasks: Int? = getOrThrow(key = "totalTasks", allowNull = true)
-                val maxTitleLength: Int? = getOrThrow(key = "maxTitleLength", allowNull = true)
-                val maxDescriptionParagraph: Int? = getOrThrow(key = "maxDescriptionParagraph", allowNull = true)
+                val itemPerTrunk: Long = getOrThrow(key = "itemPerTrunk", allowNull = false)
+                val totalTasks: Long = getOrThrow(key = "totalTasks", allowNull = false)
+                val minTitleLength: Int = getOrThrow(key = "minTitleLength", allowNull = false)
+                val maxTitleLength: Int = getOrThrow(key = "maxTitleLength", allowNull = false)
+                val minDescriptionParagraph: Int = getOrThrow(key = "minDescriptionParagraph", allowNull = false)
+                val maxDescriptionParagraph: Int = getOrThrow(key = "maxDescriptionParagraph", allowNull = false)
                 return Parameter(
                     isBrandNew = isBrandNew,
                     totalTasks = totalTasks,
+                    itemPerTrunk = itemPerTrunk,
                     maxTitleLength = maxTitleLength,
+                    minTitleLength = minTitleLength,
+                    minDescriptionParagraph = minDescriptionParagraph,
                     maxDescriptionParagraph = maxDescriptionParagraph
                 )
             }

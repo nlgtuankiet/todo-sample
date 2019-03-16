@@ -8,23 +8,8 @@ class UpdateComplete @Inject constructor(
 ) {
     // TODO undo button
     // TODO check for complete first then update, ex: task is active then mask as active again
-    suspend operator fun invoke(taskId: String, oldComplete: Boolean?, newCompleted: Boolean) {
-        if (oldComplete == null) throw IllegalArgumentException("Unknown current task complete")
-        if (oldComplete != newCompleted) {
-            val rowsUpdated = taskRepository.updateComplete(taskId, newCompleted)
-            if (rowsUpdated > 0) {
-//                val message = Message(
-//                    messageId = if (newCompleted) R.string.task_marked_complete else R.string.task_marked_active,
-//                    longDuration = true
-//                )
-//                messageManager.addMessage(message)
-            }
-        }
+    suspend operator fun invoke(taskId: String, newCompleted: Boolean): Boolean {
+        val rowsUpdated = taskRepository.updateComplete(taskId, newCompleted)
+        return rowsUpdated == 1L
     }
-}
-
-sealed class UpdateCompleteResult {
-    object TaskMarkedComplete : UpdateCompleteResult()
-    object TaskMarkedActive : UpdateCompleteResult()
-    object TaskUpdateError : UpdateCompleteResult()
 }

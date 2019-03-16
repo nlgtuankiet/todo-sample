@@ -1,16 +1,16 @@
 package com.sample.todo.ui.statistics
 
-import com.sample.todo.core.BaseViewModel
-import com.sample.todo.domain.usecase.GetTaskStatFlowable
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.map
-import com.sample.todo.util.asLiveData
+import androidx.lifecycle.toLiveData
+import com.sample.todo.core.BaseViewModel
+import com.sample.todo.domain.usecase.GetTaskStatFlowable
 import javax.inject.Inject
 
 class StatisticsViewModel @Inject constructor(
     getTaskStatLive: GetTaskStatFlowable
 ) : BaseViewModel() {
-    private val stat = getTaskStatLive().asLiveData()
+    private val stat = getTaskStatLive().toLiveData()
 
     val taskCount = stat.map { it.taskCount.toString() }.distinctUntilChanged()
 

@@ -9,6 +9,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.sample.todo.core.Event
+import com.sample.todo.ui.message.Message
 
 // TODO: understand and improve this
 fun <T> LiveData<T>.debounce(duration: Long = 500L): LiveData<T> = MediatorLiveData<T>().also { mld ->
@@ -41,4 +42,16 @@ inline fun <T> LiveData<Event<T>>.observeEvent(
     }
     observe(owner, wrappedObserver)
     return wrappedObserver
+}
+
+fun MutableLiveData<Event<Message>>.postNewMessage(messageId: Int) {
+    postValue(Event(Message(messageId = messageId)))
+}
+
+fun MutableLiveData<Event<Unit>>.setNewEvent() {
+    value = Event(Unit)
+}
+
+fun MutableLiveData<Event<Unit>>.postNewEvent() {
+    postValue(Event(Unit))
 }

@@ -3,29 +3,27 @@ package com.sample.todo.ui.tasks
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.toLiveData
 import androidx.navigation.NavDirections
 import androidx.paging.PagedList
 import com.sample.todo.R
 import com.sample.todo.core.BaseViewModel
 import com.sample.todo.core.Event
+import com.sample.todo.core.checkAllMatched
 import com.sample.todo.domain.model.TaskFilterType
-import com.sample.todo.domain.usecase.GetTaskFilterType
+import com.sample.todo.domain.model.TaskMini
+import com.sample.todo.domain.usecase.GetTaskFilterTypeFlowable
 import com.sample.todo.domain.usecase.GetTaskMiniList
 import com.sample.todo.domain.usecase.SetTaskFilterType
 import com.sample.todo.domain.usecase.UpdateComplete
-import com.sample.todo.domain.model.TaskMini
 import com.sample.todo.ui.message.Message
-import com.sample.todo.util.ToolbarData
-import androidx.lifecycle.distinctUntilChanged
-import androidx.lifecycle.map
-import com.sample.todo.util.extension.setValueIfNew
-import androidx.lifecycle.switchMap
-import com.sample.todo.core.checkAllMatched
 import com.sample.todo.util.FabData
-import com.sample.todo.util.asLiveData
-import io.reactivex.BackpressureStrategy
-import kotlinx.coroutines.Dispatchers
+import com.sample.todo.util.ToolbarData
+import com.sample.todo.util.extension.postNewMessage
+import com.sample.todo.util.extension.setValueIfNew
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -37,7 +35,7 @@ import javax.inject.Inject
 class TasksViewModel @Inject constructor(
     private val getAllTaskMini: GetTaskMiniList,
     private val updateComplete: UpdateComplete,
-    private val getLastTaskFilterTypeLive: GetTaskFilterType,
+    private val getLastTaskFilterTypeLive: GetTaskFilterTypeFlowable,
     private val setLastTaskFilterType: SetTaskFilterType
 ) : BaseViewModel() {
 
@@ -181,7 +179,6 @@ class TasksViewModel @Inject constructor(
         get() = _showBottomSheetEvent
 
     val currentFilter: LiveData<TaskFilterType> = getLastTaskFilterTypeLive()
-        .toFlowable(BackpressureStrategy.LATEST)
         .toLiveData()
         .distinctUntilChanged()
 
@@ -189,7 +186,7 @@ class TasksViewModel @Inject constructor(
 
     val currentTasks: LiveData<PagedList<TaskMini>> = currentFilter.switchMap {
         Timber.d("new task filter: $it trigger new tasks")
-        getAllTaskMini(it).asLiveData()
+        getAllTaskMini(it).toLiveData()
     }
 
     val isNoTasks = currentTasks.map {
@@ -281,9 +278,15 @@ class TasksViewModel @Inject constructor(
     fun onTaskCheckBoxClick(taskMini: TaskMini?, checked: Boolean?) {
         Timber.d("onTaskCheckBoxClick(taskMini: $taskMini, checked: $checked)")
         if (taskMini == null || checked == null) return
-        launch(Dispatchers.IO) {
-            updateComplete(taskMini.id, taskMini.isCompleted, checked)
-        }
+            launch {
+                runCatching { updateComplete(taskMini.id, checked) }
+                    .onSuccess {
+                        _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_success)
+                    }
+                    .onFailure {
+                        _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_fail)
+                    }
+            }
     }
 
     fun onNavigationOnClicked() {

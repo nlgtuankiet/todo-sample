@@ -11,11 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.todo.R
 import com.sample.todo.databinding.TasksFragmentBinding
-import com.sample.todo.ui.bottomnavigation.BottomNavigationFragment
 import com.sample.todo.ui.message.MessageManager
 import com.sample.todo.ui.message.setUpSnackbar
 import com.sample.todo.util.extension.observeEvent
-import com.sample.todo.util.setupWith
 import dagger.android.support.DaggerFragment
 import timber.log.Timber
 import javax.inject.Inject
@@ -55,14 +53,10 @@ class TasksFragment : DaggerFragment() {
                     }
                 })
             }
-            bottomNavigationView.setupWith(this@TasksFragment)
         }
         tasksViewModel.apply {
             navigationEvent.observeEvent(viewLifecycleOwner) {
                 findNavController().navigate(it)
-            }
-            showBottomSheetEvent.observeEvent(viewLifecycleOwner) {
-                BottomNavigationFragment.showNewInstance(childFragmentManager)
             }
         }
 

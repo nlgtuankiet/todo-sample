@@ -8,7 +8,7 @@ import com.sample.todo.data.sqldelight.SqlDelightTask
 import com.sample.todo.data.sqldelight.SqlDelightTaskStatistics
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskMini
-import com.sample.todo.domain.model.TaskStat
+import com.sample.todo.domain.model.TaskStatistics
 import dagger.Binds
 import dagger.Module
 
@@ -25,5 +25,5 @@ interface MapperBindingModule {
     @Binds
     fun bindSelectCompletedTaskMiniMapper(mapper: SelectCompletedTaskMiniMapper): Mapper<SelectCompletedTaskMini, TaskMini>
     @Binds
-    fun bindSqlDelightTaskStatisticsMapper(mapper: SqlDelightTaskStatisticsMapper): Mapper<SqlDelightTaskStatistics, TaskStat>
+    fun bindSqlDelightTaskStatisticsMapper(mapper: SqlDelightTaskStatisticsMapper): Mapper<SqlDelightTaskStatistics, TaskStatistics>
 }

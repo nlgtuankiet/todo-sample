@@ -6,19 +6,29 @@ import kotlin.String
  * Update this file with
  *   `$ ./gradlew buildSrcVersions` */
 object Libs {
+    /**
+     * https://developer.android.com/topic/libraries/architecture/index.html */
     const val navigation_fragment_ktx: String = "android.arch.navigation:navigation-fragment-ktx:" +
             Versions.android_arch_navigation
 
+    /**
+     * https://developer.android.com/topic/libraries/architecture/index.html */
     const val navigation_safe_args_gradle_plugin: String =
             "android.arch.navigation:navigation-safe-args-gradle-plugin:" +
             Versions.android_arch_navigation
 
+    /**
+     * https://developer.android.com/topic/libraries/architecture/index.html */
     const val navigation_ui_ktx: String = "android.arch.navigation:navigation-ui-ktx:" +
             Versions.android_arch_navigation
 
+    /**
+     * https://developer.android.com/topic/libraries/architecture/index.html */
     const val work_runtime_ktx: String = "android.arch.work:work-runtime-ktx:" +
             Versions.android_arch_work
 
+    /**
+     * https://developer.android.com/topic/libraries/architecture/index.html */
     const val work_testing: String = "android.arch.work:work-testing:" + Versions.android_arch_work
 
     const val activity_ktx: String = "androidx.activity:activity-ktx:" + Versions.activity_ktx
@@ -136,6 +146,28 @@ object Libs {
     const val androidx_test_runner: String = "androidx.test:runner:" + Versions.androidx_test_runner
 
     /**
+     * https://github.com/airbnb/epoxy */
+    const val epoxy_databinding: String = "com.airbnb.android:epoxy-databinding:" +
+            Versions.epoxy_databinding
+
+    /**
+     * https://github.com/airbnb/epoxy */
+    const val epoxy_paging: String = "com.airbnb.android:epoxy-paging:" + Versions.epoxy_paging
+
+    /**
+     * https://github.com/airbnb/epoxy */
+    const val epoxy_processor: String = "com.airbnb.android:epoxy-processor:" +
+            Versions.epoxy_processor
+
+    /**
+     * https://github.com/airbnb/epoxy */
+    const val epoxy: String = "com.airbnb.android:epoxy:" + Versions.epoxy
+
+    /**
+     * https://github.com/airbnb/mvrx */
+    const val mvrx: String = "com.airbnb.android:mvrx:" + Versions.mvrx
+
+    /**
      * https://developer.android.com/studio */
     const val aapt2: String = "com.android.tools.build:aapt2:" + Versions.aapt2
 
@@ -166,6 +198,9 @@ object Libs {
     /**
      * http://developer.android.com/tools/extras/support-library.html */
     const val material: String = "com.google.android.material:material:" + Versions.material
+
+    const val com_google_android_play_core: String = "com.google.android.play:core:" +
+            Versions.com_google_android_play_core
 
     /**
      * https://github.com/google/dagger */
@@ -356,4 +391,6 @@ object Libs {
     /**
      * http://robolectric.org */
     const val robolectric: String = "org.robolectric:robolectric:" + Versions.robolectric
+
+    const val sqlite_jdbc: String = "org.xerial:sqlite-jdbc:" + Versions.sqlite_jdbc
 }

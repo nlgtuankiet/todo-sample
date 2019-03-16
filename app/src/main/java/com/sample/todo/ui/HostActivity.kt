@@ -1,78 +1,77 @@
 package com.sample.todo.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import com.sample.todo.R
 import com.sample.todo.databinding.HostActivityBinding
-import androidx.lifecycle.observe
-import com.sample.todo.util.extension.setupMainNavGraph
+import com.sample.todo.util.extension.setupWithNavController
 import dagger.android.support.DaggerAppCompatActivity
-import timber.log.Timber
 import javax.inject.Inject
 
-class HostActivity : DaggerAppCompatActivity(), HasTopNavigation {
-    override fun getNavControllerIdLiveData(): LiveData<Int> {
-        return hostViewModel.currentNavControllerId
-    }
-
+class HostActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val hostViewModel: HostViewModel by viewModels { viewModelFactory }
     private lateinit var binding: HostActivityBinding
-    private lateinit var currentController: NavController
+    private var currentNavController: LiveData<NavController>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView<HostActivityBinding>(this, R.layout.host_activity)
             .apply {
                 viewModel = hostViewModel
-                setLifecycleOwner(this@HostActivity)
+                lifecycleOwner = this@HostActivity
             }
-        setupMainNavGraph(R.navigation.tasks_graph, mapOf(
-            R.id.tasks_nav_controller to R.id.tasksFragment,
-            R.id.search_nav_controller to R.id.searchFragment,
-            R.id.stat_nav_controller to R.id.statisticsFragment,
-            R.id.setting_nav_controller to R.id.settingFragment
-        ))
-        hostViewModel.currentNavControllerId.observe(this) {
-            currentController = findNavController(it)
-        }
+
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
+        } // Else, need to wait for onRestoreInstanceState
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // Now that BottomNavigationBar has restored its instance state
+        // and its selectedItemId, we can proceed with setting up the
+        // BottomNavigationBar with Navigation
+        setupBottomNavigationBar()
+    }
+
+    /**
+     * Called on first creation and when restoring state.
+     */
+    private fun setupBottomNavigationBar() {
+        val bottomNavigationView = binding.bottomNavigationView
+        val navGraphIds = listOf(R.navigation.tasks_graph, R.navigation.search_graph, R.navigation.about_graph)
+
+        // Setup the bottom navigation view with a list of navigation graphs
+        val controller = bottomNavigationView.setupWithNavController(
+            navGraphIds = navGraphIds,
+            fragmentManager = supportFragmentManager,
+            containerId = R.id.nav_host_container,
+            intent = intent
+        )
+
+        // Whenever the selected controller changes, setup the action bar.
+//        controller.observe(this) { navController ->
+//            setupActionBarWithNavController(navController)
+//        }
+        currentNavController = controller
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        Timber.d("onSupportNavigateUp w/ currentController.graph.id=${currentController.graph.id}")
-        return currentController.navigateUp()
+        return currentNavController?.value?.navigateUp() ?: false
     }
 
+    /**
+     * Overriding popBackStack is necessary in this case if the app is started from the deep link.
+     */
     override fun onBackPressed() {
-        val poped = currentController.popBackStack()
-        Timber.d("onBackPressed poped=$poped")
-        if (!poped) finish()
+        if (currentNavController?.value?.popBackStack() != true) {
+            super.onBackPressed()
+        }
     }
-
-    override fun supportNavigateUpTo(upIntent: Intent) {
-        Timber.d("supportNavigateUpTo")
-        currentController.navigateUp()
-    }
-
-    override fun onTopNavigationSelected(navControllerId: Int) {
-        hostViewModel.onTopNavigationSelected(navControllerId)
-    }
-
-    override fun getCurrentNavControllerId(): Int {
-        return hostViewModel.currentNavControllerId.value
-            ?: throw RuntimeException("How can this happen?")
-    }
-}
-
-interface HasTopNavigation {
-    fun onTopNavigationSelected(navControllerId: Int)
-    fun getCurrentNavControllerId(): Int
-    fun getNavControllerIdLiveData(): LiveData<Int>
 }

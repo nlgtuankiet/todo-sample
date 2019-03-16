@@ -2,7 +2,7 @@ version: 2
 
 references:
   cache_key: &cache_key
-    key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum  "app/build.gradle.kts" }}-{{ checksum "buildSrc/build.gradle.kts" }}-{{ checksum "core/build.gradle.kts" }}-{{ checksum "data/build.gradle.kts" }}-{{ checksum "domain/build.gradle.kts" }}-{{ checksum "testShared/build.gradle.kts" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+    key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum  "app/build.gradle.kts" }}-{{ checksum "buildSrc/build.gradle.kts" }}-{{ checksum "core/build.gradle.kts" }}-{{ checksum "data/build.gradle.kts" }}-{{ checksum "domain/build.gradle.kts" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
 
 jobs:
   devBuild:
@@ -38,7 +38,7 @@ jobs:
             - ~/.gradle/wrapper
       - run:
           name: Run test + check style
-          command: ./gradlew check
+          command: ./gradlew test spotlessCheck
       - run:
           name: Deploy to Google Play (beta channel)
           command: ./gradlew publishReleaseBundle
@@ -113,7 +113,7 @@ jobs:
             - ~/.gradle/wrapper
       - run:
           name: Run test + check style
-          command: ./gradlew check
+          command: ./gradlew test spotlessCheck
       - store_artifacts:
           path: app/build/reports
           destination: reports

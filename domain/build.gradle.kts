@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins {
     id("java-library")
     id("kotlin")
@@ -13,17 +11,14 @@ buildscript {
 }
 
 dependencies {
-    implementation(Libs.kotlin_stdlib_jdk8)
-    implementation(Libs.paging_common)
-    implementation(Libs.rxkotlin)
-    implementation(Libs.rxjava)
-
-    implementation(Libs.lorem)
-    implementation(Libs.kotlinx_coroutines_core)
-
     implementation(Libs.dagger)
+    implementation(Libs.kotlin_stdlib_jdk8)
+    implementation(Libs.kotlinx_coroutines_core)
+    implementation(Libs.lorem)
+    implementation(Libs.paging_common)
+    implementation(Libs.rxjava)
+    implementation(Libs.rxkotlin)
     kapt(Libs.dagger_compiler)
-
     testImplementation(Libs.junit_junit)
     testImplementation(Libs.mockito_kotlin)
 }
@@ -41,4 +36,3 @@ kapt {
     // not sure
     useBuildCache = true
 }
-

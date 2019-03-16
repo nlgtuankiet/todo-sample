@@ -1,22 +1,19 @@
 package com.sample.todo
 
-import androidx.work.Configuration
-import androidx.work.WorkManager
-import androidx.work.WorkerFactory
-import com.facebook.stetho.Stetho
-import com.sample.todo.core.CrashlyticsTree
+import android.content.Context
+import com.google.android.play.core.splitcompat.SplitCompat
 import com.sample.todo.data.DataComponent
 import com.sample.todo.data.room.RoomDataComponent
 import com.sample.todo.di.AppComponent
 import com.sample.todo.domain.di.DomainComponent
+import com.sample.todo.initializer.AppInitializer
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
-import timber.log.Timber
 import javax.inject.Inject
 
 open class TodoApplication : DaggerApplication() {
     @Inject
-    lateinit var workerFactory: WorkerFactory
+    lateinit var appInitializer: AppInitializer
 
     val dataComponent: DataComponent by lazy {
         RoomDataComponent.builder().seedContext(this).build()
@@ -27,32 +24,25 @@ open class TodoApplication : DaggerApplication() {
             .preferenceRepository(dataComponent.providePreferenceRepository())
             .build()
     }
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return AppComponent.builder()
+    val appComponent: AppComponent by lazy {
+        AppComponent.builder()
             .domainComponent(domainComponent)
             .dataComponent(dataComponent)
-            .create(this)
+            .create(this) as? AppComponent ?: TODO()
+    }
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return appComponent
     }
 
     override fun onCreate() {
         super.onCreate()
-        if (!isInUnitTests()) {
-            if (BuildConfig.DEBUG) {
-                Timber.plant(Timber.DebugTree())
-                Stetho.initializeWithDefaults(this)
+        appInitializer.initialize(this)
+    }
 
-//            LeakCanary.isInAnalyzerProcess(this)
-//            LeakCanary.install(this)
-            } else {
-                Timber.plant(CrashlyticsTree())
-            }
-
-            WorkManager.initialize(
-                this,
-                Configuration.Builder().setWorkerFactory(workerFactory).build()
-            )
-        }
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        SplitCompat.install(this)
     }
 
     protected open fun isInUnitTests() = false

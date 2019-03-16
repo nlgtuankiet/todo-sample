@@ -3,6 +3,7 @@ package com.sample.todo.ui
 import androidx.lifecycle.ViewModel
 import com.sample.todo.di.ActivityScoped
 import com.sample.todo.di.ViewModelKey
+import com.sample.todo.ui.about.AboutModule
 import com.sample.todo.ui.addedit.AddEditModule
 import com.sample.todo.ui.search.SearchModule
 import com.sample.todo.ui.setting.SettingModule
@@ -25,7 +26,8 @@ abstract class HostActivityModule {
             SearchModule::class,
             StatisticsModule::class,
             HostActivityBindingModule::class,
-            SettingModule::class
+            SettingModule::class,
+            AboutModule::class
         ]
     )
     abstract fun contrubuteHostActivity(): HostActivity

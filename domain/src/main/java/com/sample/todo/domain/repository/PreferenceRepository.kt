@@ -1,11 +1,11 @@
 package com.sample.todo.domain.repository
 
-import io.reactivex.Observable
+import io.reactivex.Flowable
 
 interface PreferenceRepository {
-    fun getTotalTaskSeeded(): Int
-    fun increaseTotalTaskSeeded(amount: Int): Int
-    fun getTaskFilterTypeOrdinal(): Int
-    fun setTaskFilterTypeOrdinal(value: Int)
-    fun getTaskFilterTypeOrdinalFlowable(): Observable<Int>
+    suspend fun getTotalTaskSeeded(): Int
+    suspend fun increaseTotalTaskSeeded(amount: Int): Int
+    suspend fun getTaskFilterTypeOrdinal(): Int
+    suspend fun setTaskFilterTypeOrdinal(value: Int)
+    fun getTaskFilterTypeOrdinalFlowable(): Flowable<Int>
 }
