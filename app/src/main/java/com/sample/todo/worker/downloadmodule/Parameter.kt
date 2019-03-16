@@ -11,7 +11,7 @@ data class Parameter(
 
         companion object {
             fun fromString(name: String): Module {
-                return when(name) {
+                return when (name) {
                     "settings" -> Settings
                     else -> TODO()
                 }

@@ -28,11 +28,11 @@ class SeedDatabase @Inject constructor(
                     )
                 )
             }
-            val insertResult = insertAllTasks(tasks)
+            val insertResult = kotlin.runCatching { insertAllTasks(tasks) }
             if (insertResult.isFailure) {
                 return@withContext SeedDatabaseResult.Retry
             }
-            val updatedValue = preferenceRepository.increaseTotalTaskSeeded(insertResult.getOrNull()?.toInt()!!)
+            val updatedValue = preferenceRepository.increaseTotalTaskSeeded(numberOfTask)
             totalTaskSeeded = updatedValue
         }
         return@withContext SeedDatabaseResult.Success

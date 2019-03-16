@@ -1,7 +1,5 @@
 package com.sample.todo.notification
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationManagerCompat
 import com.sample.todo.R

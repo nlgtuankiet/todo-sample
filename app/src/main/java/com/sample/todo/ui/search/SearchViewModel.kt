@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.toLiveData
 import androidx.navigation.NavDirections
 import com.sample.todo.core.BaseViewModel
 import com.sample.todo.core.Event
 import com.sample.todo.domain.usecase.GetTasksCountFlowable
 import com.sample.todo.domain.usecase.SearchTask
-import com.sample.todo.util.asLiveData
 import com.sample.todo.util.extension.debounce
 import com.sample.todo.util.extension.setValueIfNew
 import timber.log.Timber
@@ -30,10 +30,10 @@ class SearchViewModel @Inject constructor(
     }
 
     val source = latestQuery.switchMap {
-        searchTask(it).asLiveData()
+        searchTask(it).toLiveData()
     }
 
-    private val totalTaskCount = tasksCountLive().asLiveData()
+    private val totalTaskCount = tasksCountLive().toLiveData()
 
     val resultStatistics = MediatorLiveData<SearchResultStatistics?>().apply {
         addSource(latestQuery) {

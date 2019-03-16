@@ -520,7 +520,7 @@ wisi
         for (j in 0 until count) {
             val sentences = Random.nextInt(5) + 2 // 2 to 6
             for (i in 0 until sentences) {
-                var first = getWords(1,1, false)
+                var first = getWords(1, 1, false)
                 first = first.substring(0, 1).toUpperCase() + first.substring(1)
                 sb.append(first)
 

@@ -5,22 +5,21 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
+import androidx.lifecycle.toLiveData
 import androidx.navigation.NavDirections
 import com.sample.todo.R
 import com.sample.todo.core.BaseViewModel
 import com.sample.todo.core.Event
-import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskId
 import com.sample.todo.domain.usecase.DeleteTask
 import com.sample.todo.domain.usecase.GetTaskFlowable
 import com.sample.todo.domain.usecase.UpdateComplete
 import com.sample.todo.ui.message.Message
-import com.sample.todo.ui.message.MessageManager
 import com.sample.todo.util.ToolbarData
-import com.sample.todo.util.asLiveData
+import com.sample.todo.util.extension.postNewEvent
+import com.sample.todo.util.extension.postNewMessage
 import com.sample.todo.util.extension.setValueIfNew
-import io.reactivex.Observable
-import kotlinx.coroutines.Dispatchers
+import io.reactivex.Flowable
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,8 +32,7 @@ class TaskDetailViewModel @Inject constructor(
     private val args: TaskDetailFragmentArgs,
     private val getTaskFlowable: GetTaskFlowable,
     private val updateComplete: UpdateComplete,
-    private val deleteTask: DeleteTask,
-    private val messageManager: MessageManager
+    private val deleteTask: DeleteTask
 ) : BaseViewModel() {
 
     val toolbarListenerData = ToolbarData(
@@ -44,16 +42,15 @@ class TaskDetailViewModel @Inject constructor(
         menuItemClickHandler = this::onToolbarMenuClick
     )
 
-    private val getTaskResult: Observable<Result<Task>> = getTaskFlowable(TaskId(args.taskId))
+    private val getTaskResult: Flowable<GetTaskFlowable.Result> =
+        getTaskFlowable(TaskId(args.taskId))
 
     // TODO base on init load and refresh event
-    private val _currentTask = getTaskResult.asLiveData().map {
-        it.getOrNull()
-    }
+    private val _currentTask = getTaskResult.toLiveData()
 
-    val title = _currentTask.map { it?.title }
-    val description = _currentTask.map { it?.description }
-    val isCompleted = _currentTask.map { it?.isCompleted }
+    val title = _currentTask.map { it.getOrNull()?.title }
+    val description = _currentTask.map { it.getOrNull()?.description }
+    val isCompleted = _currentTask.map { it.getOrNull()?.isCompleted }
 
     private val _snackBarMessage = MutableLiveData<Event<Message>>()
     val snackBarMessage: LiveData<Event<Message>>
@@ -112,24 +109,30 @@ class TaskDetailViewModel @Inject constructor(
 
     private fun deleteTask() {
         launch {
-            val result = deleteTask(taskId = TaskId(args.taskId))
-            if (result.isSuccess) {
-                _navigateUpEvent.postValue(Event(Unit))
-                // TODO how map add message back map task screen?
-                messageManager.addMessage(Message(
-                    messageId = R.string.delete_task_success
-                ))
-            } else {
-                // TODO handle failure
-                Timber.e("Delete task fail")
-            }
+            runCatching { deleteTask(taskId = TaskId(args.taskId)) }
+                .onSuccess {
+                    _navigateUpEvent.postNewEvent()
+                    // TODO how map add message back map task screen?
+                    _snackBarMessage.postNewMessage(messageId = R.string.task_detail_delete_task_success)
+                }
+                .onFailure {
+                    _snackBarMessage.postNewMessage(messageId = R.string.task_detail_delete_task_fail)
+                }
         }
     }
 
     fun onCheckedChange(checked: Boolean) {
         Timber.d("onCheckedChange(checked: $checked)")
-        launch(Dispatchers.IO) {
-            updateComplete(args.taskId, _currentTask.value?.isCompleted, checked)
+        if (_currentTask.value?.getOrNull()?.isCompleted != checked) {
+            launch {
+                runCatching { updateComplete(args.taskId, checked) }
+                    .onSuccess {
+                        _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_success)
+                    }
+                    .onFailure {
+                        _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_fail)
+                    }
+            }
         }
     }
 }

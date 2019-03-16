@@ -3,7 +3,6 @@ package com.sample.todo.ui.statistics
 import androidx.lifecycle.ViewModel
 import com.sample.todo.di.FragmentScoped
 import com.sample.todo.di.ViewModelKey
-import com.sample.todo.ui.bottomnavigation.BottomNavigationModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -14,8 +13,7 @@ abstract class StatisticsModule {
     @FragmentScoped
     @ContributesAndroidInjector(
         modules = [
-            StatisticsBindingModule::class,
-            BottomNavigationModule::class
+            StatisticsBindingModule::class
         ]
     )
     abstract fun contributeStatisticsFragment(): StatisticsFragment

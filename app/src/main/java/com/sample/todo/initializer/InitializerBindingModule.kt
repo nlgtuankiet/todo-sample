@@ -1,6 +1,5 @@
 package com.sample.todo.initializer
 
-import android.app.Application
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoSet

@@ -5,17 +5,14 @@ import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
 
-// TODO scope?
 class TodoViewModelFactory @Inject constructor(
-    providers: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
-) : BassViewModelFactory(providers)
-
-abstract class BassViewModelFactory(
     private val providers: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val found = providers.entries.find { modelClass.isAssignableFrom(it.key) }
-        val provider = found?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
+        val found =
+            providers.entries.find { modelClass.isAssignableFrom(it.key) }
+        val provider =
+            found?.value ?: throw IllegalArgumentException("Unknown model class $modelClass")
         try {
             @Suppress("UNCHECKED_CAST")
             return provider.get() as T

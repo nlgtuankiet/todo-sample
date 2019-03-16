@@ -5,14 +5,8 @@ import com.sample.todo.di.ApplicationScope
 import dagger.Module
 import dagger.Provides
 
-@Module(
-    includes = [
-        ListenableWorkerFactoryBindingModule::class,
-        WorkerFactoryBindingModule::class
-    ]
-)
+@Module
 abstract class WorkerModule {
-
     @Module
     companion object {
         @Provides

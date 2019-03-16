@@ -4,45 +4,74 @@ import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import com.sample.todo.data.room.entity.SearchResultEntity
 import com.sample.todo.data.room.entity.TaskEntity
 import com.sample.todo.data.room.entity.TaskMiniEntity
-import com.sample.todo.data.room.entity.TaskStatEntity
+import com.sample.todo.data.room.entity.TaskStatisticsEntity
+import io.reactivex.Flowable
 import io.reactivex.Observable
 
 @Dao
 abstract class TaskDao {
 
+    @Query("SELECT changes()")
+    abstract fun changes(): Long
+
     @Query("SELECT * FROM task")
     abstract fun getAll(): Observable<List<TaskEntity>>
 
     @Insert
-    abstract suspend fun insert(entity: TaskEntity)
+    abstract fun insert(entity: TaskEntity)
+
+    @Transaction
+    open fun insertAndCountChanges(entity: TaskEntity): Long {
+        insert(entity)
+        return changes()
+    }
 
     @Insert
-    abstract suspend fun insertAll(entities: List<TaskEntity>)
+    abstract fun insertAll(entities: List<TaskEntity>)
+
+    @Transaction
+    open fun insertAllAndCountChanges(entities: List<TaskEntity>): Long {
+        insertAll(entities)
+        return changes()
+    }
 
     @Query("SELECT * FROM task WHERE id = :taskId")
-    abstract suspend fun findById(taskId: String): TaskEntity?
+    abstract fun findById(taskId: String): TaskEntity?
 
     @Query("UPDATE task SET completed = :completed WHERE id = :taskId")
-    abstract suspend fun updateComplete(taskId: String, completed: Boolean): Int
+    abstract fun updateComplete(taskId: String, completed: Boolean)
+
+    @Transaction
+    open fun updateCompleteAndCountChanges(taskId: String, completed: Boolean): Long {
+        updateComplete(taskId, completed)
+        return changes()
+    }
 
     @Query("SELECT completed FROM task WHERE id = :taskId")
-    abstract suspend fun getComplete(taskId: String): Boolean
+    abstract fun getComplete(taskId: String): Boolean
 
     @Query("SELECT [id], [title], [completed] FROM task")
-    abstract fun getAllTaskMiniDataSourceFactory(): DataSource.Factory<Int, TaskMiniEntity>
+    abstract fun getTaskMiniDataSourceFactory(): DataSource.Factory<Int, TaskMiniEntity>
 
     @Query("SELECT [id], [title], [completed] FROM task WHERE completed = 1")
-    abstract fun getAllCompletedTaskMiniDataSourceFactory(): DataSource.Factory<Int, TaskMiniEntity>
+    abstract fun getCompletedTaskMiniDataSourceFactory(): DataSource.Factory<Int, TaskMiniEntity>
 
     @Query("SELECT [id], [title], [completed] FROM task WHERE completed = 0")
-    abstract fun getAllActiveTaskMiniDataSourceFactory(): DataSource.Factory<Int, TaskMiniEntity>
+    abstract fun getActiveTaskMiniDataSourceFactory(): DataSource.Factory<Int, TaskMiniEntity>
 
     @Update
-    abstract fun update(taskEntity: TaskEntity): Int
+    abstract fun update(taskEntity: TaskEntity)
+
+    @Transaction
+    open fun updateAndCountChanges(taskEntity: TaskEntity): Long {
+        update(taskEntity)
+        return changes()
+    }
 
     @Query("""
         SELECT
@@ -54,10 +83,16 @@ abstract class TaskDao {
         WHERE
             task_fts MATCH :query
     """)
-    abstract fun searchTask(query: String): DataSource.Factory<Int, SearchResultEntity>
+    abstract fun getSearchResultDataSourceWith(query: String): DataSource.Factory<Int, SearchResultEntity>
 
     @Query("DELETE FROM task")
-    abstract fun deleteAllTasks(): Int
+    abstract fun deleteAllTasks()
+
+    @Transaction
+    open fun deleteAllCountChanges(): Long {
+        deleteAllTasks()
+        return changes()
+    }
 
     @Query("SELECT COUNT(*) FROM task")
     abstract fun tasksCount(): Long
@@ -69,14 +104,20 @@ abstract class TaskDao {
             (SELECT COUNT(*) AS completed_task_count FROM task WHERE completed = 1),
             (SELECT COUNT(*) AS active_task_count FROM task WHERE completed = 0)
     """)
-    abstract fun taskStat(): Observable<TaskStatEntity>
+    abstract fun getTaskStatistics(): Flowable<TaskStatisticsEntity>
 
     @Query("SELECT COUNT(*) FROM task")
-    abstract fun tasksCountLive(): Observable<Long>
+    abstract fun getTasksCountFlowable(): Flowable<Long>
 
     @Query("SELECT * FROM task WHERE id = :id LIMIT 1")
-    abstract fun findByIdFlowable(id: String): Observable<List<TaskEntity>>
+    abstract fun findByIdFlowable(id: String): Flowable<List<TaskEntity>>
 
     @Query("DELETE FROM task WHERE id = :id")
-    abstract suspend fun deleteTask(id: String): Int
+    abstract fun deleteTask(id: String)
+
+    @Transaction
+    open fun deleteTaskAndCountChanges(id: String): Long {
+        deleteTask(id)
+        return changes()
+    }
 }

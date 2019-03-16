@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import com.sample.todo.di.FragmentScoped
 import com.sample.todo.di.ViewModelKey
-import com.sample.todo.ui.bottomnavigation.BottomNavigationModule
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -16,8 +15,7 @@ abstract class TaskDetailModule {
     @FragmentScoped
     @ContributesAndroidInjector(
         modules = [
-            TaskDetailBindingModule::class,
-            BottomNavigationModule::class
+            TaskDetailBindingModule::class
         ]
     )
     abstract fun contributeTaskDetailFragment(): TaskDetailFragment

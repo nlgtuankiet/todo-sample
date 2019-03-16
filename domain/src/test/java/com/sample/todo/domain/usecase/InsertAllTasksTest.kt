@@ -36,7 +36,7 @@ class InsertAllTasksTest {
     fun `fail because invalid task id`() = runBlocking {
         val tasks: List<Task> = listOf(Task(id = "123", title = ""))
 
-        val result = useCase.invoke(tasks)
+        val result = runCatching { useCase.invoke(tasks) }
 
         assertTrue(result.exceptionOrNull() is InvalidTaskIdException)
         verifyNoMoreInteractions(taskRepository)
@@ -46,7 +46,7 @@ class InsertAllTasksTest {
     fun `fail because TaskRepository throw exception`() = runBlocking {
         val tasks: List<Task> = TestData.tasks
         `when`(taskRepository.insertAll(tasks)) doThrow RuntimeException()
-        val result = useCase.invoke(tasks)
+        val result = runCatching { useCase.invoke(tasks) }
 
         assertTrue(result.exceptionOrNull() is RuntimeException)
     }
@@ -55,9 +55,9 @@ class InsertAllTasksTest {
     fun `success insert empty list`() = runBlocking {
         val tasks: List<Task> = emptyList()
 
-        val result = useCase.invoke(tasks)
+        val result = runCatching { useCase.invoke(tasks) }
 
-        assertEquals(0L, result.getOrNull())
+        assertEquals(true, result.getOrNull())
         verifyNoMoreInteractions(taskRepository)
     }
 
@@ -65,8 +65,8 @@ class InsertAllTasksTest {
     fun `success`() = runBlocking {
         val tasks: List<Task> = TestData.tasks
         `when`(taskRepository.insertAll(tasks)) doReturn tasks.size.toLong()
-        val result = useCase.invoke(tasks)
+        val result = runCatching { useCase.invoke(tasks) }
 
-        assertEquals(tasks.size.toLong(), result.getOrNull())
+        assertEquals(true, result.getOrNull())
     }
 }

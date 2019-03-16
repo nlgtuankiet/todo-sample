@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.sample.todo.settings.ui.SettingsFragment"
+        android:name="com.sample.todo.ui.SettingsFragment"
         android:label="SettingsFragment" />
 </navigation>

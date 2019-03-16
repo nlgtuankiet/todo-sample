@@ -5,8 +5,8 @@ import com.sample.todo.domain.model.SearchResult
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskFilterType
 import com.sample.todo.domain.model.TaskMini
-import com.sample.todo.domain.model.TaskStat
-import io.reactivex.Observable
+import com.sample.todo.domain.model.TaskStatistics
+import io.reactivex.Flowable
 
 interface TaskRepository {
     /**
@@ -31,15 +31,15 @@ interface TaskRepository {
      */
     suspend fun update(task: Task): Long
 
-    fun getTaskStatistics(): Observable<TaskStat>
+    fun getTaskStatisticsFlowable(): Flowable<TaskStatistics>
 
-    fun getTaskCount(): Observable<Long>
+    fun getTaskCount(): Flowable<Long>
 
-    fun getTaskMini(taskFilterType: TaskFilterType, pageSize: Int): Observable<PagedList<TaskMini>>
+    fun getTaskMiniFlowablePaged(taskFilterType: TaskFilterType, pageSize: Int): Flowable<PagedList<TaskMini>>
 
-    fun getSearchResult(query: String, pageSize: Int): Observable<PagedList<SearchResult>>
+    fun getSearchResultFlowablePaged(query: String, pageSize: Int): Flowable<PagedList<SearchResult>>
 
-    fun getTaskWithId(id: String): Observable<List<Task>>
+    fun getTaskWithIdFlowable(id: String): Flowable<List<Task>>
 
     /**
      * @return number of row deleted

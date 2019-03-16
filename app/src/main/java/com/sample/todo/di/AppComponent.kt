@@ -5,12 +5,11 @@ import androidx.core.app.NotificationManagerCompat
 import com.sample.todo.TodoApplication
 import com.sample.todo.data.DataComponent
 import com.sample.todo.domain.di.DomainComponent
-import com.sample.todo.domain.di.DomainModule
 import com.sample.todo.initializer.InitializerBindingModule
 import com.sample.todo.service.ServiceBindingModule
 import com.sample.todo.ui.HostActivityModule
 import com.sample.todo.ui.message.MessageManagerBindingModule
-import com.sample.todo.worker.WorkerModule
+import com.sample.todo.worker.ApplicationWorkerModule
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
@@ -23,8 +22,7 @@ import dagger.android.support.AndroidSupportInjectionModule
         AndroidModule::class,
         MessageManagerBindingModule::class,
         ViewModelFactoryBindingModule::class,
-        AssistedInjectModule::class,
-        WorkerModule::class,
+        ApplicationWorkerModule::class,
         ServiceBindingModule::class,
         InitializerBindingModule::class
     ],

@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.sample.todo.ui.tasks.TasksViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -37,61 +39,63 @@
                     app:subTitleStringRes="@{viewModel.toolbarSubTitle}"
                     app:title="@string/app_name" />
             </com.google.android.material.appbar.AppBarLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/tasks_recycler_view"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:scrollbars="vertical"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/no_task_image_view"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="8dp"
-                        android:scaleType="fitCenter"
-                        android:tint="@color/bottomAppBarIconColor"
-                        app:goneUnless="@{viewModel.isNoTasks}"
-                        app:imageResource="@{viewModel.noTaskIconDrawableRes}"
-                        app:layout_constraintBottom_toTopOf="@+id/no_task_text_view"
-                        app:layout_constraintEnd_toStartOf="@+id/tasks_recycler_view"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tasks_recycler_view"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        tools:src="@drawable/ic_edit_24dp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                    <TextView
-                        android:id="@+id/no_task_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:goneUnless="@{viewModel.isNoTasks}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tasks_recycler_view"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tasks_recycler_view"
-                        app:layout_constraintTop_toBottomOf="@+id/no_task_image_view"
-                        app:stringRes="@{viewModel.noTaskLabelStringRes}"
-                        tools:text="no task" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tasks_recycler_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scrollbars="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/no_task_image_view"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="fitCenter"
+                    android:tint="@color/bottomAppBarIconColor"
+                    app:goneUnless="@{viewModel.isNoTasks}"
+                    app:imageResource="@{viewModel.noTaskIconDrawableRes}"
+                    app:layout_constraintBottom_toTopOf="@+id/no_task_text_view"
+                    app:layout_constraintEnd_toStartOf="@+id/tasks_recycler_view"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tasks_recycler_view"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:src="@drawable/ic_edit_24dp" />
+
+                <TextView
+                    android:id="@+id/no_task_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:goneUnless="@{viewModel.isNoTasks}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tasks_recycler_view"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tasks_recycler_view"
+                    app:layout_constraintTop_toBottomOf="@+id/no_task_image_view"
+                    app:stringRes="@{viewModel.noTaskLabelStringRes}"
+                    tools:text="no task" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
                 android:layout_margin="16dp"
                 android:theme="@style/Widget.Todo.FloatingActionButton"
                 app:backgroundTint="@color/white"
-                android:layout_gravity="bottom|end"
                 app:data="@{viewModel.fabData}"
                 app:tint="@color/bottomAppBarIconColor" />
 
@@ -105,16 +109,6 @@
                 app:layout_anchor="@id/fab" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/host_bottom_navigation_view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

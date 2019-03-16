@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.sample.todo.databinding.StatisticsFragmentBinding
-import com.sample.todo.util.setupWith
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -24,7 +23,6 @@ class StatisticsFragment : DaggerFragment() {
         binding = StatisticsFragmentBinding.inflate(inflater, container, false).apply {
             viewModel = statisticsViewModel
             lifecycleOwner = viewLifecycleOwner
-            bottomNavigationView.setupWith(this@StatisticsFragment)
         }
         return binding.root
     }

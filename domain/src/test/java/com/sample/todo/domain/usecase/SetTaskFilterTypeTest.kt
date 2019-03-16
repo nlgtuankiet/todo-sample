@@ -32,7 +32,7 @@ class SetTaskFilterTypeTest {
     fun `success when there is no value in preference`() = runBlocking {
         `when`(preferenceRepository.getTaskFilterTypeOrdinal()) doReturn -1
 
-        val result = useCase.invoke(TaskFilterType.ACTIVE)
+        val result = runCatching { useCase.invoke(TaskFilterType.ACTIVE) }
 
         assertTrue(result.isSuccess)
         inOrder(preferenceRepository) {
@@ -46,7 +46,7 @@ class SetTaskFilterTypeTest {
     fun `success when set same value`() = runBlocking {
         `when`(preferenceRepository.getTaskFilterTypeOrdinal()) doReturn TaskFilterType.ACTIVE.ordinal
 
-        val result = useCase.invoke(TaskFilterType.ACTIVE)
+        val result = runCatching { useCase.invoke(TaskFilterType.ACTIVE) }
 
         assertTrue(result.isSuccess)
         inOrder(preferenceRepository) {
@@ -59,7 +59,7 @@ class SetTaskFilterTypeTest {
     fun `success when set different value`() = runBlocking {
         `when`(preferenceRepository.getTaskFilterTypeOrdinal()) doReturn TaskFilterType.ACTIVE.ordinal
 
-        val result = useCase.invoke(TaskFilterType.COMPLETED)
+        val result = runCatching { useCase.invoke(TaskFilterType.COMPLETED) }
 
         assertTrue(result.isSuccess)
         inOrder(preferenceRepository) {
@@ -73,7 +73,7 @@ class SetTaskFilterTypeTest {
     fun `fail when repository throw exception when get filter`() = runBlocking {
         `when`(preferenceRepository.getTaskFilterTypeOrdinal()) doThrow RuntimeException()
 
-        val result = useCase.invoke(TaskFilterType.COMPLETED)
+        val result = runCatching { useCase.invoke(TaskFilterType.COMPLETED) }
 
         assertTrue(result.exceptionOrNull() is RuntimeException)
     }
@@ -85,7 +85,7 @@ class SetTaskFilterTypeTest {
         `when`(preferenceRepository.getTaskFilterTypeOrdinal()) doReturn oldFilter.ordinal
         `when`(preferenceRepository.setTaskFilterTypeOrdinal(newFilter.ordinal)) doThrow RuntimeException()
 
-        val result = useCase.invoke(newFilter)
+        val result = runCatching { useCase.invoke(newFilter) }
 
         assertTrue(result.exceptionOrNull() is RuntimeException)
     }

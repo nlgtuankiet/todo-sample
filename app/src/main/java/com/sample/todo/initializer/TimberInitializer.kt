@@ -1,7 +1,6 @@
 package com.sample.todo.initializer
 
 import android.app.Application
-import com.sample.todo.BuildConfig
 import timber.log.Timber
 import javax.inject.Inject
 

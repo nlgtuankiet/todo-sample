@@ -1,10 +1,5 @@
 import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-//import com.android.build.gradle.kts.BaseExtension
-//import org.apache.commons.io.output.TeeOutputStream
-//import org.jetbrains.kotlin.gradle.dsl.Coroutines
-//import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
-//import org.jetbrains.kotlin.gradle.internal.CacheImplementation
 
 buildscript {
     repositories {
@@ -17,8 +12,7 @@ buildscript {
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
     }
     dependencies {
-        // classpath for kapt
-        classpath("com.squareup.sqldelight:gradle-plugin:1.1.0-SNAPSHOT")
+        classpath("com.squareup.sqldelight:gradle-plugin:1.0.3")
         classpath(Libs.com_android_tools_build_gradle)
         classpath(Libs.kotlin_gradle_plugin)
         classpath(Libs.navigation_safe_args_gradle_plugin)
@@ -38,7 +32,6 @@ plugins {
     `build-scan`
 }
 
-
 allprojects {
     repositories {
         google()
@@ -50,15 +43,11 @@ allprojects {
     }
 }
 
-
-
 //buildScan {
 //    termsOfServiceUrl = "https://gradle.com/terms-of-service"
 //    termsOfServiceAgree = "yes"
 ////    publishAlways()
 //}
-
-
 
 subprojects {
     apply(plugin = "com.diffplug.gradle.spotless")
@@ -86,7 +75,6 @@ subprojects {
         }
     }
 }
-
 
 gradle.projectsEvaluated {
     todoReport()

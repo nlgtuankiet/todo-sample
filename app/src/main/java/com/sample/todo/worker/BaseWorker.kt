@@ -20,9 +20,9 @@ abstract class BaseWorker(
         get() = job + Dispatchers.Default
 
     override fun doWork(): Result = runBlocking(coroutineContext) {
-        runCatching { doSuspendWork() }.fold({Result.success()}, {
+        runCatching { doSuspendWork() }.fold({ Result.success() }, {
             Timber.e(it)
-            Result.failure()})
+            Result.failure() })
     }
 
     abstract suspend fun doSuspendWork()

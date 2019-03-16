@@ -18,7 +18,6 @@ import com.sample.todo.ui.message.MessageManager
 import com.sample.todo.ui.message.setUpSnackbar
 import com.sample.todo.util.autoId
 import com.sample.todo.util.extension.observeEvent
-import com.sample.todo.util.setupWith
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -41,7 +40,6 @@ class TaskDetailFragment : DaggerFragment() {
         binding = TaskDetailFragmentBinding.inflate(inflater, container, false).apply {
             viewModel = taskDetailViewModel
             lifecycleOwner = viewLifecycleOwner
-            bottomNavigationView.setupWith(this@TaskDetailFragment)
         }
         taskDetailViewModel.apply {
             navigateUpEvent.observeEvent(viewLifecycleOwner) {

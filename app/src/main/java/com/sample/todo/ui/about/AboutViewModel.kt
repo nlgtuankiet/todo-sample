@@ -23,5 +23,4 @@ class AboutViewModel @Inject constructor() : BaseViewModel() {
     fun onSettingsLabelClick() {
         _navigateToSettingsEvent.value = Event(Unit)
     }
-
 }

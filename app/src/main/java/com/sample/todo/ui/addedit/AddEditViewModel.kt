@@ -14,12 +14,15 @@ import com.sample.todo.domain.usecase.UpdateTask
 import com.sample.todo.ui.message.Message
 import com.sample.todo.util.ToolbarData
 import com.sample.todo.util.autoId
+import com.sample.todo.util.extension.postNewEvent
+import com.sample.todo.util.extension.postNewMessage
 import com.sample.todo.util.extension.postValueIfNew
-import kotlinx.coroutines.Dispatchers
+import com.sample.todo.util.extension.setNewEvent
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+// need a way to disable the save button
 class AddEditViewModel @Inject constructor(
     private val addEditFragmentArgs: AddEditFragmentArgs,
     private val getTask: GetTask,
@@ -35,7 +38,9 @@ class AddEditViewModel @Inject constructor(
 
     val toolbarListenerData = ToolbarData(
         navigationIcon = R.drawable.toolbar_navigation_icon,
-        navigationClickHandler = this::onNavigationClick
+        navigationClickHandler = this::onNavigationClick,
+        menu = R.menu.add_edit_menu,
+        menuItemClickHandler = this::onMenuClick
     )
 
     private val _navigateUpEvent = MutableLiveData<Event<Unit>>()
@@ -60,9 +65,9 @@ class AddEditViewModel @Inject constructor(
 
     private fun loadTask() {
         if (taskId != null) {
-            launch(Dispatchers.IO) {
+            launch {
                 _isLoading.postValueIfNew(true)
-                getTask(TaskId(taskId))
+                runCatching { getTask(TaskId(taskId)) }
                     .onSuccess { task ->
                         title.postValueIfNew(task.title)
                         description.postValueIfNew(task.description)
@@ -85,16 +90,40 @@ class AddEditViewModel @Inject constructor(
             description = description.value,
             isCompleted = isCompleted
         )
-        launch(Dispatchers.IO) {
+        launch {
             if (taskId == null) {
-                insertNewTask(taskEntity)
+                runCatching {
+                    insertNewTask(taskEntity)
+                }.onFailure {
+                    _snackBarMessage.postNewMessage(messageId = R.string.add_edit_insert_new_task_fail)
+                }.onSuccess {
+                    _navigateUpEvent.postNewEvent()
+                }
             } else {
-                updateTask(taskEntity)
+                runCatching {
+                    updateTask(taskEntity)
+                }.onFailure {
+                    _snackBarMessage.postNewMessage(messageId = R.string.add_edit_update_task_fail)
+                }.onSuccess {
+                    _snackBarMessage.postNewMessage(messageId = R.string.add_edit_update_task_success)
+                }
             }
         }
     }
 
     private fun onNavigationClick() {
-        _navigateUpEvent.value = Event(Unit)
+        _navigateUpEvent.setNewEvent()
+    }
+
+    private fun onMenuClick(menuId: Int): Boolean {
+        when (menuId) {
+            R.id.save -> onSaveButtonClick()
+            else -> TODO()
+        }
+        return true
+    }
+
+    private fun postNewMessage(messageId: Int) {
+        _snackBarMessage.postValue(Event(Message(messageId)))
     }
 }

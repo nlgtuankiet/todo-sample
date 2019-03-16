@@ -11,11 +11,9 @@
     </dist:module>
     <application android:name="com.sample.todo.TodoApplication"
         tools:ignore="GoogleAppIndexingWarning">
-
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name="com.sample.todo.ui.SettingsActivity"
             android:parentActivityName="com.sample.todo.ui.HostActivity" />
-
     </application>
 </manifest>
 

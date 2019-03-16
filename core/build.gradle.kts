@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.*
-
 plugins {
     id("java-library")
     id("kotlin")

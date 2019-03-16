@@ -38,7 +38,7 @@ class InsertNewTaskTest {
     fun `fail because invalid task id`() = runBlocking {
         val task = Task(id = "123", title = "")
 
-        val result = useCase.invoke(task)
+        val result = runCatching { useCase.invoke(task) }
 
         Assert.assertTrue(result.exceptionOrNull() is InvalidTaskIdException)
         verifyNoMoreInteractions(taskRepository)
@@ -49,7 +49,7 @@ class InsertNewTaskTest {
         val task: Task = TestData.tasks.first()
         `when`(taskRepository.insert(task)) doThrow RuntimeException()
 
-        val result = useCase.invoke(task)
+        val result = runCatching { useCase.invoke(task) }
 
         assertTrue(result.exceptionOrNull() is RuntimeException)
     }
@@ -59,9 +59,9 @@ class InsertNewTaskTest {
         val task: Task = TestData.tasks.first()
         `when`(taskRepository.insert(task)) doReturn 1L
 
-        val result = useCase.invoke(task)
+        val result = runCatching { useCase.invoke(task) }
 
-        assertEquals(1L, result.getOrNull())
+        assertEquals(true, result.getOrNull())
         verify(taskRepository).insert(task)
         Unit
     }

@@ -23,7 +23,7 @@ class GetTaskTest {
         }
         val getTask = GetTask(taskRepository)
 
-        val result = getTask(taskId)
+        val result = runCatching { getTask(taskId) }
         assertEquals(task, result.getOrNull())
     }
 
@@ -36,7 +36,7 @@ class GetTaskTest {
         }
         val getTask = GetTask(taskRepository)
 
-        val result = getTask(taskId)
+        val result = runCatching { getTask(taskId) }
         assertTrue(result.exceptionOrNull() is TaskNotFoundException)
     }
 
@@ -46,7 +46,7 @@ class GetTaskTest {
         val taskRepository: TaskRepository = mock()
         val getTask = GetTask(taskRepository)
 
-        val result = getTask(taskId)
+        val result = runCatching { getTask(taskId) }
 
         verifyNoMoreInteractions(taskRepository)
         assertTrue(result.exceptionOrNull() is InvalidTaskIdException)

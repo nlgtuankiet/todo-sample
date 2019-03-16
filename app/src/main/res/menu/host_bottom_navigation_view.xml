@@ -5,15 +5,15 @@
         <item
             android:icon="@drawable/host_bottom_navigation_view_tasks_icon"
             tools:selected="true"
-            android:id="@id/tasks_nav_controller"
+            android:id="@+id/tasks_graph"
             android:title="Tasks" />
         <item
             android:icon="@drawable/host_bottom_navigation_view_search_icon"
-            android:id="@id/search_nav_controller"
+            android:id="@+id/search_graph"
             android:title="Search" />
         <item
             android:icon="@drawable/host_bottom_navigation_view_statistics_icon"
-            android:id="@id/about_nav_controller"
+            android:id="@+id/about_graph"
             android:title="About" />
     </group>
 </menu>

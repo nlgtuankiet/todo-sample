@@ -1,21 +1,14 @@
 package com.sample.todo
 
 import android.content.Context
-import androidx.work.Configuration
-import androidx.work.WorkManager
-import androidx.work.WorkerFactory
-import com.facebook.stetho.Stetho
 import com.google.android.play.core.splitcompat.SplitCompat
-import com.sample.todo.core.CrashlyticsTree
 import com.sample.todo.data.DataComponent
 import com.sample.todo.data.room.RoomDataComponent
 import com.sample.todo.di.AppComponent
 import com.sample.todo.domain.di.DomainComponent
 import com.sample.todo.initializer.AppInitializer
-import com.sample.todo.util.SoutTree
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
-import timber.log.Timber
 import javax.inject.Inject
 
 open class TodoApplication : DaggerApplication() {
@@ -36,7 +29,6 @@ open class TodoApplication : DaggerApplication() {
             .domainComponent(domainComponent)
             .dataComponent(dataComponent)
             .create(this) as? AppComponent ?: TODO()
-
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

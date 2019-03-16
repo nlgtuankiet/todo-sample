@@ -15,7 +15,6 @@ import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.sample.todo.R
 import com.sample.todo.databinding.AboutFragmentBinding
 import com.sample.todo.util.extension.observeEvent
-import com.sample.todo.util.setupWith
 import com.sample.todo.worker.downloadmodule.DownloadModuleWorker
 import com.sample.todo.worker.seeddatabase.Parameter
 import com.sample.todo.worker.seeddatabase.SeedDatabaseWorker
@@ -41,7 +40,6 @@ class AboutFragment : DaggerFragment() {
         binding = AboutFragmentBinding.inflate(inflater, container, false).apply {
             viewModel = aboutViewModel
             lifecycleOwner = viewLifecycleOwner
-            bottomNavigationView.setupWith(this@AboutFragment)
             seedDatabaseButton.setOnClickListener {
                 val param = Parameter(totalTasks = 10, itemPerTrunk = 1)
                 WorkManager.getInstance().enqueueUniqueWork(
@@ -85,7 +83,7 @@ class AboutFragment : DaggerFragment() {
         } else {
             val intent = Intent(
                 requireContext(),
-                Class.forName("com.sample.todo.settings.ui.SettingsActivity")
+                Class.forName("com.sample.todo.ui.SettingsActivity")
             )
             startActivity(intent)
         }

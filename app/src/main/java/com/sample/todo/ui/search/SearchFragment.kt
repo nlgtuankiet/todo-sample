@@ -14,7 +14,6 @@ import com.sample.todo.ui.message.MessageManager
 import com.sample.todo.util.LinearOffsetsItemDecoration
 import com.sample.todo.util.extension.hideKeyboard
 import com.sample.todo.util.extension.observeEvent
-import com.sample.todo.util.setupWith
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -56,7 +55,6 @@ class SearchFragment : DaggerFragment() {
                     })
                 }
             }
-            bottomNavigationView.setupWith(this@SearchFragment)
         }
         searchViewModel.apply {
             navigationEvent.observeEvent(viewLifecycleOwner) {

@@ -12,7 +12,6 @@ import com.sample.todo.ui.message.MessageManager
 import com.sample.todo.ui.message.setUpSnackbar
 import com.sample.todo.util.extension.hideKeyboard
 import com.sample.todo.util.extension.observeEvent
-import com.sample.todo.util.setupWith
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -32,7 +31,6 @@ class AddEditFragment : DaggerFragment() {
         binding = AddEditFragmentBinding.inflate(inflater, container, false).apply {
             viewModel = addEditViewModel
             lifecycleOwner = viewLifecycleOwner
-            bottomNavigationView.setupWith(this@AddEditFragment)
         }
         setUpSnackbar(
             messageManager = messageManager,

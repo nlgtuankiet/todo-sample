@@ -18,7 +18,6 @@ import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 import kotlin.random.Random
-import androidx.work.ListenableWorker.Result as WorkResult
 
 // TODO implement DB
 // TODO implement: Seed XX tasks in XX seconds
@@ -43,6 +42,17 @@ class SeedDatabaseWorker @AssistedInject constructor(
             .setAutoCancel(false)
     private var _totalTasksSeeded = 0L
 
+    val a: Int = run {
+        val ass: SeedDatabaseWorker_AssistedFactory = TODO()
+        val sf: SeedDatabaseWorker.Factory = TODO()
+        val lw: ListenableWorkerFactory = TODO()
+
+        lw = ass
+        lw = sf
+
+        1
+    }
+
     override suspend fun doSuspendWork() {
         // TODO validate param
         val totalTasks = params.totalTasks
@@ -58,9 +68,11 @@ class SeedDatabaseWorker @AssistedInject constructor(
             if (nextTrunk < 0L) TODO()
             if (nextTrunk == 0L) break
             val tasks = createRandomTasks(nextTrunk)
-            val result = insertAllTasks(tasks)
+            val result = kotlin.runCatching {
+                insertAllTasks(tasks)
+            }
             result.onFailure { TODO() }
-                .onSuccess { onTasksSeeded(it) }
+                .onSuccess { onTasksSeeded(nextTrunk) }
 
             delay(1000)
         }
