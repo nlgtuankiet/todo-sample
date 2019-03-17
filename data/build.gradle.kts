@@ -5,18 +5,18 @@ plugins {
 }
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(Android.compileSdkVersion)
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        minSdkVersion(21)
+        minSdkVersion(Android.minSdkVersion)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         getByName("release") {
-            isDebuggable = Config.isReleaseDebugable
+            isDebuggable = false
             isMinifyEnabled = false
         }
     }

@@ -6,9 +6,14 @@
     <data>
 
         <variable
+            name="state"
+            type="com.sample.todo.ui.search.SearchState" />
+
+        <variable
             name="viewModel"
             type="com.sample.todo.ui.search.SearchViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -31,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/Widget.Todo.Toolbar"
-                    app:searchResultStat="@{viewModel.resultStatistics}"
+                    app:searchResultStat="@{state.searchResultStatistics.invoke()}"
                     app:title="@string/search_toolbar_title"
                     tools:subtitle="Found 3 results in 10 entry" />
             </com.google.android.material.appbar.AppBarLayout>

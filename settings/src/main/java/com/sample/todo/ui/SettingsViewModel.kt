@@ -1,31 +1,57 @@
 package com.sample.todo.ui
 
-import androidx.lifecycle.MutableLiveData
-import com.sample.todo.core.BaseViewModel
+import androidx.lifecycle.viewModelScope
+import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.Uninitialized
+import com.airbnb.mvrx.ViewModelContext
+import com.sample.todo.core.MvRxViewModel
 import com.sample.todo.domain.usecase.GetNameObservable
 import com.sample.todo.domain.usecase.SetName
+import com.sample.todo.util.extension.getFragment
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class SettingsViewModel @Inject constructor(
+class SettingsViewModel @AssistedInject constructor(
     private val getNameObservable: GetNameObservable,
+    @Assisted private val initState: SettingsState,
     private val setName: SetName
-) : BaseViewModel() {
-    val name: MutableLiveData<String> = MutableLiveData()
-    private val getNameSubscription = getNameObservable().subscribe {
-        name.value = it
-    }
+) : MvRxViewModel<SettingsState>(initState) {
+    companion object : MvRxViewModelFactory<SettingsViewModel, SettingsState> {
+        override fun create(
+            viewModelContext: ViewModelContext,
+            state: SettingsState
+        ): SettingsViewModel? {
+            return viewModelContext.getFragment<SettingsFragment>().viewModelFactory.create(state)
+        }
 
-    fun onSetNameClick() {
-        println("name is: ${name.value}")
-        launch {
-            val result = setName(name.value ?: TODO())
-            println("result: $result")
+        override fun initialState(viewModelContext: ViewModelContext): SettingsState? {
+            return SettingsState(
+                name = Uninitialized
+            )
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        getNameSubscription.dispose()
+    @AssistedInject.Factory
+    interface Factoryy {
+        fun create(initState: SettingsState): SettingsViewModel
+    }
+
+    private var textTemp: String? = null
+
+    init {
+        getNameObservable().execute {
+            copy(name = it)
+        }
+    }
+
+    fun onNameChange(name: CharSequence?) {
+        textTemp = name?.toString()
+    }
+
+    fun onSetNameClick() {
+        viewModelScope.launch {
+            setName(textTemp ?: TODO())
+        }
     }
 }

@@ -1,20 +1,19 @@
 package com.sample.todo.domain.usecase
 
 import androidx.paging.PagedList
-import com.sample.todo.domain.model.TaskFilterType
 import com.sample.todo.domain.model.TaskMini
 import com.sample.todo.domain.repository.TaskRepository
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class GetTaskMiniList @Inject constructor(
-    private val taskRepository: TaskRepository
+    private val taskRepository: TaskRepository,
+    private val getTaskFilterType: GetTaskFilterTypeObservable
 ) {
     operator fun invoke(
-        filter: TaskFilterType = TaskFilterType.ALL,
         pageSize: Int = DEFAULT_PAGE_SIZE
-    ): Flowable<PagedList<TaskMini>> {
-        return taskRepository.getTaskMiniFlowablePaged(filter, pageSize)
+    ): Observable<PagedList<TaskMini>> {
+        return getTaskFilterType().switchMap { taskRepository.getTasksObservablePaged(it, pageSize) }
     }
 
     companion object {

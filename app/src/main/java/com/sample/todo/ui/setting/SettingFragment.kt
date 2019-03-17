@@ -6,16 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.sample.todo.databinding.SettingFragmentBinding
+import com.sample.todo.ui.setting.seedinput.SeedInputFragment
 import com.sample.todo.util.extension.observeEvent
 import dagger.android.support.DaggerFragment
-import javax.inject.Inject
 
 class SettingFragment : DaggerFragment() {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val settingViewModel: SettingViewModel by viewModels { viewModelFactory }
+    private val settingViewModel: SettingViewModel by viewModels()
     lateinit var binding: SettingFragmentBinding
     override fun onCreateView(
         inflater: LayoutInflater,

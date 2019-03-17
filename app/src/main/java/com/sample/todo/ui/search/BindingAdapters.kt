@@ -3,6 +3,7 @@ package com.sample.todo.ui.search
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import com.sample.todo.R
+import com.sample.todo.domain.model.SearchResultStatistics
 import timber.log.Timber
 
 @BindingAdapter("searchResultStat")

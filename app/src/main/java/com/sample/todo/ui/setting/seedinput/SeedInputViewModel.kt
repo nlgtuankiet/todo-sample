@@ -1,13 +1,13 @@
-package com.sample.todo.ui.setting
+package com.sample.todo.ui.setting.seedinput
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.sample.todo.core.BaseViewModel
+import androidx.lifecycle.ViewModel
 import com.sample.todo.core.Event
 import com.sample.todo.worker.seeddatabase.Parameter
 import javax.inject.Inject
 
-class SeedInputViewModel @Inject constructor() : BaseViewModel() {
+class SeedInputViewModel @Inject constructor() : ViewModel() {
 
     private val _requestSeedDatabaseEvent: MutableLiveData<Event<Parameter>> = MutableLiveData()
     val requestSeedDatabaseEvent: LiveData<Event<Parameter>>

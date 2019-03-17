@@ -21,7 +21,6 @@ import dagger.android.support.AndroidSupportInjectionModule
         AndroidSupportInjectionModule::class,
         AndroidModule::class,
         MessageManagerBindingModule::class,
-        ViewModelFactoryBindingModule::class,
         ApplicationWorkerModule::class,
         ServiceBindingModule::class,
         InitializerBindingModule::class

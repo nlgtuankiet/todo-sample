@@ -1,56 +1,94 @@
 package com.sample.todo.ui.taskdetail
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
-import androidx.lifecycle.toLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.ViewModelContext
 import com.sample.todo.R
-import com.sample.todo.core.BaseViewModel
 import com.sample.todo.core.Event
+import com.sample.todo.core.MvRxViewModel
+import com.sample.todo.core.ViewModelArgumentFactory
 import com.sample.todo.domain.model.TaskId
 import com.sample.todo.domain.usecase.DeleteTask
-import com.sample.todo.domain.usecase.GetTaskFlowable
+import com.sample.todo.domain.usecase.GetTaskObservable
 import com.sample.todo.domain.usecase.UpdateComplete
 import com.sample.todo.ui.message.Message
 import com.sample.todo.util.ToolbarData
+import com.sample.todo.util.extension.arguments
+import com.sample.todo.util.extension.getFragment
 import com.sample.todo.util.extension.postNewEvent
 import com.sample.todo.util.extension.postNewMessage
-import com.sample.todo.util.extension.setValueIfNew
-import io.reactivex.Flowable
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * [ViewModel] for [TaskDetailFragment]
  */
-// TODO find solution for refreshing task
-class TaskDetailViewModel @Inject constructor(
-    private val args: TaskDetailFragmentArgs,
-    private val getTaskFlowable: GetTaskFlowable,
+class TaskDetailViewModel @AssistedInject constructor(
+    @Assisted private val initialState: TaskDetailState,
+    @Assisted private val args: TaskDetailFragmentArgs,
+    private val getTaskFlowable: GetTaskObservable,
     private val updateComplete: UpdateComplete,
     private val deleteTask: DeleteTask
-) : BaseViewModel() {
+) : MvRxViewModel<TaskDetailState>(initialState = initialState) {
 
-    val toolbarListenerData = ToolbarData(
+    @AssistedInject.Factory
+    interface Factory :
+        ViewModelArgumentFactory<TaskDetailViewModel, TaskDetailState, TaskDetailFragmentArgs>
+
+    companion object : MvRxViewModelFactory<TaskDetailViewModel, TaskDetailState> {
+        override fun create(
+            viewModelContext: ViewModelContext,
+            state: TaskDetailState
+        ): TaskDetailViewModel? {
+            val fragment = viewModelContext.getFragment<TaskDetailFragment>()
+            val args: TaskDetailFragmentArgs = TaskDetailFragmentArgs.fromBundle(
+                viewModelContext.arguments
+            )
+            return fragment.viewModelFactory.create(state, args)
+        }
+
+        override fun initialState(viewModelContext: ViewModelContext): TaskDetailState? {
+            return TaskDetailState(
+                originalTask = null,
+                isLoading = null,
+                taskNotFound = null
+            )
+        }
+    }
+
+    init {
+        setState {
+            copy(isLoading = true)
+        }
+        getTaskFlowable(TaskId(args.taskId)).execute { asyncResult ->
+            when (val result = asyncResult()) {
+                is GetTaskObservable.Result.Found -> copy(
+                    isLoading = false,
+                    originalTask = result.task,
+                    taskNotFound = false
+                )
+                is GetTaskObservable.Result.TaskNotFound -> copy(
+                    isLoading = false,
+                    originalTask = null,
+                    taskNotFound = true
+                )
+                else -> this
+            }
+        }
+    }
+
+    val toolbarData = ToolbarData(
         navigationIcon = R.drawable.toolbar_navigation_icon,
         navigationClickHandler = this::onNavigationClick,
         menu = R.menu.task_detail_menu,
         menuItemClickHandler = this::onToolbarMenuClick
     )
-
-    private val getTaskResult: Flowable<GetTaskFlowable.Result> =
-        getTaskFlowable(TaskId(args.taskId))
-
-    // TODO base on init load and refresh event
-    private val _currentTask = getTaskResult.toLiveData()
-
-    val title = _currentTask.map { it.getOrNull()?.title }
-    val description = _currentTask.map { it.getOrNull()?.description }
-    val isCompleted = _currentTask.map { it.getOrNull()?.isCompleted }
 
     private val _snackBarMessage = MutableLiveData<Event<Message>>()
     val snackBarMessage: LiveData<Event<Message>>
@@ -72,22 +110,6 @@ class TaskDetailViewModel @Inject constructor(
     val addNotificationEvent: LiveData<Event<String>>
         get() = _addNotificationEvent
 
-    private val _isLoading = MediatorLiveData<Boolean>().apply {
-        addSource(_currentTask) {
-            setValueIfNew(it == null)
-        }
-        addSource(_loadErrorEvent) {
-            setValueIfNew(false)
-        }
-    }
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-
-    val isUiVisible: LiveData<Boolean> = isLoading.map { !it }
-
-    init {
-    }
-
     fun onFabButtonClick() {
         _navigationEvent.value =
             Event(TaskDetailFragmentDirections.actionTaskDetailFragmentToAddEditFragment(args.taskId))
@@ -108,7 +130,7 @@ class TaskDetailViewModel @Inject constructor(
     }
 
     private fun deleteTask() {
-        launch {
+        viewModelScope.launch {
             runCatching { deleteTask(taskId = TaskId(args.taskId)) }
                 .onSuccess {
                     _navigateUpEvent.postNewEvent()
@@ -123,15 +145,17 @@ class TaskDetailViewModel @Inject constructor(
 
     fun onCheckedChange(checked: Boolean) {
         Timber.d("onCheckedChange(checked: $checked)")
-        if (_currentTask.value?.getOrNull()?.isCompleted != checked) {
-            launch {
-                runCatching { updateComplete(args.taskId, checked) }
-                    .onSuccess {
-                        _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_success)
-                    }
-                    .onFailure {
-                        _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_fail)
-                    }
+        withState { state ->
+            if (state.originalTask?.isCompleted != checked) {
+                viewModelScope.launch {
+                    runCatching { updateComplete(args.taskId, checked) }
+                        .onSuccess {
+                            _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_success)
+                        }
+                        .onFailure {
+                            _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_fail)
+                        }
+                }
             }
         }
     }

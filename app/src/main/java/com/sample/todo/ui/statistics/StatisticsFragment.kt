@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
+import com.sample.todo.core.BaseFragment
 import com.sample.todo.databinding.StatisticsFragmentBinding
-import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class StatisticsFragment : DaggerFragment() {
+class StatisticsFragment : BaseFragment() {
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val statisticsViewModel: StatisticsViewModel by viewModels { viewModelFactory }
+    lateinit var viewModelFactory: StatisticsViewModel.Factory
+    private val statisticsViewModel: StatisticsViewModel by fragmentViewModel()
     lateinit var binding: StatisticsFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,5 +26,11 @@ class StatisticsFragment : DaggerFragment() {
             lifecycleOwner = viewLifecycleOwner
         }
         return binding.root
+    }
+
+    override fun invalidate() {
+        withState(statisticsViewModel) {
+            binding.state = it
+        }
     }
 }

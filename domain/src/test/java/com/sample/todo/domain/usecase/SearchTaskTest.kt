@@ -31,7 +31,7 @@ class SearchTaskTest {
         val expected = """
             "1* 2* 3* 4* 5*"
         """.trimIndent()
-        verify(taskRepository).getSearchResultFlowablePaged(expected, 1)
+        verify(taskRepository).getSearchResultObservablePaged(expected, 1)
     }
 
     @Test
@@ -43,6 +43,6 @@ class SearchTaskTest {
         val expected = """
             "aaa*"
         """.trimIndent()
-        verify(taskRepository).getSearchResultFlowablePaged(expected, 1)
+        verify(taskRepository).getSearchResultObservablePaged(expected, 1)
     }
 }

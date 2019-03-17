@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -23,10 +22,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class AboutFragment : DaggerFragment() {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: AboutFragmentBinding
-    private val aboutViewModel: AboutViewModel by viewModels { viewModelFactory }
+    private val aboutViewModel: AboutViewModel by viewModels()
     @Inject
     lateinit var splitInstallManager: SplitInstallManager
     @Inject

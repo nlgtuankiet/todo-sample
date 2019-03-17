@@ -1,8 +1,7 @@
 <resources>
     <!--TODO find a way map set toolbar nav icon tint, bottom appbar nav icon tint-->
 
-    <style name="Theme.Todo" parent="Base.Theme.Todo">
-    </style>
+    <style name="Theme.Todo" parent="Base.Theme.Todo"></style>
 
     <style name="Base.Theme.Todo" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
         <!--region color-->
@@ -27,8 +26,7 @@
         <item name="android:fontFamily">@font/google_sans</item>
     </style>
 
-    <style name="Widget.Todo.SearchView" parent="Widget.AppCompat.Light.SearchView">
-    </style>
+    <style name="Widget.Todo.SearchView" parent="Widget.AppCompat.Light.SearchView"></style>
     <!--region toolbar global-->
     <style name="Widget.Todo.Toolbar" parent="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
         <item name="titleTextColor">#ffffff</item>
@@ -47,6 +45,7 @@
         <item name="backgroundTint">@color/white</item>
         <item name="actionButtonStyle">@style/Widget.Todo.BottomAppBar.ActionButton</item>
     </style>
+
     <style name="Widget.Todo.BottomAppBar.ActionButton" parent="@style/Widget.AppCompat.ActionButton">
         <item name="tint">@color/ugly</item>
         <item name="android:tint">@color/ugly</item>
@@ -68,8 +67,7 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="TextAppearance.Todo.SearchResult.Snippet" parent="TextAppearance.AppCompat.Body1">
-    </style>
+    <style name="TextAppearance.Todo.SearchResult.Snippet" parent="TextAppearance.AppCompat.Body1"></style>
 
     <style name="Widget.Todo.NavigationView" parent="Widget.Design.NavigationView">
         <item name="itemTextColor">@color/bottom_navigation_item</item>

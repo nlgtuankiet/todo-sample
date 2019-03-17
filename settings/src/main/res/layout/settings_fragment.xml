@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="state"
+            type="com.sample.todo.ui.SettingsState" />
+        <variable
             name="viewModel"
             type="com.sample.todo.ui.SettingsViewModel" />
     </data>
@@ -33,7 +36,8 @@
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@={viewModel.name}"
+            android:onTextChanged="@{(text, start, before, count) -> viewModel.onNameChange(text)}"
+            android:text="@{state.name.invoke()}"
             app:layout_constraintEnd_toStartOf="@+id/set_name_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

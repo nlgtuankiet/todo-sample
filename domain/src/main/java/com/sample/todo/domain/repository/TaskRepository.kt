@@ -2,11 +2,12 @@ package com.sample.todo.domain.repository
 
 import androidx.paging.PagedList
 import com.sample.todo.domain.model.SearchResult
+import com.sample.todo.domain.model.SearchResultStatistics
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskFilterType
 import com.sample.todo.domain.model.TaskMini
 import com.sample.todo.domain.model.TaskStatistics
-import io.reactivex.Flowable
+import io.reactivex.Observable
 
 interface TaskRepository {
     /**
@@ -31,15 +32,23 @@ interface TaskRepository {
      */
     suspend fun update(task: Task): Long
 
-    fun getTaskStatisticsFlowable(): Flowable<TaskStatistics>
+    fun getTaskStatisticsObservable(): Observable<TaskStatistics>
 
-    fun getTaskCount(): Flowable<Long>
+    fun getTaskCount(): Observable<Long>
 
-    fun getTaskMiniFlowablePaged(taskFilterType: TaskFilterType, pageSize: Int): Flowable<PagedList<TaskMini>>
+    fun getTasksObservablePaged(
+        taskFilterType: TaskFilterType,
+        pageSize: Int
+    ): Observable<PagedList<TaskMini>>
 
-    fun getSearchResultFlowablePaged(query: String, pageSize: Int): Flowable<PagedList<SearchResult>>
+    fun getSearchResultObservablePaged(
+        query: String,
+        pageSize: Int
+    ): Observable<PagedList<SearchResult>>
 
-    fun getTaskWithIdFlowable(id: String): Flowable<List<Task>>
+    fun getSearchResultStatisticsObservable(query: String): Observable<SearchResultStatistics>
+
+    fun getTaskWithIdObservable(id: String): Observable<List<Task>>
 
     /**
      * @return number of row deleted

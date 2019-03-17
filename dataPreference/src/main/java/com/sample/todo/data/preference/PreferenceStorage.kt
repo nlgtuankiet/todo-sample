@@ -9,8 +9,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import com.sample.todo.data.core.DataScope
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposables
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +23,7 @@ interface PreferenceStorage {
     suspend fun increaseTotalTaskSeeded(amount: Int): Int
     suspend fun getTaskFilterTypeOrdinal(): Int
     suspend fun setTaskFilterTypeOrdinal(value: Int)
-    fun getTaskFilterTypeOrdinalFlowable(): Flowable<Int>
+    fun getTaskFilterTypeOrdinalObservable(): Observable<Int>
 }
 
 /**
@@ -55,10 +53,8 @@ class SharedPreferenceStorage @Inject constructor(
         -1
     )
 
-    private val _taskFilterTypeOrdinalLiveData by lazy {
-        prefs.observableOf(PREFS_TASK_FILTER_TYPE, 0).toFlowable(
-            BackpressureStrategy.LATEST
-        )
+    private val _taskFilterTypeOrdinalObservable by lazy {
+        prefs.observableOf(PREFS_TASK_FILTER_TYPE, 0)
     }
 
     override suspend fun getTotalTaskSeeded(): Int = withContext(Dispatchers.IO) {
@@ -78,8 +74,8 @@ class SharedPreferenceStorage @Inject constructor(
         _taskFilterTypeOrdinal = value
     }
 
-    override fun getTaskFilterTypeOrdinalFlowable(): Flowable<Int> {
-        return _taskFilterTypeOrdinalLiveData
+    override fun getTaskFilterTypeOrdinalObservable(): Observable<Int> {
+        return _taskFilterTypeOrdinalObservable
     }
 
     companion object {

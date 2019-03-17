@@ -13,6 +13,7 @@ import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sample.todo.util.FabData
 import com.sample.todo.util.ToolbarData
+import timber.log.Timber
 
 @BindingAdapter("goneUnless")
 fun goneUnless(view: View, condition: Boolean) {
@@ -72,7 +73,9 @@ fun asyncHtmlText(view: TextView, htmlText: String?) {
 
 // TODO optimize this using view tag
 @BindingAdapter("data")
-fun data(toolbar: Toolbar, data: ToolbarData) {
+fun data(toolbar: Toolbar, data: ToolbarData?) {
+    Timber.d("data(toolbar=$toolbar, data=$data)")
+    if (data == null) return
     data.apply {
         if (navigationIcon != null) {
             toolbar.setNavigationIcon(navigationIcon)
@@ -99,7 +102,8 @@ fun data(toolbar: Toolbar, data: ToolbarData) {
 }
 
 @BindingAdapter("data")
-fun data(fab: FloatingActionButton, data: FabData) {
+fun data(fab: FloatingActionButton, data: FabData?) {
+    if (data == null) return
     data.apply {
         val drawable = AppCompatResources.getDrawable(fab.context, icon)
         fab.setImageDrawable(drawable)

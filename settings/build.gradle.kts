@@ -9,18 +9,18 @@ android {
     dataBinding {
         isEnabled = true
     }
-    compileSdkVersion(28)
+    compileSdkVersion(Android.compileSdkVersion)
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        minSdkVersion(21)
+        minSdkVersion(Android.minSdkVersion)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         getByName("release") {
-            isDebuggable = Config.isReleaseDebugable
+            isDebuggable = false
             isMinifyEnabled = false
         }
     }
@@ -45,6 +45,7 @@ dependencies {
     implementation(Libs.kotlin_stdlib_jdk8)
     implementation(Libs.lifecycle_livedata_ktx)
     implementation(Libs.lifecycle_viewmodel_ktx)
+    implementation(Libs.mvrx)
     implementation(Libs.navigation_fragment_ktx)
     implementation(Libs.navigation_ui_ktx)
     implementation(Libs.paging_rxjava2_ktx)

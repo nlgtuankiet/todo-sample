@@ -6,19 +6,19 @@ import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.sample.todo.domain.repository.TaskRepository
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
 
-class GetTasksCountFlowableTest {
+class GetTasksCountObservableTest {
     private val taskRepository: TaskRepository = mock()
-    private lateinit var useCase: GetTasksCountFlowable
+    private lateinit var useCase: GetTasksCountObservable
 
     @Before
     fun `set up`() {
-        useCase = GetTasksCountFlowable(taskRepository)
+        useCase = GetTasksCountObservable(taskRepository)
     }
 
     @After
@@ -28,7 +28,7 @@ class GetTasksCountFlowableTest {
 
     @Test
     fun `success as usual`() {
-        val mockFlow = Flowable.just(1L, 2L, 3L)
+        val mockFlow = Observable.just(1L, 2L, 3L)
         `when`(taskRepository.getTaskCount()) doReturn mockFlow
 
         val result = useCase.invoke()
@@ -40,7 +40,7 @@ class GetTasksCountFlowableTest {
 
     @Test
     fun `success distinct until changed`() {
-        val mockFlow = Flowable.just(1L, 2L, 2L, 1L)
+        val mockFlow = Observable.just(1L, 2L, 2L, 1L)
         `when`(taskRepository.getTaskCount()) doReturn mockFlow
 
         val result = useCase.invoke()

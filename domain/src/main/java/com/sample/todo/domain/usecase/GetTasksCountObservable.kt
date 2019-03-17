@@ -1,13 +1,13 @@
 package com.sample.todo.domain.usecase
 
 import com.sample.todo.domain.repository.TaskRepository
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import javax.inject.Inject
 
-class GetTasksCountFlowable @Inject constructor(
+class GetTasksCountObservable @Inject constructor(
     private val taskRepository: TaskRepository
 ) {
-    operator fun invoke(): Flowable<Long> {
+    operator fun invoke(): Observable<Long> {
         return taskRepository.getTaskCount().distinctUntilChanged()
     }
 }

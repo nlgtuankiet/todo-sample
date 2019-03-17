@@ -2,11 +2,11 @@ package com.sample.todo.ui.about
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.sample.todo.core.BaseViewModel
+import androidx.lifecycle.ViewModel
 import com.sample.todo.core.Event
 import javax.inject.Inject
 
-class AboutViewModel @Inject constructor() : BaseViewModel() {
+class AboutViewModel @Inject constructor() : ViewModel() {
 
     private val _navigateToStatisticsEvent = MutableLiveData<Event<Unit>>()
     val navigateToStatisticsEvent: LiveData<Event<Unit>>

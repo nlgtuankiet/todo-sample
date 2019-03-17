@@ -2,10 +2,11 @@ package com.sample.todo.data
 
 import androidx.paging.PagedList
 import com.sample.todo.domain.model.SearchResult
+import com.sample.todo.domain.model.SearchResultStatistics
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskMini
 import com.sample.todo.domain.model.TaskStatistics
-import io.reactivex.Flowable
+import io.reactivex.Observable
 
 interface TaskDataSource {
     suspend fun findTaskById(taskId: String): Task?
@@ -13,14 +14,14 @@ interface TaskDataSource {
     suspend fun insertAll(entities: List<Task>): Long
     suspend fun updateComplete(taskId: String, completed: Boolean): Long
     suspend fun update(task: Task): Long
-    fun getTaskStatisticsFlowable(): Flowable<TaskStatistics>
-    fun tasksCountLive(): Flowable<Long>
+    fun getTaskStatisticsObservable(): Observable<TaskStatistics>
+    fun tasksCountObservable(): Observable<Long>
 
-    fun getTaskMiniFlowablePaged(pageSize: Int): Flowable<PagedList<TaskMini>>
-    fun getCompletedTaskMiniFlowablePaged(pageSize: Int): Flowable<PagedList<TaskMini>>
-    fun getActiveTaskMiniFlowablePaged(pageSize: Int): Flowable<PagedList<TaskMini>>
-    fun getSearchResultFlowablePaged(query: String, pageSize: Int): Flowable<PagedList<SearchResult>>
-
-    fun findByIdFlowable(id: String): Flowable<List<Task>>
+    fun getTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>>
+    fun getCompletedTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>>
+    fun getActiveTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>>
+    fun getSearchResultObservablePaged(query: String, pageSize: Int): Observable<PagedList<SearchResult>>
+    fun getSearchResultStatisticsObservable(query: String): Observable<SearchResultStatistics>
+    fun findByIdObservable(id: String): Observable<List<Task>>
     suspend fun deleteTask(id: String): Long
 }

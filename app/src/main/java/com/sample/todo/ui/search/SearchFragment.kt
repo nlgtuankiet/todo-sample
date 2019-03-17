@@ -5,25 +5,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
 import com.sample.todo.R
+import com.sample.todo.core.BaseFragment
 import com.sample.todo.databinding.SearchFragmentBinding
 import com.sample.todo.ui.message.MessageManager
 import com.sample.todo.util.LinearOffsetsItemDecoration
 import com.sample.todo.util.extension.hideKeyboard
 import com.sample.todo.util.extension.observeEvent
-import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class SearchFragment : DaggerFragment() {
+class SearchFragment : BaseFragment() {
+    override fun invalidate() {
+        withState(searchViewModel) {
+            binding.state = it
+            searchController.submitList(it.searchResult())
+        }
+    }
+
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: SearchViewModel.Factory
     @Inject
     lateinit var messageManager: MessageManager
     private lateinit var binding: SearchFragmentBinding
-    private val searchViewModel: SearchViewModel by viewModels { viewModelFactory }
+    private val searchViewModel: SearchViewModel by fragmentViewModel()
+    private lateinit var searchController: SearchController
 
     // TODO android:onTextChanged="@{(text, start, before, count) -> viewModel.onUsernameTextChanged(text)}"
     override fun onCreateView(
@@ -35,10 +43,8 @@ class SearchFragment : DaggerFragment() {
             viewModel = searchViewModel
             lifecycleOwner = viewLifecycleOwner
             searchResultRecyclerView.apply {
-                adapter = SearchAdapter(
-                    searchViewModel = searchViewModel,
-                    lifecycleOwner = viewLifecycleOwner
-                )
+                searchController = SearchController(searchViewModel)
+                adapter = searchController.adapter
                 addItemDecoration(LinearOffsetsItemDecoration())
             }
             toolbar.apply {

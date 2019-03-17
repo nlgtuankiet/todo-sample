@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="state"
+            type="com.sample.todo.ui.tasks.TasksState" />
+
+        <variable
             name="viewModel"
             type="com.sample.todo.ui.tasks.TasksViewModel" />
     </data>
@@ -28,15 +32,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stateListAnimator="@animator/toolbar_elevation"
-                app:selected="@{viewModel.isToolbarSelected}">
+                app:selected="@{state.isToolbarSelected}">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/Widget.Todo.Toolbar"
-                    app:data="@{viewModel.toolbarData}"
-                    app:subTitleStringRes="@{viewModel.toolbarSubTitle}"
+                    app:data="@{state.toolbarData}"
+                    app:subTitleStringRes="@{state.toolbarSubTitle}"
                     app:title="@string/app_name" />
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -63,8 +67,8 @@
                     android:layout_marginTop="8dp"
                     android:scaleType="fitCenter"
                     android:tint="@color/bottomAppBarIconColor"
-                    app:goneUnless="@{viewModel.isNoTasks}"
-                    app:imageResource="@{viewModel.noTaskIconDrawableRes}"
+                    app:goneUnless="@{state.isNoTasks}"
+                    app:imageResource="@{state.noTaskIcon}"
                     app:layout_constraintBottom_toTopOf="@+id/no_task_text_view"
                     app:layout_constraintEnd_toStartOf="@+id/tasks_recycler_view"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -78,13 +82,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:goneUnless="@{viewModel.isNoTasks}"
+                    app:goneUnless="@{state.isNoTasks}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/tasks_recycler_view"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/tasks_recycler_view"
                     app:layout_constraintTop_toBottomOf="@+id/no_task_image_view"
-                    app:stringRes="@{viewModel.noTaskLabelStringRes}"
+                    app:stringRes="@{state.noTaskLabel}"
                     tools:text="no task" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -96,7 +100,7 @@
                 android:layout_margin="16dp"
                 android:theme="@style/Widget.Todo.FloatingActionButton"
                 app:backgroundTint="@color/white"
-                app:data="@{viewModel.fabData}"
+                app:data="@{state.fabData}"
                 app:tint="@color/bottomAppBarIconColor" />
 
             <!--TODO anchor using gravity instead of margin bottom-->

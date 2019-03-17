@@ -1,4 +1,4 @@
-package com.sample.todo.ui.setting
+package com.sample.todo.ui.setting.seedinput
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -17,9 +16,7 @@ import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
 
 class SeedInputFragment : DaggerDialogFragment() {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val seedInputViewModel: SeedInputViewModel by viewModels { viewModelFactory }
+    private val seedInputViewModel: SeedInputViewModel by viewModels()
     lateinit var binding: SettingSeedInputFragmentBinding
     @Inject
     lateinit var workManager: WorkManager

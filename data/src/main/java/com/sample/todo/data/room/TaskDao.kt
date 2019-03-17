@@ -7,10 +7,10 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.sample.todo.data.room.entity.SearchResultEntity
+import com.sample.todo.data.room.entity.SearchResultStatisticsEntity
 import com.sample.todo.data.room.entity.TaskEntity
 import com.sample.todo.data.room.entity.TaskMiniEntity
 import com.sample.todo.data.room.entity.TaskStatisticsEntity
-import io.reactivex.Flowable
 import io.reactivex.Observable
 
 @Dao
@@ -104,13 +104,13 @@ abstract class TaskDao {
             (SELECT COUNT(*) AS completed_task_count FROM task WHERE completed = 1),
             (SELECT COUNT(*) AS active_task_count FROM task WHERE completed = 0)
     """)
-    abstract fun getTaskStatistics(): Flowable<TaskStatisticsEntity>
+    abstract fun getTaskStatistics(): Observable<TaskStatisticsEntity>
 
     @Query("SELECT COUNT(*) FROM task")
-    abstract fun getTasksCountFlowable(): Flowable<Long>
+    abstract fun getTasksCountObservable(): Observable<Long>
 
     @Query("SELECT * FROM task WHERE id = :id LIMIT 1")
-    abstract fun findByIdFlowable(id: String): Flowable<List<TaskEntity>>
+    abstract fun findByIdObservable(id: String): Observable<List<TaskEntity>>
 
     @Query("DELETE FROM task WHERE id = :id")
     abstract fun deleteTask(id: String)
@@ -120,4 +120,11 @@ abstract class TaskDao {
         deleteTask(id)
         return changes()
     }
+
+    @Query("""
+        SELECT * FROM
+            (SELECT COUNT(*) AS total_result_count FROM task_fts WHERE task_fts MATCH :query) ,
+            (SELECT COUNT(*) AS total_task_count FROM task)
+    """)
+    abstract fun getSearchResultStatisticsObservable(query: String): Observable<SearchResultStatisticsEntity>
 }

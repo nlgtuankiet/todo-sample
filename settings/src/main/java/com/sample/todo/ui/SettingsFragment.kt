@@ -4,20 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.ViewModelProvider
 import com.sample.todo.settings.databinding.SettingsFragmentBinding
-import dagger.android.support.DaggerFragment
 import javax.inject.Inject
-import androidx.fragment.app.viewModels
+import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
+import com.sample.todo.core.BaseFragment
 
-class SettingsFragment : DaggerFragment() {
+class SettingsFragment : BaseFragment() {
     private lateinit var binding: SettingsFragmentBinding
     @Inject
-    lateinit var notificationManagerCompat: NotificationManagerCompat
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val settingsViewModel: SettingsViewModel by viewModels { viewModelFactory }
+    lateinit var viewModelFactory: SettingsViewModel.Factoryy
+    private val settingsViewModel: SettingsViewModel by fragmentViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +25,12 @@ class SettingsFragment : DaggerFragment() {
             viewModel = settingsViewModel
             lifecycleOwner = viewLifecycleOwner
         }
-
         return binding.root
+    }
+
+    override fun invalidate() {
+        withState(settingsViewModel) {
+            binding.state = it
+        }
     }
 }

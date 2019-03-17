@@ -2,10 +2,12 @@ package com.sample.todo.data.room.mapper
 
 import com.sample.todo.data.Mapper
 import com.sample.todo.data.room.entity.SearchResultEntity
+import com.sample.todo.data.room.entity.SearchResultStatisticsEntity
 import com.sample.todo.data.room.entity.TaskEntity
 import com.sample.todo.data.room.entity.TaskMiniEntity
 import com.sample.todo.data.room.entity.TaskStatisticsEntity
 import com.sample.todo.domain.model.SearchResult
+import com.sample.todo.domain.model.SearchResultStatistics
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskMini
 import com.sample.todo.domain.model.TaskStatistics
@@ -29,4 +31,7 @@ interface MapperBindingModule {
 
     @Binds
     fun bindTaskEntityMapper(mapper: TaskEntityMapper): Mapper<TaskEntity, Task>
+
+    @Binds
+    fun bindSearchResultStatisticsEntityMapper(mapper: SearchResultStatisticsEntityMapper): Mapper<SearchResultStatisticsEntity, SearchResultStatistics>
 }

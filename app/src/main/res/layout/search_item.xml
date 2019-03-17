@@ -13,10 +13,11 @@
             name="viewModel"
             type="com.sample.todo.ui.search.SearchViewModel" />
     </data>
+
     <com.google.android.material.card.MaterialCardView
-        android:onClick="@{() -> viewModel.onResultItemClick(item.id)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> viewModel.onResultItemClick(item.id)}"
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp">
 
@@ -82,16 +83,16 @@
 
             <!--TODO what if null object is set map text view-->
             <View
-                app:layout_constraintTop_toBottomOf="@id/title_text_view"
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/gray300"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_text_view"
                 tools:layout_editor_absoluteY="68dp" />
 
             <TextView

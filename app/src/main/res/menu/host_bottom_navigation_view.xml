@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools">
     <group android:checkableBehavior="none">
         <item
-            android:icon="@drawable/host_bottom_navigation_view_tasks_icon"
-            tools:selected="true"
             android:id="@+id/tasks_graph"
-            android:title="Tasks" />
+            android:icon="@drawable/host_bottom_navigation_view_tasks_icon"
+            android:title="Tasks"
+            tools:selected="true" />
         <item
-            android:icon="@drawable/host_bottom_navigation_view_search_icon"
             android:id="@+id/search_graph"
+            android:icon="@drawable/host_bottom_navigation_view_search_icon"
             android:title="Search" />
         <item
-            android:icon="@drawable/host_bottom_navigation_view_statistics_icon"
             android:id="@+id/about_graph"
+            android:icon="@drawable/host_bottom_navigation_view_statistics_icon"
             android:title="About" />
     </group>
 </menu>

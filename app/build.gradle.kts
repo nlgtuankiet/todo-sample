@@ -14,7 +14,7 @@ allOpen {
 }
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(Android.compileSdkVersion)
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -40,15 +40,18 @@ android {
     }
     defaultConfig {
         applicationId = "com.sample.todo"
-        minSdkVersion(21)
-        targetSdkVersion(28)
+        minSdkVersion(Android.minSdkVersion)
+        targetSdkVersion(Android.targetSdkVersion)
         versionCode = 56
         versionName = "1.1.22"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
     buildTypes {
         getByName("debug") {
-            resValue("string", "app_name", "Todo Dev")
             applicationIdSuffix = ".debug"
             signingConfigs.getByName("debug")
             isDebuggable = true
@@ -56,13 +59,12 @@ android {
             isShrinkResources = false
         }
         getByName("release") {
-            resValue("string", "app_name", "Todo")
             signingConfig = if (file("../release.keystore").exists()) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")
             }
-            isDebuggable = Config.isReleaseDebugable
+            isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = false
             proguardFiles(
@@ -151,6 +153,8 @@ dependencies {
     testImplementation(Libs.paging_common)
     testImplementation(Libs.robolectric)
     testImplementation(Libs.rxjava)
+
+    implementation("androidx.multidex:multidex:2.0.1")
 }
 
 kapt {

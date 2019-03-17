@@ -1,20 +1,48 @@
 package com.sample.todo.ui.statistics
 
-import androidx.lifecycle.distinctUntilChanged
-import androidx.lifecycle.map
-import androidx.lifecycle.toLiveData
-import com.sample.todo.core.BaseViewModel
-import com.sample.todo.domain.usecase.GetTaskStatFlowable
-import javax.inject.Inject
+import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.ViewModelContext
+import com.sample.todo.core.MvRxViewModel
+import com.sample.todo.core.ViewModelFactory
+import com.sample.todo.domain.usecase.GetTaskStatObservable
+import com.sample.todo.util.extension.getFragment
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 
-class StatisticsViewModel @Inject constructor(
-    getTaskStatLive: GetTaskStatFlowable
-) : BaseViewModel() {
-    private val stat = getTaskStatLive().toLiveData()
+class StatisticsViewModel @AssistedInject constructor(
+    @Assisted private val initialState: StatisticsState,
+    getTaskStatLive: GetTaskStatObservable
+) : MvRxViewModel<StatisticsState>(initialState) {
 
-    val taskCount = stat.map { it.taskCount.toString() }.distinctUntilChanged()
+    @AssistedInject.Factory
+    interface Factory : ViewModelFactory<StatisticsViewModel, StatisticsState>
 
-    val completedTaskCount = stat.map { it.completedTaskCount.toString() }.distinctUntilChanged()
+    companion object : MvRxViewModelFactory<StatisticsViewModel, StatisticsState> {
+        override fun create(
+            viewModelContext: ViewModelContext,
+            state: StatisticsState
+        ): StatisticsViewModel? {
+            return viewModelContext.getFragment<StatisticsFragment>().viewModelFactory.create(state)
+        }
 
-    val activeTaskCount = stat.map { it.activeTaskCount.toString() }.distinctUntilChanged()
+        override fun initialState(viewModelContext: ViewModelContext): StatisticsState? {
+            return StatisticsState(
+                tasksCount = "",
+                completedTasksCount = "",
+                activeTasksCount = ""
+            )
+        }
+    }
+
+    init {
+        getTaskStatLive().execute {
+            it()?.let {
+                copy(
+                    tasksCount = it.taskCount.toString(),
+                    completedTasksCount = it.completedTaskCount.toString(),
+                    activeTasksCount = it.activeTaskCount.toString()
+                )
+            } ?: this
+        }
+    }
 }

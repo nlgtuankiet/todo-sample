@@ -2,7 +2,7 @@ package com.sample.todo.data.preference
 
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.domain.repository.PreferenceRepository
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import javax.inject.Inject
 
 @DataScope
@@ -25,7 +25,7 @@ class PreferenceRepositoryImpl @Inject constructor(
         return preferenceStorage.setTaskFilterTypeOrdinal(value)
     }
 
-    override fun getTaskFilterTypeOrdinalFlowable(): Flowable<Int> {
-        return preferenceStorage.getTaskFilterTypeOrdinalFlowable()
+    override fun getTaskFilterTypeOrdinalObservable(): Observable<Int> {
+        return preferenceStorage.getTaskFilterTypeOrdinalObservable()
     }
 }

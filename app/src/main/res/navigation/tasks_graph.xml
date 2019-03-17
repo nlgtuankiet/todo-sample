@@ -10,11 +10,7 @@
         android:label="TasksFragment">
         <action
             android:id="@+id/action_tasksFragment_to_taskDetailFragment"
-            app:destination="@id/taskDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/taskDetailFragment" />
         <action
             android:id="@+id/action_tasksFragment_to_addEditFragment"
             app:destination="@id/addEditFragment" />

@@ -15,8 +15,7 @@ import dagger.android.support.AndroidSupportInjectionModule
     modules = [
         AndroidSupportInjectionModule::class,
         SettingsModule::class,
-        SettingsPreferenceRepositoryBindingModule::class,
-        ViewModelFactoryBindingModule::class
+        SettingsPreferenceRepositoryBindingModule::class
     ]
 )
 @SettingsScope

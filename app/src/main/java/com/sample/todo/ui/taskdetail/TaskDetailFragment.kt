@@ -9,28 +9,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
 import com.sample.todo.R
+import com.sample.todo.core.BaseFragment
 import com.sample.todo.databinding.TaskDetailFragmentBinding
 import com.sample.todo.ui.message.MessageManager
 import com.sample.todo.ui.message.setUpSnackbar
 import com.sample.todo.util.autoId
 import com.sample.todo.util.extension.observeEvent
-import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-// TODO DI use navArg lazy by navArgs() see: https://issuetracker.google.com/issues/122603367
-class TaskDetailFragment : DaggerFragment() {
+class TaskDetailFragment : BaseFragment() {
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: TaskDetailViewModel.Factory
     @Inject
     lateinit var messageManager: MessageManager
     @Inject
     lateinit var notificationManager: NotificationManagerCompat
     private lateinit var binding: TaskDetailFragmentBinding
-    private val taskDetailViewModel: TaskDetailViewModel by viewModels { viewModelFactory }
+    private val taskDetailViewModel: TaskDetailViewModel by fragmentViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +57,12 @@ class TaskDetailFragment : DaggerFragment() {
             messageManager
         )
         return binding.root
+    }
+
+    override fun invalidate() {
+        withState(taskDetailViewModel) {
+            binding.state = it
+        }
     }
 
     /**

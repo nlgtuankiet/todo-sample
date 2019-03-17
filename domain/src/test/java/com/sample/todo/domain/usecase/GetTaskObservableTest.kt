@@ -9,7 +9,7 @@ import com.sample.todo.domain.exception.InvalidTaskIdException
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskId
 import com.sample.todo.domain.repository.TaskRepository
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -22,14 +22,14 @@ import org.mockito.Mockito.`when`
 // //            .assertValue { it.exceptionOrNull() is InvalidTaskIdException } // null
 // //            .assertComplete()
 
-class GetTaskFlowableTest {
+class GetTaskObservableTest {
 
     private val taskRepository: TaskRepository = mock()
-    private lateinit var useCase: GetTaskFlowable
+    private lateinit var useCase: GetTaskObservable
 
     @Before
     fun `set up`() {
-        useCase = GetTaskFlowable(taskRepository)
+        useCase = GetTaskObservable(taskRepository)
     }
 
     @After
@@ -51,11 +51,11 @@ class GetTaskFlowableTest {
     fun `fail because of task not found`() {
         val task: Task = TestData.tasks.first()
         val taskId = TaskId(task.id)
-        val mockResult: Flowable<List<Task>> = Flowable.just(emptyList())
-        `when`(taskRepository.getTaskWithIdFlowable(taskId.value)) doReturn mockResult
+        val mockResult: Observable<List<Task>> = Observable.just(emptyList())
+        `when`(taskRepository.getTaskWithIdObservable(taskId.value)) doReturn mockResult
 
         val actual = useCase.invoke(taskId)
-        actual.test().assertValue(GetTaskFlowable.Result.TaskNotFound)
+        actual.test().assertValue(GetTaskObservable.Result.TaskNotFound)
     }
 
     @Test
@@ -63,18 +63,18 @@ class GetTaskFlowableTest {
         val task: Task = TestData.tasks.first()
         val task2: Task = task.copy(title = "new title")
         val taskId = TaskId(task.id)
-        val mockResult: Flowable<List<Task>> = Flowable.just(
+        val mockResult: Observable<List<Task>> = Observable.just(
             listOf(task),
             listOf(task2)
         )
-        `when`(taskRepository.getTaskWithIdFlowable(taskId.value)) doReturn mockResult
+        `when`(taskRepository.getTaskWithIdObservable(taskId.value)) doReturn mockResult
 
         val useCaseResult = useCase.invoke(taskId)
 
         assertEquals(
             listOf(
-                GetTaskFlowable.Result.Found(task),
-                GetTaskFlowable.Result.Found(task2)
+                GetTaskObservable.Result.Found(task),
+                GetTaskObservable.Result.Found(task2)
             ),
             useCaseResult.test().values()
         )
@@ -85,21 +85,21 @@ class GetTaskFlowableTest {
         val task: Task = TestData.tasks.first()
         val task2: Task = task.copy(title = "new title")
         val taskId = TaskId(task.id)
-        val mockResult: Flowable<List<Task>> = Flowable.just(
+        val mockResult: Observable<List<Task>> = Observable.just(
             listOf(task),
             listOf(task2),
             listOf(task2),
             listOf(task)
         )
 
-        `when`(taskRepository.getTaskWithIdFlowable(taskId.value)) doReturn mockResult
+        `when`(taskRepository.getTaskWithIdObservable(taskId.value)) doReturn mockResult
 
         val useCaseResult = useCase.invoke(taskId)
         assertEquals(
             listOf(
-                GetTaskFlowable.Result.Found(task),
-                GetTaskFlowable.Result.Found(task2),
-                GetTaskFlowable.Result.Found(task)
+                GetTaskObservable.Result.Found(task),
+                GetTaskObservable.Result.Found(task2),
+                GetTaskObservable.Result.Found(task)
             ),
             useCaseResult.test().values()
         )

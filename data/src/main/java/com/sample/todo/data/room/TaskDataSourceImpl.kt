@@ -1,19 +1,22 @@
 package com.sample.todo.data.room
 
+import androidx.paging.Config
 import androidx.paging.PagedList
-import androidx.paging.toFlowable
+import androidx.paging.toObservable
 import com.sample.todo.data.Mapper
 import com.sample.todo.data.TaskDataSource
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.data.room.entity.SearchResultEntity
+import com.sample.todo.data.room.entity.SearchResultStatisticsEntity
 import com.sample.todo.data.room.entity.TaskEntity
 import com.sample.todo.data.room.entity.TaskMiniEntity
 import com.sample.todo.data.room.entity.TaskStatisticsEntity
 import com.sample.todo.domain.model.SearchResult
+import com.sample.todo.domain.model.SearchResultStatistics
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskMini
 import com.sample.todo.domain.model.TaskStatistics
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -31,8 +34,14 @@ class TaskDataSourceImpl @Inject constructor(
     private val taskStatisticsEntityMapper: Mapper<TaskStatisticsEntity, TaskStatistics>,
     private val taskMapper: Mapper<Task, TaskEntity>,
     private val taskMiniMapper: Mapper<TaskMiniEntity, TaskMini>,
-    private val searchResultMapper: Mapper<SearchResultEntity, SearchResult>
+    private val searchResultMapper: Mapper<SearchResultEntity, SearchResult>,
+    private val searchResultStatisticsEntityMapper: Mapper<SearchResultStatisticsEntity, SearchResultStatistics>
 ) : TaskDataSource {
+    override fun getSearchResultStatisticsObservable(query: String): Observable<SearchResultStatistics> {
+        return taskDao.getSearchResultStatisticsObservable(query)
+            .map(searchResultStatisticsEntityMapper::map)
+    }
+
     override suspend fun findTaskById(taskId: String): Task? {
         return withContext(Dispatchers.IO) {
             taskDao.findById(taskId)?.let { taskEntityMapper.map(it) }
@@ -58,43 +67,43 @@ class TaskDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun getTaskStatisticsFlowable(): Flowable<TaskStatistics> {
+    override fun getTaskStatisticsObservable(): Observable<TaskStatistics> {
         return taskDao.getTaskStatistics().map(taskStatisticsEntityMapper::map)
     }
 
-    override fun findByIdFlowable(id: String): Flowable<List<Task>> {
-        return taskDao.findByIdFlowable(id).map { it.map(taskEntityMapper::map) }
+    override fun findByIdObservable(id: String): Observable<List<Task>> {
+        return taskDao.findByIdObservable(id).map { it.map(taskEntityMapper::map) }
     }
 
-    override fun getTaskMiniFlowablePaged(pageSize: Int): Flowable<PagedList<TaskMini>> {
+    override fun getTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>> {
         return taskDao
             .getTaskMiniDataSourceFactory()
             .map(taskMiniMapper::map)
-            .toFlowable(pageSize)
+            .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
     }
 
-    override fun getCompletedTaskMiniFlowablePaged(pageSize: Int): Flowable<PagedList<TaskMini>> {
+    override fun getCompletedTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>> {
         return taskDao
             .getCompletedTaskMiniDataSourceFactory()
             .map(taskMiniMapper::map)
-            .toFlowable(pageSize)
+            .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
     }
 
-    override fun getActiveTaskMiniFlowablePaged(pageSize: Int): Flowable<PagedList<TaskMini>> {
+    override fun getActiveTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>> {
         return taskDao
             .getActiveTaskMiniDataSourceFactory()
             .map(taskMiniMapper::map)
-            .toFlowable(pageSize)
+            .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
     }
 
-    override fun getSearchResultFlowablePaged(
+    override fun getSearchResultObservablePaged(
         query: String,
         pageSize: Int
-    ): Flowable<PagedList<SearchResult>> {
+    ): Observable<PagedList<SearchResult>> {
         return taskDao
             .getSearchResultDataSourceWith(query)
             .map(searchResultMapper::map)
-            .toFlowable(pageSize)
+            .toObservable(pageSize)
     }
 
     override suspend fun deleteTask(id: String): Long {
@@ -103,8 +112,8 @@ class TaskDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun tasksCountLive(): Flowable<Long> {
-        return taskDao.getTasksCountFlowable()
+    override fun tasksCountObservable(): Observable<Long> {
+        return taskDao.getTasksCountObservable()
     }
 
     override suspend fun updateComplete(taskId: String, completed: Boolean): Long {

@@ -5,10 +5,10 @@ import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskId
 import com.sample.todo.domain.model.isValid
 import com.sample.todo.domain.repository.TaskRepository
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import javax.inject.Inject
 
-class GetTaskFlowable @Inject constructor(
+class GetTaskObservable @Inject constructor(
     private val taskRepository: TaskRepository
 ) {
 
@@ -18,11 +18,11 @@ class GetTaskFlowable @Inject constructor(
 
         fun getOrNull(): Task? = (this as? Found)?.task
     }
-    operator fun invoke(taskId: TaskId): Flowable<Result> {
+    operator fun invoke(taskId: TaskId): Observable<Result> {
         if (!taskId.isValid)
             throw InvalidTaskIdException(taskId)
         return taskRepository
-            .getTaskWithIdFlowable(taskId.value)
+            .getTaskWithIdObservable(taskId.value)
             .map { taskList ->
                 if (taskList.isEmpty()) {
                     Result.TaskNotFound

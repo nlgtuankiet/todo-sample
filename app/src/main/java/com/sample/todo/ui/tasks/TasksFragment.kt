@@ -5,31 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
 import com.sample.todo.R
+import com.sample.todo.core.BaseFragment
 import com.sample.todo.databinding.TasksFragmentBinding
 import com.sample.todo.ui.message.MessageManager
 import com.sample.todo.ui.message.setUpSnackbar
 import com.sample.todo.util.extension.observeEvent
-import dagger.android.support.DaggerFragment
 import timber.log.Timber
 import javax.inject.Inject
 
 // TODO fix bug when user double click navigation icon
-class TasksFragment : DaggerFragment() {
+class TasksFragment : BaseFragment() {
+
     @Inject
     lateinit var messageManager: MessageManager
-
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
+    lateinit var viewModelFactory: TasksViewModel.Factory
     private lateinit var binding: TasksFragmentBinding
-
-    private val tasksViewModel: TasksViewModel by viewModels { viewModelFactory }
+    private val tasksViewModel: TasksViewModel by fragmentViewModel()
     private var filterPopupMenu: PopupMenu? = null
+    private lateinit var tasksController: TasksController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,10 +39,8 @@ class TasksFragment : DaggerFragment() {
             viewModel = tasksViewModel
             lifecycleOwner = viewLifecycleOwner
             tasksRecyclerView.apply {
-                adapter = TasksAdapter(
-                    lifecycleOwner = viewLifecycleOwner,
-                    tasksViewModel = tasksViewModel
-                )
+                tasksController = TasksController(tasksViewModel)
+                adapter = tasksController.adapter
                 addOnScrollListener(object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)
@@ -73,6 +70,13 @@ class TasksFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         tasksViewModel.openFilterPopupEvent.observeEvent(viewLifecycleOwner) {
             showFilterPopupMenu()
+        }
+    }
+
+    override fun invalidate() {
+        withState(tasksViewModel) {
+            binding.state = it
+            tasksController.submitList(it.tasksMini)
         }
     }
 

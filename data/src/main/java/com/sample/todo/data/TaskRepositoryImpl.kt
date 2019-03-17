@@ -4,52 +4,59 @@ import androidx.paging.PagedList
 import com.sample.todo.core.checkAllMatched
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.domain.model.SearchResult
+import com.sample.todo.domain.model.SearchResultStatistics
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskFilterType
 import com.sample.todo.domain.model.TaskMini
 import com.sample.todo.domain.model.TaskStatistics
 import com.sample.todo.domain.repository.TaskRepository
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import kotlinx.coroutines.delay
+import timber.log.Timber
 import javax.inject.Inject
 
 @DataScope
 class TaskRepositoryImpl @Inject constructor(
     private val taskDataSource: TaskDataSource
 ) : TaskRepository {
+    override fun getSearchResultStatisticsObservable(query: String): Observable<SearchResultStatistics> {
+        return taskDataSource.getSearchResultStatisticsObservable(query)
+    }
+
     override suspend fun deleteTask(id: String): Long {
         delay(2000) // fake load
         return taskDataSource.deleteTask(id)
     }
 
-    override fun getTaskWithIdFlowable(id: String): Flowable<List<Task>> {
-        return taskDataSource.findByIdFlowable(id)
+    override fun getTaskWithIdObservable(id: String): Observable<List<Task>> {
+        return taskDataSource.findByIdObservable(id)
     }
 
-    override fun getTaskMiniFlowablePaged(
+    override fun getTasksObservablePaged(
         taskFilterType: TaskFilterType,
         pageSize: Int
-    ): Flowable<PagedList<TaskMini>> {
+    ): Observable<PagedList<TaskMini>> {
+        Timber.d("getTasksObservablePaged(taskFilterType=$taskFilterType, pageSize=$pageSize)")
         return when (taskFilterType) {
-            TaskFilterType.ALL -> taskDataSource.getTaskMiniFlowablePaged(pageSize)
-            TaskFilterType.COMPLETED -> taskDataSource.getCompletedTaskMiniFlowablePaged(pageSize)
-            TaskFilterType.ACTIVE -> taskDataSource.getActiveTaskMiniFlowablePaged(pageSize)
+            TaskFilterType.ALL -> taskDataSource.getTaskMiniObservablePaged(pageSize)
+            TaskFilterType.COMPLETED -> taskDataSource.getCompletedTaskMiniObservablePaged(pageSize)
+            TaskFilterType.ACTIVE -> taskDataSource.getActiveTaskMiniObservablePaged(pageSize)
         }.checkAllMatched
     }
 
-    override fun getSearchResultFlowablePaged(
+    override fun getSearchResultObservablePaged(
         query: String,
         pageSize: Int
-    ): Flowable<PagedList<SearchResult>> {
-        return taskDataSource.getSearchResultFlowablePaged(query, pageSize)
+    ): Observable<PagedList<SearchResult>> {
+        return taskDataSource.getSearchResultObservablePaged(query, pageSize)
     }
 
-    override fun getTaskCount(): Flowable<Long> {
-        return taskDataSource.tasksCountLive()
+    override fun getTaskCount(): Observable<Long> {
+        return taskDataSource.tasksCountObservable()
     }
 
-    override fun getTaskStatisticsFlowable(): Flowable<TaskStatistics> {
-        return taskDataSource.getTaskStatisticsFlowable()
+    override fun getTaskStatisticsObservable(): Observable<TaskStatistics> {
+        return taskDataSource.getTaskStatisticsObservable()
     }
 
     override suspend fun update(task: Task): Long {
