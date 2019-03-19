@@ -73,11 +73,6 @@ object Libs {
     const val fragment_testing: String = "androidx.fragment:fragment-testing:" +
             Versions.androidx_fragment
 
-    /**
-     * https://developer.android.com/topic/libraries/architecture/index.html */
-    const val lifecycle_livedata_core: String = "androidx.lifecycle:lifecycle-livedata-core:" +
-            Versions.androidx_lifecycle
-
     const val lifecycle_livedata_ktx: String = "androidx.lifecycle:lifecycle-livedata-ktx:" +
             Versions.androidx_lifecycle
 
@@ -223,6 +218,9 @@ object Libs {
 
     const val firebase_core: String = "com.google.firebase:firebase-core:" + Versions.firebase_core
 
+    const val firebase_firestore: String = "com.google.firebase:firebase-firestore:" +
+            Versions.firebase_firestore
+
     /**
      * http://tools.android.com/ */
     const val google_services: String = "com.google.gms:google-services:" + Versions.google_services
@@ -232,8 +230,18 @@ object Libs {
             Versions.com_gradle_build_scan_gradle_plugin
 
     /**
+     * https://github.com/JakeWharton/ThreeTenABP/ */
+    const val threetenabp: String = "com.jakewharton.threetenabp:threetenabp:" +
+            Versions.threetenabp
+
+    /**
      * https://github.com/JakeWharton/timber */
     const val timber: String = "com.jakewharton.timber:timber:" + Versions.timber
+
+    /**
+     * https://github.com/JakeWharton/butterknife/ */
+    const val butterknife_gradle_plugin: String = "com.jakewharton:butterknife-gradle-plugin:" +
+            Versions.butterknife_gradle_plugin
 
     /**
      * https://github.com/nhaarman/mockito-kotlin */
@@ -252,35 +260,38 @@ object Libs {
             "com.squareup.inject:assisted-inject-processor-dagger2:" + Versions.com_squareup_inject
 
     /**
+     * https://github.com/square/retrofit/ */
+    const val retrofit: String = "com.squareup.retrofit2:retrofit:" + Versions.retrofit
+
+    /**
      * https://github.com/square/sqldelight/ */
     const val android_driver: String = "com.squareup.sqldelight:android-driver:" +
-            Versions.android_driver
+            Versions.com_squareup_sqldelight
 
     /**
      * https://github.com/square/sqldelight/ */
     const val android_paging_extensions: String =
-            "com.squareup.sqldelight:android-paging-extensions:" +
-            Versions.android_paging_extensions
+            "com.squareup.sqldelight:android-paging-extensions:" + Versions.com_squareup_sqldelight
 
     /**
      * https://github.com/square/sqldelight/ */
     const val gradle_plugin: String = "com.squareup.sqldelight:gradle-plugin:" +
-            Versions.gradle_plugin
+            Versions.com_squareup_sqldelight
 
     /**
      * https://github.com/square/sqldelight/ */
     const val com_squareup_sqldelight_runtime: String = "com.squareup.sqldelight:runtime:" +
-            Versions.com_squareup_sqldelight_runtime
+            Versions.com_squareup_sqldelight
 
     /**
      * https://github.com/square/sqldelight/ */
     const val rxjava2_extensions: String = "com.squareup.sqldelight:rxjava2-extensions:" +
-            Versions.rxjava2_extensions
+            Versions.com_squareup_sqldelight
 
     /**
      * https://github.com/square/sqldelight/ */
     const val sqlite_driver: String = "com.squareup.sqldelight:sqlite-driver:" +
-            Versions.sqlite_driver
+            Versions.com_squareup_sqldelight
 
     /**
      * http://maven.apache.org */
@@ -391,6 +402,10 @@ object Libs {
     /**
      * http://robolectric.org */
     const val robolectric: String = "org.robolectric:robolectric:" + Versions.robolectric
+
+    /**
+     * https://www.threeten.org/threetenbp */
+    const val threetenbp: String = "org.threeten:threetenbp:" + Versions.threetenbp
 
     const val sqlite_jdbc: String = "org.xerial:sqlite-jdbc:" + Versions.sqlite_jdbc
 }

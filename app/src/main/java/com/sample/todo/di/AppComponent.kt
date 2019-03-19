@@ -2,14 +2,13 @@ package com.sample.todo.di
 
 import android.content.SharedPreferences
 import androidx.core.app.NotificationManagerCompat
+import com.sample.todo.MainActivityModule
 import com.sample.todo.TodoApplication
+import com.sample.todo.base.di.ApplicationScope
+import com.sample.todo.base.message.MessageManagerBindingModule
 import com.sample.todo.data.DataComponent
 import com.sample.todo.domain.di.DomainComponent
 import com.sample.todo.initializer.InitializerBindingModule
-import com.sample.todo.service.ServiceBindingModule
-import com.sample.todo.ui.HostActivityModule
-import com.sample.todo.ui.message.MessageManagerBindingModule
-import com.sample.todo.worker.ApplicationWorkerModule
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
@@ -17,12 +16,11 @@ import dagger.android.support.AndroidSupportInjectionModule
 @ApplicationScope
 @Component(
     modules = [
-        HostActivityModule::class,
+        MainActivityModule::class,
         AndroidSupportInjectionModule::class,
         AndroidModule::class,
         MessageManagerBindingModule::class,
-        ApplicationWorkerModule::class,
-        ServiceBindingModule::class,
+        WorkModule::class,
         InitializerBindingModule::class
     ],
     dependencies = [

@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
     tableName = "task",
     indices = [
         Index(
-            value = ["completed"],
-            unique = false
+            value = ["completed", "create_time"],
+            unique = true
         )
     ]
 )
@@ -24,5 +24,9 @@ data class TaskEntity(
     @ColumnInfo(name = "description")
     val description: String?,
     @ColumnInfo(name = "completed")
-    val isCompleted: Boolean
+    val isCompleted: Boolean,
+    @ColumnInfo(name = "create_time")
+    val createTime: Long,
+    @ColumnInfo(name = "update_time")
+    val updateTime: Long
 )

@@ -43,25 +43,25 @@ abstract class TaskDao {
     @Query("SELECT * FROM task WHERE id = :taskId")
     abstract fun findById(taskId: String): TaskEntity?
 
-    @Query("UPDATE task SET completed = :completed WHERE id = :taskId")
-    abstract fun updateComplete(taskId: String, completed: Boolean)
+    @Query("UPDATE task SET completed = :completed, update_time = :updateTime WHERE id = :taskId")
+    abstract fun updateComplete(taskId: String, completed: Boolean, updateTime: Long)
 
     @Transaction
-    open fun updateCompleteAndCountChanges(taskId: String, completed: Boolean): Long {
-        updateComplete(taskId, completed)
+    open fun updateCompleteAndCountChanges(taskId: String, completed: Boolean, updateTime: Long): Long {
+        updateComplete(taskId, completed, updateTime)
         return changes()
     }
 
     @Query("SELECT completed FROM task WHERE id = :taskId")
     abstract fun getComplete(taskId: String): Boolean
 
-    @Query("SELECT [id], [title], [completed] FROM task")
+    @Query("SELECT [id], [title], [completed] FROM task ORDER BY create_time ASC")
     abstract fun getTaskMiniDataSourceFactory(): DataSource.Factory<Int, TaskMiniEntity>
 
-    @Query("SELECT [id], [title], [completed] FROM task WHERE completed = 1")
+    @Query("SELECT [id], [title], [completed] FROM task WHERE completed = 1 ORDER BY create_time ASC")
     abstract fun getCompletedTaskMiniDataSourceFactory(): DataSource.Factory<Int, TaskMiniEntity>
 
-    @Query("SELECT [id], [title], [completed] FROM task WHERE completed = 0")
+    @Query("SELECT [id], [title], [completed] FROM task WHERE completed = 0 ORDER BY create_time ASC")
     abstract fun getActiveTaskMiniDataSourceFactory(): DataSource.Factory<Int, TaskMiniEntity>
 
     @Update
@@ -82,6 +82,7 @@ abstract class TaskDao {
             task JOIN task_fts ON (task.rowid = task_fts.rowid)
         WHERE
             task_fts MATCH :query
+        ORDER BY create_time ASC
     """)
     abstract fun getSearchResultDataSourceWith(query: String): DataSource.Factory<Int, SearchResultEntity>
 

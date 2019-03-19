@@ -4,7 +4,6 @@ plugins {
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
-    id("androidx.navigation.safeargs.kotlin")
     id("io.fabric")
     id("kotlin-allopen")
 }
@@ -14,6 +13,9 @@ allOpen {
 }
 
 android {
+    dexOptions {
+        javaMaxHeapSize = "4g"
+    }
     compileSdkVersion(Android.compileSdkVersion)
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -43,9 +45,9 @@ android {
         minSdkVersion(Android.minSdkVersion)
         targetSdkVersion(Android.targetSdkVersion)
         versionCode = 56
-        versionName = "1.1.22"
+        versionName = "1.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        multiDexEnabled = true
+//        multiDexEnabled = true
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -55,8 +57,12 @@ android {
             applicationIdSuffix = ".debug"
             signingConfigs.getByName("debug")
             isDebuggable = true
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             isShrinkResources = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
         getByName("release") {
             signingConfig = if (file("../release.keystore").exists()) {
@@ -78,6 +84,10 @@ android {
             isIncludeAndroidResources = true
         }
     }
+    lintOptions {
+        setCheckReleaseBuilds(false)
+    }
+    testBuildType = "release"
     dynamicFeatures.add(":settings")
 
 }
@@ -104,6 +114,7 @@ dependencies {
     androidTestImplementation(Libs.mockito_android)
     androidTestImplementation(Libs.mockito_core)
     androidTestImplementation(Libs.mockito_kotlin)
+    androidTestImplementation(Libs.core_testing)
     compileOnly(Libs.assisted_inject_annotations_dagger2)
     implementation(Libs.activity_ktx)
     implementation(Libs.appcompat)
@@ -139,9 +150,7 @@ dependencies {
     implementation(Libs.timber)
     implementation(Libs.work_runtime_ktx)
     implementation(Libs.work_testing)
-    implementation(project(":core"))
-    implementation(project(":data"))
-    implementation(project(":domain"))
+
     kapt(Libs.assisted_inject_processor_dagger2)
     kapt(Libs.dagger_android_processor)
     kapt(Libs.dagger_compiler)
@@ -154,7 +163,18 @@ dependencies {
     testImplementation(Libs.robolectric)
     testImplementation(Libs.rxjava)
 
-    implementation("androidx.multidex:multidex:2.0.1")
+    implementation(project(":main"))
+    implementation(project(":splash"))
+    implementation(project(":work"))
+    implementation(project(":base"))
+    implementation(project(":mainNavigation"))
+    implementation(project(":core"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":seedDatabase"))
+    implementation(project(":downloadModule"))
+
+//    implementation("androidx.multidex:multidex:2.0.1")
 }
 
 kapt {

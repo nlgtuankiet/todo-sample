@@ -7,6 +7,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.sample.todo.TodoApplication
+import com.sample.todo.base.di.ApplicationScope
 import dagger.Module
 import dagger.Provides
 

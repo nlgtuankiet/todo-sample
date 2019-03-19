@@ -10,6 +10,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    dataBinding {
+        isEnabled = true
+    }
     defaultConfig {
         minSdkVersion(Android.minSdkVersion)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -19,6 +22,12 @@ android {
             isDebuggable = false
             isMinifyEnabled = false
         }
+    }
+    lintOptions {
+        setCheckReleaseBuilds(false)
+    }
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
     }
 }
 
@@ -60,6 +69,14 @@ dependencies {
     testImplementation(Libs.rxjava)
     testImplementation(Libs.sqlite_driver)
     testImplementation(Libs.sqlite_jdbc)
+    implementation("org.threeten:threetenbp:1.3.8:no-tzdb")
+    implementation("com.google.firebase:firebase-firestore:18.1.0")
+    implementation("com.squareup.retrofit2:retrofit:2.5.0")
+    implementation("com.squareup.moshi:moshi:1.8.0")
+    implementation("com.google.firebase:firebase-functions:16.3.0")
+    compileOnly(Libs.assisted_inject_annotations_dagger2)
+    kapt(Libs.assisted_inject_processor_dagger2)
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.8.0")
 }
 
 kapt {

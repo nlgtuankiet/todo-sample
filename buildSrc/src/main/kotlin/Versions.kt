@@ -7,7 +7,7 @@ import kotlin.String
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
-    const val android_arch_navigation: String = "1.0.0-alpha11" // available: "1.0.0"
+    const val android_arch_navigation: String = "1.0.0" 
 
     const val android_arch_work: String = "1.0.0-rc02" // available: "1.0.0"
 
@@ -21,7 +21,7 @@ object Versions {
 
     const val core_ktx: String = "1.0.1" 
 
-    const val androidx_databinding: String = "3.5.0-alpha06" 
+    const val androidx_databinding: String = "3.5.0-alpha07" 
 
     const val androidx_fragment: String = "1.1.0-alpha03" 
 
@@ -51,55 +51,53 @@ object Versions {
 
     const val mvrx: String = "0.7.2" 
 
-    const val aapt2: String = "3.5.0-alpha06-5320053" 
+    const val aapt2: String = "3.5.0-alpha07-5336736" 
 
-    const val com_android_tools_build_gradle: String = "3.5.0-alpha02"
+    const val com_android_tools_build_gradle: String = "3.5.0-alpha02" 
 
-    const val lint_gradle: String = "26.5.0-alpha06" 
+    const val lint_gradle: String = "26.5.0-alpha07" 
 
-    const val crashlytics: String = "2.9.7" // available: "2.9.9"
+    const val crashlytics: String = "2.9.4" // available: "2.9.9"
 
-    const val com_diffplug_gradle_spotless_gradle_plugin: String = "3.17.0" // available: "3.19.0"
+    const val com_diffplug_gradle_spotless_gradle_plugin: String = "3.17.0" // available: "3.20.0"
 
-    const val stetho: String = "1.5.0" 
+    const val stetho: String = "1.5.0" // available: "1.5.1"
 
     const val com_github_triplet_play_gradle_plugin: String = "2.1.0" // available: "2.1.1"
 
     const val material: String = "1.1.0-alpha02" 
 
-    const val com_google_android_play_core: String = "1.3.4" // available: "1.4.0"
+    const val com_google_android_play_core: String = "1.4.0" 
 
     const val com_google_dagger: String = "2.21" 
 
-    const val firebase_core: String = "16.0.5" // available: "16.0.8"
+    const val firebase_core: String = "16.0.1" // available: "16.0.8"
 
-    const val google_services: String = "4.2.0" 
+    const val firebase_firestore: String = "18.1.0" 
+
+    const val google_services: String = "3.2.0" // available: "4.2.0"
 
     const val com_gradle_build_scan_gradle_plugin: String = "2.1" // available: "2.2.1"
 
+    const val threetenabp: String = "1.2.0" 
+
     const val timber: String = "4.7.1" 
+
+    const val butterknife_gradle_plugin: String = "10.1.0" 
 
     const val mockito_kotlin: String = "2.1.0" 
 
-    const val com_squareup_inject: String = "0.3.2" // available: "0.3.3"
+    const val com_squareup_inject: String = "0.3.3" 
 
-    const val android_driver: String = "1.0.3" // available: "1.1.1"
+    const val retrofit: String = "2.5.0" 
 
-    const val android_paging_extensions: String = "1.0.3" // available: "1.1.1"
-
-    const val gradle_plugin: String = "1.0.3" // available: "1.1.1"
-
-    const val com_squareup_sqldelight_runtime: String = "1.0.3" // available: "1.1.1"
-
-    const val rxjava2_extensions: String = "1.0.3" // available: "1.1.1"
-
-    const val sqlite_driver: String = "1.0.3" // available: "1.1.1"
+    const val com_squareup_sqldelight: String = "1.0.3" // available: "1.1.1"
 
     const val lorem: String = "2.1" 
 
     const val de_fayard_buildsrcversions_gradle_plugin: String = "0.3.2" 
 
-    const val io_fabric_tools_gradle: String = "1.27.0" // available: "1.27.1"
+    const val io_fabric_tools_gradle: String = "1.27.0" // available: "1.28.0"
 
     const val rxandroid: String = "2.1.0" // available: "2.1.1"
 
@@ -119,6 +117,8 @@ object Versions {
 
     const val robolectric: String = "4.1" // available: "4.2.1"
 
+    const val threetenbp: String = "1.3.8" 
+
     const val sqlite_jdbc: String = "3.25.2" // available: "3.27.2"
 
     /**
@@ -129,10 +129,10 @@ object Versions {
     object Gradle {
         const val runningVersion: String = "5.2.1"
 
-        const val currentVersion: String = "5.2.1"
+        const val currentVersion: String = "5.3"
 
-        const val nightlyVersion: String = "5.4-20190316000113+0000"
+        const val nightlyVersion: String = "5.4-20190321000037+0000"
 
-        const val releaseCandidate: String = "5.3-rc-3"
+        const val releaseCandidate: String = ""
     }
 }

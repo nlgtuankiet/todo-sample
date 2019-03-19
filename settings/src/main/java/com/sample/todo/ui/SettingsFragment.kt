@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.airbnb.mvrx.fragmentViewModel
 import com.sample.todo.settings.databinding.SettingsFragmentBinding
 import javax.inject.Inject
-import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
-import com.sample.todo.core.BaseFragment
+import com.sample.todo.base.BaseFragment
 
-class SettingsFragment : BaseFragment() {
+class SettingsFragment : com.sample.todo.base.BaseFragment() {
     private lateinit var binding: SettingsFragmentBinding
     @Inject
-    lateinit var viewModelFactory: SettingsViewModel.Factoryy
+    lateinit var viewModelFactory: SettingsViewModel.Factory
     private val settingsViewModel: SettingsViewModel by fragmentViewModel()
 
     override fun onCreateView(

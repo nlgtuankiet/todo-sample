@@ -116,9 +116,9 @@ class TaskDataSourceImpl @Inject constructor(
         return taskDao.getTasksCountObservable()
     }
 
-    override suspend fun updateComplete(taskId: String, completed: Boolean): Long {
+    override suspend fun updateComplete(taskId: String, completed: Boolean, updateTime: Long): Long {
         return withContext(Dispatchers.IO) {
-            taskDao.updateCompleteAndCountChanges(taskId, completed)
+            taskDao.updateCompleteAndCountChanges(taskId, completed, updateTime)
         }
     }
 }

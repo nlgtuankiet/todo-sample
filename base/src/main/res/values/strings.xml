@@ -1,0 +1,8 @@
+<resources>
+    <!--notification info-->
+    <string name="notification_channel_seed_database_name">Seed Database Information</string>
+    <string name="notification_channel_seed_database_description">Information related to seed database process</string>
+    <string name="notification_channel_download_module_name">Download Module Information</string>
+    <string name="notification_channel_download_module_description">Information related to download module process</string>
+
+</resources>

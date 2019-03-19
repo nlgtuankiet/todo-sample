@@ -4,10 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
-import com.sample.todo.core.MvRxViewModel
+import com.sample.todo.base.extension.getFragment
 import com.sample.todo.domain.usecase.GetNameObservable
 import com.sample.todo.domain.usecase.SetName
-import com.sample.todo.util.extension.getFragment
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.launch
@@ -16,7 +15,7 @@ class SettingsViewModel @AssistedInject constructor(
     private val getNameObservable: GetNameObservable,
     @Assisted private val initState: SettingsState,
     private val setName: SetName
-) : MvRxViewModel<SettingsState>(initState) {
+) : com.sample.todo.base.MvRxViewModel<SettingsState>(initState) {
     companion object : MvRxViewModelFactory<SettingsViewModel, SettingsState> {
         override fun create(
             viewModelContext: ViewModelContext,
@@ -33,7 +32,7 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     @AssistedInject.Factory
-    interface Factoryy {
+    interface Factory {
         fun create(initState: SettingsState): SettingsViewModel
     }
 

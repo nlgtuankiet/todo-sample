@@ -1,0 +1,17 @@
+<resources>
+
+    <!--download module notification-->
+    <string name="download_module_notification_title">Download module: %s</string>
+    <string name="download_module_notification_installed">Installed</string>
+    <string name="download_module_notification_install_failed">Install failed</string>
+    <string name="download_module_notification_installing">Installing</string>
+    <string name="download_module_notification_sending_request">Sending request</string>
+    <string name="download_module_notification_percent_downloaded">%d%%</string>
+    <string name="download_module_notification_downloaded">Downloaded</string>
+    <string name="download_module_notification_downloading">Downloading</string>
+    <string name="download_module_notification_unknown_error">Unknown error</string>
+    <string name="download_module_notification_pending">Pending</string>
+    <string name="download_module_notification_canceling">Canceling</string>
+    <string name="download_module_notification_canceled">Canceled</string>
+
+</resources>

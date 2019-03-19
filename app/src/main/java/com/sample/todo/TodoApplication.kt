@@ -1,6 +1,8 @@
 package com.sample.todo
 
 import android.content.Context
+// import androidx.multidex.MultiDex
+// import androidx.multidex.MultiDexApplication
 import com.google.android.play.core.splitcompat.SplitCompat
 import com.sample.todo.data.DataComponent
 import com.sample.todo.data.room.RoomDataComponent
@@ -10,6 +12,7 @@ import com.sample.todo.initializer.AppInitializer
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import javax.inject.Inject
+import com.jakewharton.threetenabp.AndroidThreeTen
 
 open class TodoApplication : DaggerApplication() {
     @Inject
@@ -38,10 +41,12 @@ open class TodoApplication : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         appInitializer.initialize(this)
+        AndroidThreeTen.init(this)
     }
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
+//        MultiDex.install(this)
         SplitCompat.install(this)
     }
 

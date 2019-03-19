@@ -12,6 +12,7 @@ buildscript {
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
     }
     dependencies {
+        classpath("com.jakewharton:butterknife-gradle-plugin:10.1.0")
         classpath("com.squareup.sqldelight:gradle-plugin:1.0.3")
         classpath(Libs.com_android_tools_build_gradle)
         classpath(Libs.kotlin_gradle_plugin)

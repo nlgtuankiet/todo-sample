@@ -1,0 +1,10 @@
+<resources>
+    <string name="tasks_filter_all_header">All</string>
+    <string name="tasks_filter_active_header">Active</string>
+    <string name="tasks_filter_completed_header">Completed</string>
+    <string name="tasks_no_task_all">You have no tasks!</string>
+    <string name="tasks_no_task_active">You have no active tasks!</string>
+    <string name="tasks_no_task_completed">You have no completed tasks!</string>
+    <string name="tasks_update_complete_success">Update complete success</string>
+    <string name="tasks_update_complete_fail">Update complete fail</string>
+</resources>

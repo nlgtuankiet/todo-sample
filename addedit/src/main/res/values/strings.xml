@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="add_edit_add_title">Add new task</string>
+    <string name="add_edit_edit_title">Edit task</string>
+    <string name="add_edit_insert_new_task_fail">Insert new task fail</string>
+    <string name="add_edit_update_task_success">Update task successful</string>
+    <string name="add_edit_update_task_fail">Update task fail</string>
+
+</resources>

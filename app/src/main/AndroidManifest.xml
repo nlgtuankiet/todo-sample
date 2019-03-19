@@ -11,14 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Todo"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.HostActivity" />
-        <activity android:name=".ui.splash.Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -28,6 +20,6 @@
             android:authorities="${applicationId}.workmanager-init"
             android:exported="false"
             tools:node="remove" />
-        <service android:name=".service.SeedControllerService"/>
+        <service android:name="com.sample.todo.work.seeddatabase.service.SeedControllerService"/>
     </application>
 </manifest>

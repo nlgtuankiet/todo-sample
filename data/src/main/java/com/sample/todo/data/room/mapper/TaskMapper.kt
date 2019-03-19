@@ -13,7 +13,9 @@ class TaskMapper @Inject constructor() : Mapper<Task, TaskEntity> {
             id = from.id,
             title = from.title,
             description = from.description,
-            isCompleted = from.isCompleted
+            isCompleted = from.isCompleted,
+            createTime = from.createTime.epochSecond,
+            updateTime = from.updateTime.epochSecond
         )
     }
 }

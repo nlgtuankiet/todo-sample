@@ -14,6 +14,7 @@ abstract class RoomDataComponent : DataComponent() {
 
     @Component.Builder
     abstract class Builder : DataComponent.Builder()
+
     companion object {
         fun builder(): Builder = DaggerRoomDataComponent.builder()
     }

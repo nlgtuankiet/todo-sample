@@ -12,7 +12,7 @@ interface TaskDataSource {
     suspend fun findTaskById(taskId: String): Task?
     suspend fun insert(entity: Task): Long
     suspend fun insertAll(entities: List<Task>): Long
-    suspend fun updateComplete(taskId: String, completed: Boolean): Long
+    suspend fun updateComplete(taskId: String, completed: Boolean, updateTime: Long): Long
     suspend fun update(task: Task): Long
     fun getTaskStatisticsObservable(): Observable<TaskStatistics>
     fun tasksCountObservable(): Observable<Long>

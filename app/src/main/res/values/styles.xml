@@ -28,11 +28,7 @@
 
     <style name="Widget.Todo.SearchView" parent="Widget.AppCompat.Light.SearchView"></style>
     <!--region toolbar global-->
-    <style name="Widget.Todo.Toolbar" parent="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
-        <item name="titleTextColor">#ffffff</item>
-        <item name="subtitleTextColor">#CCFFFFFF</item>
-        <item name="android:background">@color/colorPrimary</item>
-    </style>
+
 
     <style name="Widget.Todo.Toolbar.Button.Navigation" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
         <!--set navigation button color map white-->
@@ -55,27 +51,13 @@
 
     <!--endregion-->
 
-    <!--TODO backgroundTint not working-->
-    <style name="Widget.Todo.FloatingActionButton" parent="@style/Widget.MaterialComponents.FloatingActionButton">
-        <!--icon color-->
-        <item name="tint">@color/gray600</item>
-        <!--background color-->
-        <item name="backgroundTint">@color/white</item>
-    </style>
 
-    <style name="TextAppearance.Todo.SearchResult.Header" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
 
-    <style name="TextAppearance.Todo.SearchResult.Snippet" parent="TextAppearance.AppCompat.Body1"></style>
+
 
     <style name="Widget.Todo.NavigationView" parent="Widget.Design.NavigationView">
         <item name="itemTextColor">@color/bottom_navigation_item</item>
         <item name="itemIconTint">@color/bottom_navigation_item</item>
-
     </style>
 
-    <style name="Splash" parent="Theme.Todo">
-        <item name="android:windowBackground">@drawable/tasks_filter_icon</item>
-    </style>
 </resources>

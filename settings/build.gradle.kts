@@ -24,6 +24,9 @@ android {
             isMinifyEnabled = false
         }
     }
+    lintOptions {
+        setCheckReleaseBuilds(false)
+    }
 }
 
 dependencies {
@@ -54,6 +57,7 @@ dependencies {
     implementation(Libs.room_rxjava2)
     implementation(Libs.timber)
     implementation(project(":app"))
+    implementation(project(":main"))
     implementation(project(":common"))
     implementation(project(":core"))
     implementation(project(":data"))
@@ -71,4 +75,6 @@ dependencies {
     testImplementation(Libs.robolectric)
     testImplementation(Libs.room_testing)
     testImplementation(Libs.rxjava)
+    implementation(project(":base"))
+    implementation(Libs.lifecycle_viewmodel_ktx)
 }

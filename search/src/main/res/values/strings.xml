@@ -1,0 +1,5 @@
+<resources>
+
+    <string name="search_toolbar_title">Search</string>
+    <string name="search_search_result_statistics_format">Found %d result in %d entry</string>
+</resources>

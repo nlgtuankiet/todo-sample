@@ -13,8 +13,9 @@ class SearchTask @Inject constructor(
         val query = rawQuery
             .splitToSequence(" ")
             .filter { it.isNotBlank() }
-            .map { "$it*" }
-            .joinToString(" ", "\"", "\"")
+//            .map { "$it*" }
+//            .joinToString(" ", "\"", "\"")
+            .joinToString(" ")
             .toLowerCase()
         return taskRepository.getSearchResultObservablePaged(query, pageSize)
     }

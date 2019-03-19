@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
 
-    <color name="fadingSnackBarMessage">#E9E9E9</color>
-    <color name="fadingSnackBarBackground">#323232</color>
-    <color name="fadingSnackBarAction">#7BAAF7</color>
-
-    <color name="searchTextHolderBackground">#B6B6B6</color>
-
-    <!--a.k.a spacer grey-->
-    <color name="gray300">#E0E0E0</color>
-    <color name="gray600">#757575</color>
-
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="test">#757575</color>
-
-    <color name="ugly">#615716</color>
-
-    <color name="bottomAppBarIconColor">@color/gray600</color>
 </resources>

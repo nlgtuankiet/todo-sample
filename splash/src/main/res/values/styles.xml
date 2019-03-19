@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <!--<item name="android:windowBackground">@drawable/tasks_filter_icon</item>-->
+    <style name="Splash" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+    </style>
+</resources>

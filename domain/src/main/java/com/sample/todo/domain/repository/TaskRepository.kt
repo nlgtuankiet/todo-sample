@@ -25,7 +25,7 @@ interface TaskRepository {
     /**
      * @return number of row updated
      */
-    suspend fun updateComplete(taskId: String, completed: Boolean): Long
+    suspend fun updateComplete(taskId: String, completed: Boolean, updateTime: Long): Long
 
     /**
      * @return number of row updated

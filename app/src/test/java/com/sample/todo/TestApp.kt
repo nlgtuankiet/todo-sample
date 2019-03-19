@@ -1,6 +1,6 @@
 package com.sample.todo
 
-import com.sample.todo.util.SoutTree
+import com.sample.todo.core.SoutTree
 import timber.log.Timber
 
 class TestApp : TodoApplication() {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.Todo.Toolbar" parent="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="titleTextColor">#ffffff</item>
+        <item name="subtitleTextColor">#CCFFFFFF</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+    <!--TODO backgroundTint not working-->
+    <style name="Widget.Todo.FloatingActionButton" parent="@style/Widget.MaterialComponents.FloatingActionButton">
+        <!--icon color-->
+        <item name="tint">@color/gray600</item>
+        <!--background color-->
+        <item name="backgroundTint">@color/white</item>
+    </style>
+</resources>

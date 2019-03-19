@@ -6,8 +6,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.distinctUntilChanged
-import com.sample.todo.core.Event
 import androidx.lifecycle.observe
+import com.sample.todo.base.extension.observeEvent
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -94,45 +94,45 @@ class LiveDataExtensionTest : LifecycleOwner {
         val input: List<Int> = listOf(1, 2, 3, 4)
         val expecteds: List<Int> = listOf(1, 2, 3, 4)
 
-        val mutableLiveData: MutableLiveData<Event<Int>> = MutableLiveData()
+        val mutableLiveData: MutableLiveData<com.sample.todo.base.Event<Int>> = MutableLiveData()
         val actuals: MutableList<Int> = mutableListOf()
         val observer: (Int) -> Unit = { actuals.add(it) }
         mutableLiveData.observeEvent(this, observer)
-        input.forEach { mutableLiveData.value = Event(it) }
+        input.forEach { mutableLiveData.value = com.sample.todo.base.Event(it) }
 
         assertEquals(expecteds, actuals.toList())
     }
 
     @Test
     fun `event observe directly late`() {
-        val mutableLiveData: MutableLiveData<Event<Int>> = MutableLiveData()
+        val mutableLiveData: MutableLiveData<com.sample.todo.base.Event<Int>> = MutableLiveData()
         val actual: MutableList<Int> = mutableListOf()
         val observer: (Int) -> Unit = { actual.add(it) }
 
-        mutableLiveData.value = Event(1)
-        mutableLiveData.value = Event(2)
+        mutableLiveData.value = com.sample.todo.base.Event(1)
+        mutableLiveData.value = com.sample.todo.base.Event(2)
         mutableLiveData.observeEvent(this, observer)
-        mutableLiveData.value = Event(3)
-        mutableLiveData.value = Event(4)
+        mutableLiveData.value = com.sample.todo.base.Event(3)
+        mutableLiveData.value = com.sample.todo.base.Event(4)
 
         assertEquals(listOf(2, 3, 4), actual)
     }
 
     @Test
     fun `event observe with 2 active observer`() {
-        val mutableLiveData: MutableLiveData<Event<Int>> = MutableLiveData()
+        val mutableLiveData: MutableLiveData<com.sample.todo.base.Event<Int>> = MutableLiveData()
         val actual1: MutableList<Int> = mutableListOf()
         val actual2: MutableList<Int> = mutableListOf()
         val observer1: (Int) -> Unit = { actual1.add(it) }
         val observer2: (Int) -> Unit = { actual2.add(it) }
 
         mutableLiveData.observeEvent(this, observer1)
-        mutableLiveData.value = Event(1)
-        mutableLiveData.value = Event(2)
+        mutableLiveData.value = com.sample.todo.base.Event(1)
+        mutableLiveData.value = com.sample.todo.base.Event(2)
 
         mutableLiveData.observeEvent(this, observer2)
-        mutableLiveData.value = Event(3)
-        mutableLiveData.value = Event(4)
+        mutableLiveData.value = com.sample.todo.base.Event(3)
+        mutableLiveData.value = com.sample.todo.base.Event(4)
 
         println("actual1=$actual1")
         println("actual2=$actual2")
@@ -141,21 +141,21 @@ class LiveDataExtensionTest : LifecycleOwner {
 
     @Test
     fun `event observe with 2 active observer + null Event`() {
-        val mutableLiveData: MutableLiveData<Event<Int>> = MutableLiveData()
+        val mutableLiveData: MutableLiveData<com.sample.todo.base.Event<Int>> = MutableLiveData()
         val actual1: MutableList<Int> = mutableListOf()
         val actual2: MutableList<Int> = mutableListOf()
         val observer1: (Int) -> Unit = { actual1.add(it) }
         val observer2: (Int) -> Unit = { actual2.add(it) }
 
         mutableLiveData.observeEvent(this, observer1)
-        mutableLiveData.value = Event(1)
+        mutableLiveData.value = com.sample.todo.base.Event(1)
         mutableLiveData.value = null
-        mutableLiveData.value = Event(2)
+        mutableLiveData.value = com.sample.todo.base.Event(2)
 
         mutableLiveData.observeEvent(this, observer2)
-        mutableLiveData.value = Event(3)
+        mutableLiveData.value = com.sample.todo.base.Event(3)
         mutableLiveData.value = null
-        mutableLiveData.value = Event(4)
+        mutableLiveData.value = com.sample.todo.base.Event(4)
         mutableLiveData.value = null
 
         println("actual1=$actual1")

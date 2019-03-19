@@ -1,12 +1,12 @@
 package com.sample.todo.ui
 
-import com.sample.todo.di.FragmentScoped
+import com.sample.todo.base.di.FragmentScoped
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class SettingsModule {
-    @FragmentScoped
+    @com.sample.todo.base.di.FragmentScoped
     @ContributesAndroidInjector(
         modules = [
             SettingsBindingModule::class

@@ -15,6 +15,9 @@ import kotlinx.coroutines.delay
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * TODO: fix bug where PagedList<TaskMini> empty cause isNoTask to true, then PagedList update itself, mind blown
+ */
 @DataScope
 class TaskRepositoryImpl @Inject constructor(
     private val taskDataSource: TaskDataSource
@@ -67,8 +70,8 @@ class TaskRepositoryImpl @Inject constructor(
         return taskDataSource.insertAll(entities)
     }
 
-    override suspend fun updateComplete(taskId: String, completed: Boolean): Long {
-        return taskDataSource.updateComplete(taskId, completed)
+    override suspend fun updateComplete(taskId: String, completed: Boolean, updateTime: Long): Long {
+        return taskDataSource.updateComplete(taskId, completed, updateTime)
     }
 
     override suspend fun getTask(taskId: String): Task? {

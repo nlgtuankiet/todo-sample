@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="task_detail_delete_task_success">Delete task successful</string>
+    <string name="task_detail_delete_task_fail">Delete task fail</string>
+    <string name="task_detail_update_complete_success">Update complete success</string>
+    <string name="task_detail_update_complete_fail">Update complete fail</string>
+</resources>

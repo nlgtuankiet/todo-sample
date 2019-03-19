@@ -28,9 +28,7 @@ class SearchTaskTest {
 
         useCase.invoke(query, 1)
 
-        val expected = """
-            "1* 2* 3* 4* 5*"
-        """.trimIndent()
+        val expected = """1 2 3 4 5""".trimIndent()
         verify(taskRepository).getSearchResultObservablePaged(expected, 1)
     }
 
@@ -40,9 +38,7 @@ class SearchTaskTest {
 
         useCase.invoke(query, 1)
 
-        val expected = """
-            "aaa*"
-        """.trimIndent()
+        val expected = """aaa""".trimIndent()
         verify(taskRepository).getSearchResultObservablePaged(expected, 1)
     }
 }

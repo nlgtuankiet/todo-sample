@@ -4,7 +4,7 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.os.Build
 import androidx.core.app.NotificationManagerCompat
-import com.sample.todo.notification.NotificationChannelInformation
+import com.sample.todo.base.notification.NotificationChannelInformation
 import javax.inject.Inject
 
 class NotificationChannelInitializer @Inject constructor(

@@ -96,7 +96,7 @@ class TaskSqlDelightDataSource @Inject constructor(
             }
     }
 
-    override suspend fun updateComplete(taskId: String, completed: Boolean): Long {
+    override suspend fun updateComplete(taskId: String, completed: Boolean, updateTime: Long): Long {
         return database.inTransaction {
             taskQueries.updateComplete(
                 taskId,

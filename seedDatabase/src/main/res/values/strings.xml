@@ -1,0 +1,10 @@
+<resources>
+    <!--seed database notification-->
+    <string name="seed_database_module_title">Seed database</string>
+    <string name="seed_database_notification_prepare">Prepare to seed %d task(s) in %d</string>
+    <string name="seed_database_notification_cancel_action_title">Cancel</string>
+    <string name="seed_database_notification_stopped">Stopped</string>
+    <string name="seed_database_notification_seed_done">Seeded %d task(s)</string>
+    <string name="seed_database_notification_seed_process">%d%%</string>
+    <string name="title_seed_database">Seed Database</string>
+</resources>

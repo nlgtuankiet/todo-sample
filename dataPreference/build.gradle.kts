@@ -10,6 +10,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    dataBinding {
+        isEnabled = true
+    }
     defaultConfig {
         minSdkVersion(Android.minSdkVersion)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -19,6 +22,9 @@ android {
             isDebuggable = false
             isMinifyEnabled = false
         }
+    }
+    lintOptions {
+        setCheckReleaseBuilds(false)
     }
 }
 
