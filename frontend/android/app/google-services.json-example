@@ -1,0 +1,138 @@
+{
+  "project_info": {
+    "project_number": "",
+    "firebase_url": "",
+    "project_id": "",
+    "storage_bucket": "todo-6d146.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123:android:abc",
+        "android_client_info": {
+          "package_name": "com.sample.todo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123-abc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sample.todo",
+            "certificate_hash": ""
+          }
+        },
+        {
+          "client_id": "",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123:android:abc",
+        "android_client_info": {
+          "package_name": "com.sample.todo.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123-abc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sample.todo.debug",
+            "certificate_hash": ""
+          }
+        },
+        {
+          "client_id": "123-abc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123-abc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123:android:abc",
+        "android_client_info": {
+          "package_name": "com.sample.todo.releasetest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123-abc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sample.todo.releasetest",
+            "certificate_hash": ""
+          }
+        },
+        {
+          "client_id": "123-abc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123-abc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

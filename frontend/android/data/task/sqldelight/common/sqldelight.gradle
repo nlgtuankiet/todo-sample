@@ -1,0 +1,7 @@
+sqldelight {
+    TodoSqlDelightDatabase {
+        packageName = "com.sample.todo.data.tasks.sqldelight"
+        sourceFolders = ["sqldelight"]
+        schemaOutputDirectory = file("src/main/sqldelight/migrations")
+    }
+}

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="state"
+            type="com.sample.todo.main.statistics.StatisticsState" />
+
+        <variable
+            name="viewModel"
+            type="com.sample.todo.main.statistics.StatisticsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/main_coordinator_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Widget.Todo.Toolbar"
+                    app:title="@string/statistics_toolbar_title" />
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:layout_height="400dp">
+
+
+                <TextView
+                    android:id="@+id/task_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="@{state.tasksCount}"
+                    app:layout_constraintBottom_toBottomOf="@+id/task_count_label"
+                    app:layout_constraintStart_toEndOf="@+id/label_barrier"
+                    tools:text="10" />
+
+                <TextView
+                    android:id="@+id/complete_task_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="@{state.completedTasksCount}"
+                    app:layout_constraintBottom_toBottomOf="@+id/completed_task_count_label"
+                    app:layout_constraintStart_toEndOf="@+id/label_barrier"
+                    tools:text="6" />
+
+                <TextView
+                    android:id="@+id/active_task_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="@{state.activeTasksCount}"
+                    app:layout_constraintBottom_toBottomOf="@+id/active_task_label"
+                    app:layout_constraintStart_toEndOf="@+id/label_barrier"
+                    tools:text="4" />
+
+                <TextView
+                    android:id="@+id/task_count_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/statistics_all_task_count_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/completed_task_count_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/statistics_completed_task_count_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/task_count_label" />
+
+                <TextView
+                    android:id="@+id/active_task_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/statistics_active_task_count_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/completed_task_count_label" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/label_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="end"
+                    app:constraint_referenced_ids="completed_task_count_label,active_task_label,task_count_label"
+                    tools:layout_editor_absoluteX="411dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

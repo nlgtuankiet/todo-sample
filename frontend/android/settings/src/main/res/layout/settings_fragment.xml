@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="state"
+            type="com.sample.todo.settings.ui.SettingsState" />
+        <variable
+            name="viewModel"
+            type="com.sample.todo.settings.ui.SettingsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:onClick="@{() -> viewModel.onSetNameClick()}"
+            android:id="@+id/set_name_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Set"
+            app:layout_constraintBottom_toBottomOf="@+id/name_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/name_edit_text" />
+
+        <EditText
+            android:id="@+id/name_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:onTextChanged="@{(text, start, before, count) -> viewModel.onNameChange(text)}"
+            android:text="@{state.name.invoke()}"
+            app:layout_constraintEnd_toStartOf="@+id/set_name_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

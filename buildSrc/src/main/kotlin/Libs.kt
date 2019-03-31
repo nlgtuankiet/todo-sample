@@ -221,6 +221,9 @@ object Libs {
     const val firebase_firestore: String = "com.google.firebase:firebase-firestore:" +
             Versions.firebase_firestore
 
+    const val firebase_functions: String = "com.google.firebase:firebase-functions:" +
+            Versions.firebase_functions
+
     /**
      * http://tools.android.com/ */
     const val google_services: String = "com.google.gms:google-services:" + Versions.google_services
@@ -258,6 +261,15 @@ object Libs {
      * https://github.com/square/AssistedInject/ */
     const val assisted_inject_processor_dagger2: String =
             "com.squareup.inject:assisted-inject-processor-dagger2:" + Versions.com_squareup_inject
+
+    /**
+     * https://github.com/square/moshi */
+    const val moshi_kotlin_codegen: String = "com.squareup.moshi:moshi-kotlin-codegen:" +
+            Versions.com_squareup_moshi
+
+    /**
+     * https://github.com/square/moshi */
+    const val moshi: String = "com.squareup.moshi:moshi:" + Versions.com_squareup_moshi
 
     /**
      * https://github.com/square/retrofit/ */
