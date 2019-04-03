@@ -33,6 +33,7 @@ android {
 
 dependencies {
     androidTestImplementation(Libs.androidx_test_core)
+    implementation(Libs.work_runtime_ktx)
     androidTestImplementation(Libs.androidx_test_ext_junit)
     androidTestImplementation(Libs.androidx_test_rules)
     androidTestImplementation(Libs.androidx_test_runner)
@@ -54,7 +55,6 @@ dependencies {
     implementation(Libs.rxjava2_extensions)
     implementation(Libs.timber)
     implementation(project(":frontend:android:core"))
-    implementation(project(":frontend:android:data:preference"))
     implementation(project(":frontend:android:domain"))
     kapt(Libs.dagger_compiler)
     kapt(Libs.room_compiler)

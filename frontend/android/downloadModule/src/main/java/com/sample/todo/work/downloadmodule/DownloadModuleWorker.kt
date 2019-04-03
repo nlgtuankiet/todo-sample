@@ -4,86 +4,131 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.work.ListenableWorker
-import androidx.work.WorkerParameters
+import androidx.work.*
 import com.google.android.play.core.splitinstall.SplitInstallManager
-import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
+import com.sample.todo.base.entity.DownloadModuleSessionId
+import com.sample.todo.base.entity.DynamicFeatureModule
 import com.sample.todo.base.notification.AppNotification
 import com.sample.todo.base.notification.NotificationChannelInformation
+import com.sample.todo.base.usecase.IsModuleInstalled
+import com.sample.todo.base.usecase.IsModuleInstalling
+import com.sample.todo.base.usecase.StartInstallModule
 import com.sample.todo.core.checkAllMatched
 import com.sample.todo.work.BaseWorker
 import com.sample.todo.work.ListenableWorkerFactory
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import timber.log.Timber
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class DownloadModuleWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted private val workerParams: WorkerParameters,
     private val notificationManager: NotificationManagerCompat,
-    private val splitInstallManager: SplitInstallManager
+    private val splitInstallManager: SplitInstallManager,
+    private val isModuleInstalled: IsModuleInstalled,
+    private val isModuleInstalling: IsModuleInstalling,
+    private val startInstallModule: StartInstallModule
 ) : BaseWorker(appContext, workerParams) {
     @AssistedInject.Factory
     interface Factory : ListenableWorkerFactory {
         override fun create(appContext: Context, workerParams: WorkerParameters): ListenableWorker
     }
 
+    internal data class Parameter(
+        val module: DynamicFeatureModule
+    ) {
+        fun asData(): Data {
+            return Data.Builder()
+                .putString(KEY_MODULE_NAME, module.name)
+                .build()
+        }
+
+        companion object {
+            const val KEY_MODULE_NAME = "KEY_MODULE_NAME"
+            fun fromData(data: Data): Parameter {
+                val moduleName = data.getString(KEY_MODULE_NAME)
+                    ?: throw IllegalArgumentException("$KEY_MODULE_NAME is not present in data")
+                val module = DynamicFeatureModule.fromString(moduleName)
+                    ?: throw IllegalArgumentException("""Module name: "$moduleName" is not valid""")
+                return Parameter(module)
+            }
+        }
+    }
+
+    companion object {
+        private const val WORKER_NAME_PREFIX = "DOWNLOAD_MODULE_"
+
+        fun enqueNewWorker(module: DynamicFeatureModule) {
+            val param = DownloadModuleWorker.Parameter(module)
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+            val request = OneTimeWorkRequestBuilder<DownloadModuleWorker>()
+                .setInputData(param.asData())
+                .setConstraints(constraints)
+                .build()
+            WorkManager.getInstance()
+                .enqueueUniqueWork(
+                    WORKER_NAME_PREFIX + module.codeName.toUpperCase(),
+                    ExistingWorkPolicy.REPLACE,
+                    request
+                )
+        }
+    }
+
     private lateinit var stateListener: SplitInstallStateUpdatedListener
 
     private val notificationId = AppNotification.DownloadModule.ordinal
     private val channelId = NotificationChannelInformation.DownloadModule.ordinal.toString()
-    private lateinit var parameters: Parameter
-    private val moduleNames: String by lazy { parameters.modules.joinToString(", ") { it.name } }
+    private val parameters: Parameter by lazy { Parameter.fromData(workerParams.inputData) }
+    private val module: DynamicFeatureModule by lazy { parameters.module }
+    private val moduleDisplayName: String
+        get() = appContext.getString(module.displayName)
     private val notificationTitle: String
-        get() = appContext.getString(R.string.download_module_notification_title, moduleNames)
+        get() = appContext.getString(R.string.download_module_notification_title, moduleDisplayName)
 
     override suspend fun doSuspendWork() {
-        parameters = Parameter.fromData(workerParams.inputData)
-
-        // TODO validate parameter if invalid stuff
-        val requestInstall = SplitInstallRequest
-            .newBuilder()
-            .apply {
-                parameters.modules.forEach { module ->
-                    addModule(module.name)
-                }
-            }
-            .build()
         displayOnGoingNotification(R.string.download_module_notification_sending_request)
-        runCatching {
-            suspendCoroutine<Int> { continuation ->
-                splitInstallManager.startInstall(requestInstall)
-                    .addOnSuccessListener {
-                        Timber.d("sessionId: $it")
-                        continuation.resume(it)
-                    }
-                    .addOnFailureListener {
-                        Timber.d("error obtain sessionId: ${it.message}")
-                        continuation.resumeWithException(it)
-                    }
+
+        if (isModuleInstalled(module)) {
+            displayFinishNotification {
+                appContext.getString(
+                    R.string.download_module_notification_module_is_already_installed,
+                    moduleDisplayName
+                )
             }
+        }
+        if (isModuleInstalling(module)) {
+            displayFinishNotification {
+                appContext.getString(
+                    R.string.download_module_notification_module_is_already_downloading,
+                    moduleDisplayName
+                )
+            }
+        }
+
+        runCatching {
+            startInstallModule(module)
         }.onSuccess { sessionId ->
             suspendCoroutine<Unit> { continuation ->
                 initListener(sessionId, continuation)
             }
         }.onFailure { cause ->
             displayFinishNotification {
-                cause.message ?: TODO()
+                cause.message ?: appContext.getString(R.string.download_module_notification_unknown_error)
             }
         }
         clearResource()
     }
 
-    private fun initListener(sessionId: Int, continuation: Continuation<Unit>) {
+    private fun initListener(sessionId: DownloadModuleSessionId, continuation: Continuation<Unit>) {
         stateListener = SplitInstallStateUpdatedListener { state ->
-            if (state.sessionId() != sessionId) TODO()
-            val multiInstall = state.moduleNames().size > 1
+            if (state.sessionId() != sessionId.value)
+                throw IllegalArgumentException("Session id is not match: expected: $sessionId, actual: ${state.sessionId()}")
             when (state.status()) {
                 SplitInstallSessionStatus.UNKNOWN -> {
                     displayFinishNotification(R.string.download_module_notification_unknown_error)
@@ -93,7 +138,8 @@ class DownloadModuleWorker @AssistedInject constructor(
                     displayOnGoingNotification(R.string.download_module_notification_pending)
                 }
                 SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION -> {
-                    val intentSender = state.resolutionIntent()?.intentSender ?: TODO()
+                    val intentSender = state.resolutionIntent()?.intentSender
+                        ?: throw RuntimeException("Cannot resolve intent from state")
                     appContext.startIntentSender(intentSender, null, 0, 0, 0)
                 }
                 SplitInstallSessionStatus.DOWNLOADING -> {
@@ -120,7 +166,7 @@ class DownloadModuleWorker @AssistedInject constructor(
                     displayFinishNotification(R.string.download_module_notification_canceled)
                     continuation.resume(Unit)
                 }
-                else -> TODO()
+                else -> throw IllegalArgumentException("Invalid SplitInstallSessionStatus: ${state.status()}")
             }.checkAllMatched
         }
         splitInstallManager.registerListener(stateListener)
@@ -144,6 +190,7 @@ class DownloadModuleWorker @AssistedInject constructor(
 
     private inline fun displayFinishNotification(getContentText: () -> String) {
         val notification = baseNotificationBuilder
+            .setSmallIcon(android.R.drawable.stat_sys_download_done)
             .setContentText(getContentText())
             .setOngoing(false)
             .setAutoCancel(true)

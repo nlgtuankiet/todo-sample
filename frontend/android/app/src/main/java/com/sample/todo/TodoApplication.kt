@@ -19,19 +19,21 @@ open class TodoApplication : DaggerApplication() {
     lateinit var appInitializer: AppInitializer
 
     val dataComponent: DataComponent by lazy {
-        RoomDataComponent.builder().seedContext(this).build()
+        RoomDataComponent(
+            context = this)
     }
     val domainComponent: DomainComponent by lazy {
-        DomainComponent.builder()
-            .taskRepository(dataComponent.provideTaskRepository())
-            .preferenceRepository(dataComponent.providePreferenceRepository())
-            .build()
+        DomainComponent(
+            taskRepository = dataComponent.provideTaskRepository(),
+            preferenceRepository = dataComponent.providePreferenceRepository()
+        )
     }
     val appComponent: AppComponent by lazy {
-        AppComponent.builder()
-            .domainComponent(domainComponent)
-            .dataComponent(dataComponent)
-            .create(this) as? AppComponent ?: TODO()
+        AppComponent(
+            domainComponent = domainComponent,
+            dataComponent = dataComponent,
+            application = this
+        )
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
@@ -46,7 +48,6 @@ open class TodoApplication : DaggerApplication() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-//        MultiDex.install(this)
         SplitCompat.install(this)
     }
 

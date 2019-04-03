@@ -13,5 +13,7 @@
     <string name="download_module_notification_pending">Pending</string>
     <string name="download_module_notification_canceling">Canceling</string>
     <string name="download_module_notification_canceled">Canceled</string>
+    <string name="download_module_notification_module_is_already_installed">Module "%s" is already installed</string>
+    <string name="download_module_notification_module_is_already_downloading">Module "%s" is already downloading</string>
 
 </resources>

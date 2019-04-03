@@ -3,7 +3,7 @@ package com.sample.todo.main.setting.seedinput
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sample.todo.base.Event
+import com.sample.todo.base.entity.Event
 import com.sample.todo.work.seeddatabase.Parameter
 import javax.inject.Inject
 

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sample.todo.base.di.ApplicationScope
+import com.sample.todo.base.entity.Event
 import com.sample.todo.base.message.SnackbarMessageManager.Companion.MAX_ITEMS
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.base.widget.FadingSnackbar
@@ -15,7 +16,7 @@ import javax.inject.Inject
 interface MessageManager {
     fun addMessage(msg: Message)
     fun loadNextMessage()
-    fun observeNextMessage(): LiveData<com.sample.todo.base.Event<Message>>
+    fun observeNextMessage(): LiveData<Event<Message>>
 }
 
 /**
@@ -57,9 +58,9 @@ class SnackbarMessageManager @Inject constructor() : MessageManager {
         const val MAX_ITEMS = 10
     }
 
-    private val messages = mutableListOf<com.sample.todo.base.Event<Message>>()
+    private val messages = mutableListOf<Event<Message>>()
 
-    private val result = MutableLiveData<com.sample.todo.base.Event<Message>>()
+    private val result = MutableLiveData<Event<Message>>()
 
     override fun addMessage(msg: Message) {
         Timber.d("addMessage(msg=$msg)")
@@ -78,7 +79,7 @@ class SnackbarMessageManager @Inject constructor() : MessageManager {
 
         // Only add the message if it hasn't been handled before
         if (alreadyHandledWithSameId.isEmpty()) {
-            messages.add(com.sample.todo.base.Event(msg))
+            messages.add(Event(msg))
             loadNextMessage()
         }
 
@@ -92,13 +93,13 @@ class SnackbarMessageManager @Inject constructor() : MessageManager {
         result.postValue(messages.firstOrNull { !it.hasBeenHandled })
     }
 
-    override fun observeNextMessage(): LiveData<com.sample.todo.base.Event<Message>> {
+    override fun observeNextMessage(): LiveData<Event<Message>> {
         return result
     }
 }
 
 fun Fragment.setUpSnackbar(
-    snackbarMessage: LiveData<com.sample.todo.base.Event<Message>>,
+    snackbarMessage: LiveData<Event<Message>>,
     fadingSnackbar: FadingSnackbar,
     messageManager: MessageManager,
     actionClickListener: () -> Unit = {}

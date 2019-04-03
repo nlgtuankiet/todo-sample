@@ -2,17 +2,7 @@ package com.sample.todo.domain.di
 
 import com.sample.todo.domain.repository.PreferenceRepository
 import com.sample.todo.domain.repository.TaskRepository
-import com.sample.todo.domain.usecase.GetTask
-import com.sample.todo.domain.usecase.GetTaskFilterTypeObservable
-import com.sample.todo.domain.usecase.GetTaskMiniList
-import com.sample.todo.domain.usecase.GetTaskStatObservable
-import com.sample.todo.domain.usecase.GetTasksCountObservable
-import com.sample.todo.domain.usecase.InsertAllTasks
-import com.sample.todo.domain.usecase.InsertNewTask
-import com.sample.todo.domain.usecase.SeedDatabase
-import com.sample.todo.domain.usecase.SetTaskFilterType
-import com.sample.todo.domain.usecase.UpdateComplete
-import com.sample.todo.domain.usecase.UpdateTask
+import com.sample.todo.domain.usecase.*
 import com.sample.todo.domain.util.lorem.Lorem
 import dagger.BindsInstance
 import dagger.Component
@@ -23,30 +13,35 @@ import dagger.Component
     ]
 )
 @DomainScope
-abstract class DomainComponent {
-    abstract fun GetTask(): GetTask
-    abstract fun GetTaskFilterTypeLiveData(): GetTaskFilterTypeObservable
-    abstract fun GetTaskMiniList(): GetTaskMiniList
-    abstract fun GetTasksCountLive(): GetTasksCountObservable
-    abstract fun GetTaskStatLive(): GetTaskStatObservable
-    abstract fun InsertAllTasks(): InsertAllTasks
-    abstract fun InsertNewTask(): InsertNewTask
-    abstract fun SeedDatabase(): SeedDatabase
-    abstract fun SetTaskFilterType(): SetTaskFilterType
-    abstract fun UpdateComplete(): UpdateComplete
-    abstract fun UpdateTask(): UpdateTask
-    abstract fun provideLore(): Lorem
+interface DomainComponent {
+    fun GetTask(): GetTask
+    fun GetTaskFilterTypeLiveData(): GetTaskFilterTypeObservable
+    fun GetTaskMiniList(): GetTaskMiniList
+    fun GetTasksCountLive(): GetTasksCountObservable
+    fun GetTaskStatLive(): GetTaskStatObservable
+    fun InsertAllTasks(): InsertAllTasks
+    fun InsertNewTask(): InsertNewTask
+    fun SeedDatabase(): SeedDatabase
+    fun SetTaskFilterType(): SetTaskFilterType
+    fun UpdateComplete(): UpdateComplete
+    fun UpdateTask(): UpdateTask
+    fun provideLore(): Lorem
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun taskRepository(taskRepository: TaskRepository): Builder
-        @BindsInstance
-        fun preferenceRepository(preferenceRepository: PreferenceRepository): Builder
-        fun build(): DomainComponent
+    @Component.Factory
+    interface Factory {
+        fun create(
+            @BindsInstance taskRepository: TaskRepository,
+            @BindsInstance preferenceRepository: PreferenceRepository
+        ): DomainComponent
     }
 
     companion object {
-        fun builder(): Builder = DaggerDomainComponent.builder()
+        operator fun invoke(
+            taskRepository: TaskRepository,
+            preferenceRepository: PreferenceRepository
+        ): DomainComponent = DaggerDomainComponent.factory().create(
+            taskRepository,
+            preferenceRepository
+        )
     }
 }

@@ -4,5 +4,5 @@ build/
 *.iml
 local.properties
 release.keystore
-/app/google-services.json
-/app/service-account-key.json
+google-services.json
+service-account-key.json

@@ -9,6 +9,7 @@ abstract class AboutModule {
     @FragmentScoped
     @ContributesAndroidInjector(
         modules = [
+
         ]
     )
     internal abstract fun contributeFragment(): AboutFragment

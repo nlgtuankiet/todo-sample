@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.sample.todo.base.Event
+import com.sample.todo.base.entity.Event
 import com.sample.todo.base.message.Message
 
 // TODO: understand and improve this

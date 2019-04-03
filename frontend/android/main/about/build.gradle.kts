@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":frontend:android:domain"))
     implementation(project(":frontend:android:core"))
     implementation(project(":frontend:android:main:mainNavigation"))
+    implementation(project(":frontend:android:main:moduleDetail"))
     implementation(Libs.epoxy)
     implementation(Libs.epoxy_databinding)
     implementation(Libs.epoxy_paging)

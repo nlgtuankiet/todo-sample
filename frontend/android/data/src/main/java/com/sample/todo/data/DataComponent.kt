@@ -1,20 +1,19 @@
 package com.sample.todo.data
 
 import android.content.Context
+import androidx.work.WorkManager
+import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.sample.todo.domain.repository.PreferenceRepository
 import com.sample.todo.domain.repository.TaskRepository
 import dagger.BindsInstance
 
-abstract class DataComponent {
+interface DataComponent {
 
-    abstract fun provideTaskRepository(): TaskRepository
+    fun provideTaskRepository(): TaskRepository
 
-    abstract fun providePreferenceRepository(): PreferenceRepository
+    fun providePreferenceRepository(): PreferenceRepository
 
-    abstract class Builder {
-        @BindsInstance
-        abstract fun seedContext(context: Context): Builder
-
-        abstract fun build(): DataComponent
+    interface Factory {
+        fun create(@BindsInstance context: Context): DataComponent
     }
 }

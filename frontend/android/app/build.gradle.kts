@@ -170,7 +170,7 @@ dependencies {
     implementation(project(":frontend:android:main:mainNavigation"))
     implementation(project(":frontend:android:core"))
     implementation(project(":frontend:android:data"))
-    implementation(project(":frontend:android:data:task:room"))
+    implementation(project(":frontend:android:data:dataTask:dataTaskRoom"))
 
     implementation(project(":frontend:android:domain"))
     implementation(project(":frontend:android:seedDatabase"))

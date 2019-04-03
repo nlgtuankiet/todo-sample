@@ -60,7 +60,7 @@ dependencies {
     implementation(project(":frontend:android:main"))
     implementation(project(":frontend:android:core"))
     implementation(project(":frontend:android:data"))
-    implementation(project(":frontend:android:data:preference"))
+    implementation(project(":frontend:android:data:dataPreference"))
     implementation(project(":frontend:android:domain"))
     kapt(Libs.assisted_inject_processor_dagger2)
     kapt(Libs.dagger_android_processor)

@@ -69,7 +69,7 @@ object Versions {
 
     const val com_google_android_play_core: String = "1.4.0" 
 
-    const val com_google_dagger: String = "2.21" 
+    const val com_google_dagger: String = "2.22.1"
 
     const val firebase_core: String = "16.0.1" // available: "16.0.8"
 

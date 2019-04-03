@@ -3,22 +3,22 @@
     "project_number": "",
     "firebase_url": "",
     "project_id": "",
-    "storage_bucket": "todo-6d146.appspot.com"
+    "storage_bucket": ""
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:123:android:abc",
+        "mobilesdk_app_id": "",
         "android_client_info": {
-          "package_name": "com.sample.todo"
+          "package_name": ""
         }
       },
       "oauth_client": [
         {
-          "client_id": "123-abc.apps.googleusercontent.com",
+          "client_id": "",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.sample.todo",
+            "package_name": "",
             "certificate_hash": ""
           }
         },
@@ -47,22 +47,22 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:123:android:abc",
+        "mobilesdk_app_id": "",
         "android_client_info": {
-          "package_name": "com.sample.todo.debug"
+          "package_name": ""
         }
       },
       "oauth_client": [
         {
-          "client_id": "123-abc.apps.googleusercontent.com",
+          "client_id": "",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.sample.todo.debug",
+            "package_name": "",
             "certificate_hash": ""
           }
         },
         {
-          "client_id": "123-abc.apps.googleusercontent.com",
+          "client_id": "",
           "client_type": 3
         }
       ],
@@ -79,7 +79,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "123-abc.apps.googleusercontent.com",
+              "client_id": "",
               "client_type": 3
             }
           ]
@@ -91,22 +91,22 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:123:android:abc",
+        "mobilesdk_app_id": "",
         "android_client_info": {
-          "package_name": "com.sample.todo.releasetest"
+          "package_name": ""
         }
       },
       "oauth_client": [
         {
-          "client_id": "123-abc.apps.googleusercontent.com",
+          "client_id": "",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.sample.todo.releasetest",
+            "package_name": "",
             "certificate_hash": ""
           }
         },
         {
-          "client_id": "123-abc.apps.googleusercontent.com",
+          "client_id": "",
           "client_type": 3
         }
       ],
@@ -123,7 +123,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "123-abc.apps.googleusercontent.com",
+              "client_id": "",
               "client_type": 3
             }
           ]

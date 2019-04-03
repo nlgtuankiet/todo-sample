@@ -6,6 +6,7 @@ import androidx.navigation.NavDirections
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
+import com.sample.todo.base.entity.Event
 import com.sample.todo.base.extension.getFragment
 import com.sample.todo.domain.usecase.GetSearchResultStatisticsObservable
 import com.sample.todo.domain.usecase.SearchTask
@@ -55,14 +56,14 @@ class SearchViewModel @AssistedInject constructor(
             }
     }
 
-    private val _navigationEvent = MutableLiveData<com.sample.todo.base.Event<NavDirections>>()
-    val navigationEvent: LiveData<com.sample.todo.base.Event<NavDirections>>
+    private val _navigationEvent = MutableLiveData<Event<NavDirections>>()
+    val navigationEvent: LiveData<Event<NavDirections>>
         get() = _navigationEvent
 
     fun onResultItemClick(taskId: String) {
         Timber.d("onResultItemClick(taskId=$taskId)")
         _navigationEvent.value =
-            com.sample.todo.base.Event(
+            Event(
                 SearchFragmentDirections.actionSearchFragmentToTaskDetailFragment(
                     taskId
                 )

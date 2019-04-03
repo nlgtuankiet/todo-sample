@@ -5,4 +5,10 @@
     <string name="notification_channel_download_module_name">Download Module Information</string>
     <string name="notification_channel_download_module_description">Information related to download module process</string>
 
+
+    <string name="dynamic_feature_module_settings_name">Settings</string>
+    <string name="dynamic_feature_module_seed_database_name">Seed Database</string>
+    <string name="dynamic_feature_module_data_task_firestore_name">Firestore Data Implementation</string>
+    <string name="dynamic_feature_module_data_task_sqldelight_name">SqlDelight Data Implementation</string>
+
 </resources>

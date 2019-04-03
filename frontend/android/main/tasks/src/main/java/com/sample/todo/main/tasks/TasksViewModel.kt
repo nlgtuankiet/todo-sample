@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
-import com.sample.todo.base.Event
+import com.sample.todo.base.entity.Event
 import com.sample.todo.base.MvRxViewModel
 import com.sample.todo.base.extension.getFragment
 import com.sample.todo.base.extension.postNewMessage

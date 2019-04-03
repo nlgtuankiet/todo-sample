@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
+import com.sample.todo.base.entity.Event
 import com.sample.todo.base.extension.arguments
 import com.sample.todo.base.extension.getFragment
 import com.sample.todo.base.extension.postNewEvent
@@ -87,29 +88,29 @@ class TaskDetailViewModel @AssistedInject constructor(
         menuItemClickHandler = this::onToolbarMenuClick
     )
 
-    private val _snackBarMessage = MutableLiveData<com.sample.todo.base.Event<Message>>()
-    val snackBarMessage: LiveData<com.sample.todo.base.Event<Message>>
+    private val _snackBarMessage = MutableLiveData<Event<Message>>()
+    val snackBarMessage: LiveData<Event<Message>>
         get() = _snackBarMessage
 
-    private val _navigationEvent = MutableLiveData<com.sample.todo.base.Event<NavDirections>>()
-    val navigationEvent: LiveData<com.sample.todo.base.Event<NavDirections>>
+    private val _navigationEvent = MutableLiveData<Event<NavDirections>>()
+    val navigationEvent: LiveData<Event<NavDirections>>
         get() = _navigationEvent
 
-    private val _navigateUpEvent = MutableLiveData<com.sample.todo.base.Event<Unit>>()
-    val navigateUpEvent: LiveData<com.sample.todo.base.Event<Unit>>
+    private val _navigateUpEvent = MutableLiveData<Event<Unit>>()
+    val navigateUpEvent: LiveData<Event<Unit>>
         get() = _navigateUpEvent
 
-    private val _loadErrorEvent = MutableLiveData<com.sample.todo.base.Event<Unit>>()
-    val loadErrorEvent: LiveData<com.sample.todo.base.Event<Unit>>
+    private val _loadErrorEvent = MutableLiveData<Event<Unit>>()
+    val loadErrorEvent: LiveData<Event<Unit>>
         get() = _loadErrorEvent
 
-    private val _addNotificationEvent = MutableLiveData<com.sample.todo.base.Event<String>>()
-    val addNotificationEvent: LiveData<com.sample.todo.base.Event<String>>
+    private val _addNotificationEvent = MutableLiveData<Event<String>>()
+    val addNotificationEvent: LiveData<Event<String>>
         get() = _addNotificationEvent
 
     fun onFabButtonClick() {
         _navigationEvent.value =
-            com.sample.todo.base.Event(
+            Event(
                 TaskDetailFragmentDirections.actionTaskDetailFragmentToAddEditFragment(
                     args.taskId
                 )
@@ -117,14 +118,14 @@ class TaskDetailViewModel @AssistedInject constructor(
     }
 
     private fun onNavigationClick() {
-        _navigateUpEvent.value = com.sample.todo.base.Event(Unit)
+        _navigateUpEvent.value = Event(Unit)
     }
 
     private fun onToolbarMenuClick(menuId: Int): Boolean {
         Timber.d("onToolbarMenuClick(menuId=$menuId)")
         when (menuId) {
             R.id.add_notification -> _addNotificationEvent.value =
-                com.sample.todo.base.Event(args.taskId)
+                Event(args.taskId)
             R.id.delete -> deleteTask()
         }
 

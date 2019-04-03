@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
+import com.sample.todo.base.entity.Event
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskId
 import com.sample.todo.domain.usecase.GetTask
@@ -72,16 +73,16 @@ class AddEditViewModel @AssistedInject constructor(
         menuItemClickHandler = this::onMenuClick
     )
 
-    private val _navigateUpEvent = MutableLiveData<com.sample.todo.base.Event<Unit>>()
-    val navigateUpEvent: LiveData<com.sample.todo.base.Event<Unit>>
+    private val _navigateUpEvent = MutableLiveData<Event<Unit>>()
+    val navigateUpEvent: LiveData<Event<Unit>>
         get() = _navigateUpEvent
 
     val title = MutableLiveData<String>()
     val description = MutableLiveData<String?>()
     private var isCompleted = false
 
-    private val _snackBarMessage = MutableLiveData<com.sample.todo.base.Event<Message>>()
-    val snackBarMessage: LiveData<com.sample.todo.base.Event<Message>>
+    private val _snackBarMessage = MutableLiveData<Event<Message>>()
+    val snackBarMessage: LiveData<Event<Message>>
         get() = _snackBarMessage
 
     init {

@@ -30,6 +30,7 @@ android {
 }
 
 dependencies {
+    implementation(Libs.com_google_android_play_core)
     androidTestImplementation(Libs.androidx_test_core)
     androidTestImplementation(Libs.androidx_test_ext_junit)
     androidTestImplementation(Libs.androidx_test_rules)

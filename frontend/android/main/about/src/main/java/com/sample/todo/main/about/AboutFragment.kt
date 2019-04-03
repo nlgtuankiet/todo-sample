@@ -5,28 +5,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.android.play.core.splitinstall.SplitInstallManager
+import com.sample.todo.base.entity.DynamicFeatureModule
 import com.sample.todo.main.about.databinding.AboutFragmentBinding
 import com.sample.todo.navigation.MainNavigator
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.work.downloadmodule.DownloadModuleWorker
-import com.sample.todo.work.downloadmodule.Parameter
 import com.sample.todo.work.seeddatabase.Parameter as SeedParameter
 import com.sample.todo.work.seeddatabase.SeedDatabaseWorker
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
+import javax.inject.Provider
 
 class AboutFragment : DaggerFragment() {
     private lateinit var binding: AboutFragmentBinding
-    private val aboutViewModel: AboutViewModel by viewModels()
     @Inject
-    lateinit var splitInstallManager: SplitInstallManager
+    lateinit var factory: AboutViewModelFactory
+    private val aboutViewModel: AboutViewModel by viewModels(factoryProducer = { factory })
     @Inject
     lateinit var workManager: WorkManager
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,10 +44,10 @@ class AboutFragment : DaggerFragment() {
                 val param = SeedParameter(totalTasks = 10, itemPerTrunk = 1)
                 workManager.enqueueUniqueWork(
                     SeedDatabaseWorker.WORK_MANE,
-                ExistingWorkPolicy.REPLACE,
-                OneTimeWorkRequestBuilder<SeedDatabaseWorker>()
-                    .setInputData(param.toData())
-                    .build()
+                    ExistingWorkPolicy.REPLACE,
+                    OneTimeWorkRequestBuilder<SeedDatabaseWorker>()
+                        .setInputData(param.toData())
+                        .build()
                 )
             }
         }
@@ -54,23 +58,17 @@ class AboutFragment : DaggerFragment() {
             navigateToSettingsEvent.observeEvent(viewLifecycleOwner) {
                 navigateToSettings()
             }
+            displayModuleDetailDialogEvent.observeEvent(viewLifecycleOwner) {
+                // TODO download module for now, display module detail dialog later
+                DownloadModuleWorker.enqueNewWorker(DynamicFeatureModule.SETTINGS)
+            }
         }
         return binding.root
     }
 
     private fun navigateToSettings() {
         val navigated = MainNavigator.toSettingsActivity(requireActivity())
-        if (!navigated) {
-            workManager.enqueue(
-                OneTimeWorkRequestBuilder<DownloadModuleWorker>()
-                    .setInputData(
-                        Parameter(
-                            modules = listOf(Parameter.Module.Settings)
-                        )
-                            .toData()
-                    )
-                    .build()
-            )
-        }
+        if (!navigated)
+            throw IllegalArgumentException("Why?")
     }
 }
