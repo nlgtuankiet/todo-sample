@@ -10,6 +10,7 @@ buildscript {
         maven("https://plugins.gradle.org/m2/")
         maven("https://dl.bintray.com/mockito/maven")
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
+        maven("https://kotlin.bintray.com/kotlinx/")
     }
     dependencies {
         classpath("com.jakewharton:butterknife-gradle-plugin:10.1.0")
@@ -37,10 +38,25 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven("https://maven.fabric.io/public")
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
+        maven("https://plugins.gradle.org/m2/")
         maven("https://dl.bintray.com/mockito/maven")
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
-        jcenter()
+        maven("https://kotlin.bintray.com/kotlinx/")
+
+    }
+}
+subprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven("https://maven.fabric.io/public")
+        maven("https://dl.bintray.com/kotlin/kotlin-eap")
+//        maven("https://plugins.gradle.org/m2/")
+        maven("https://dl.bintray.com/mockito/maven")
+        maven("https://oss.sonatype.org/content/repositories/snapshots/")
+        maven("https://kotlin.bintray.com/kotlinx/")
     }
 }
 

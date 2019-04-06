@@ -54,7 +54,6 @@ dependencies {
     implementation(Libs.room_rxjava2)
     implementation(Libs.rxjava2_extensions)
     implementation(Libs.timber)
-    implementation(project(":frontend:android:core"))
     implementation(project(":frontend:android:domain"))
     implementation(project(":frontend:android:data:dataPreference"))
     kapt(Libs.dagger_compiler)

@@ -47,17 +47,17 @@ android {
         versionCode = 56
         versionName = "1.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-//        multiDexEnabled = true
         vectorDrawables {
             useSupportLibrary = true
         }
+        multiDexEnabled = true
     }
     buildTypes {
         getByName("debug") {
             applicationIdSuffix = ".debug"
             signingConfigs.getByName("debug")
             isDebuggable = true
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -88,7 +88,8 @@ android {
         setCheckReleaseBuilds(false)
     }
     testBuildType = "release"
-    dynamicFeatures.add(":frontend:android:settings")
+    dynamicFeatures.add(":frontend:android:dynamic:settings")
+    dynamicFeatures.add(":frontend:android:dynamic:seedDatabase")
 
 }
 
@@ -103,7 +104,6 @@ play {
 }
 
 // TODO Assisted Inject compileOnly or implementation?
-// TODO Lifecycle (ViewModel and LiveData) research lifecycle-livedata-ktx lifecycle-viewmodel-ktx
 dependencies {
     androidTestImplementation(Libs.androidx_test_core)
     androidTestImplementation(Libs.androidx_test_ext_junit)
@@ -163,20 +163,22 @@ dependencies {
     testImplementation(Libs.robolectric)
     testImplementation(Libs.rxjava)
 
-    implementation(project(":frontend:android:main"))
-    implementation(project(":frontend:android:splash"))
+    implementation(project(":frontend:android:ui:main"))
+    implementation(project(":frontend:android:ui:main:mainNavigation"))
+    implementation(project(":frontend:android:ui:splash"))
     implementation(project(":frontend:android:work"))
     implementation(project(":frontend:android:base"))
-    implementation(project(":frontend:android:main:mainNavigation"))
-    implementation(project(":frontend:android:core"))
+    implementation(project(":frontend:android:ui"))
     implementation(project(":frontend:android:data"))
+    implementation(project(":frontend:android:data:dataPreference"))
     implementation(project(":frontend:android:data:dataTask:dataTaskRoom"))
+    implementation(project(":frontend:android:data:dataTask:dataTaskFirestore"))
+    implementation(project(":frontend:android:data:dataTask:dataTaskSqldelight"))
 
     implementation(project(":frontend:android:domain"))
-    implementation(project(":frontend:android:seedDatabase"))
     implementation(project(":frontend:android:downloadModule"))
 
-//    implementation("androidx.multidex:multidex:2.0.1")
+    implementation("androidx.multidex:multidex:2.0.1")
 }
 
 kapt {

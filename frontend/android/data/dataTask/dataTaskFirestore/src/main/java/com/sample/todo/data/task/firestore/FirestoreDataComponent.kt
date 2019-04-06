@@ -1,5 +1,6 @@
 package com.sample.todo.data.task.firestore
 
+import android.content.Context
 import com.sample.todo.data.DataComponent
 import com.sample.todo.data.TaskRepositoryBindingModule
 import com.sample.todo.data.core.DataScope
@@ -25,4 +26,10 @@ import dagger.Component
 interface FirestoreDataComponent : DataComponent {
     @Component.Factory
     interface Factory : DataComponent.Factory
+
+    companion object {
+        operator fun invoke(context: Context): DataComponent {
+            return DaggerFirestoreDataComponent.factory().create(context)
+        }
+    }
 }

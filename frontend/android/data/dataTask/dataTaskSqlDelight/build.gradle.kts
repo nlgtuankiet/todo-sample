@@ -56,7 +56,6 @@ dependencies {
     implementation(Libs.rxjava2_extensions)
     implementation(Libs.timber)
     implementation(project(":frontend:android:data:dataTask:dataTaskSqldelight:common"))
-    implementation(project(":frontend:android:core"))
     implementation(project(":frontend:android:data:dataPreference"))
     implementation(project(":frontend:android:domain"))
     kapt(Libs.dagger_compiler)

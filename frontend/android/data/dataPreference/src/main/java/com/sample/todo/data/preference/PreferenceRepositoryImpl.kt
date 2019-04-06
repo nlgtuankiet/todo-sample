@@ -9,6 +9,14 @@ import javax.inject.Inject
 class PreferenceRepositoryImpl @Inject constructor(
     private val preferenceStorage: PreferenceStorage
 ) : PreferenceRepository {
+    override fun getDataImplementationOrdinal(): Int {
+        return preferenceStorage.getDataImplementationOrdinal()
+    }
+
+    override fun setDataImplementationOrdinal(value: Int) {
+        return preferenceStorage.setDataImplementationOrdinal(value)
+    }
+
     override suspend fun getTotalTaskSeeded(): Int {
         return preferenceStorage.getTotalTaskSeeded()
     }

@@ -20,6 +20,5 @@
             android:authorities="${applicationId}.workmanager-init"
             android:exported="false"
             tools:node="remove" />
-        <service android:name="com.sample.todo.work.seeddatabase.service.SeedControllerService"/>
-    </application>
+        </application>
 </manifest>

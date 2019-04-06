@@ -45,7 +45,7 @@ dependencies {
     testImplementation(Libs.junit_junit)
     testImplementation(Libs.mockito_kotlin)
     testImplementation(Libs.robolectric)
-    implementation(project(":frontend:android:core"))
+    implementation(project(":frontend:android:domain"))
     implementation(Libs.work_runtime_ktx)
     implementation(Libs.timber)
     implementation(Libs.dagger_android_support)

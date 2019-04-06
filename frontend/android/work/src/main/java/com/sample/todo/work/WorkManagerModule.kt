@@ -1,7 +1,7 @@
 package com.sample.todo.work
 
 import androidx.work.WorkManager
-import com.sample.todo.base.di.ApplicationScope
+import com.sample.todo.base.di.AppScope
 import dagger.Module
 import dagger.Provides
 
@@ -10,7 +10,7 @@ abstract class WorkManagerModule {
     @Module
     companion object {
         @Provides
-        @ApplicationScope
+        @AppScope
         @JvmStatic
         fun provideWorkManager(): WorkManager {
             return WorkManager.getInstance()

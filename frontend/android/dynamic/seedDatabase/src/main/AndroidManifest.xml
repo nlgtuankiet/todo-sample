@@ -1,0 +1,22 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sample.todo.dynamic.seeddatabase">
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="true"
+        dist:title="@string/title_settings">
+        <dist:fusing dist:include="true"/>
+    </dist:module>
+    <application
+        android:name="com.sample.todo.TodoApplication"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name="com.sample.todo.dynamic.seeddatabase.ui.SeedDatabaseActivity"/>
+        <service android:name="com.sample.todo.dynamic.seeddatabase.service.SeedDatabaseControllerService"/>
+
+    </application>
+</manifest>
+

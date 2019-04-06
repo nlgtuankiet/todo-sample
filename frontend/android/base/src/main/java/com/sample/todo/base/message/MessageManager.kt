@@ -4,12 +4,12 @@ import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.sample.todo.base.di.ApplicationScope
+import com.sample.todo.base.di.AppScope
 import com.sample.todo.base.entity.Event
 import com.sample.todo.base.message.SnackbarMessageManager.Companion.MAX_ITEMS
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.base.widget.FadingSnackbar
-import com.sample.todo.core.Mockable
+import com.sample.todo.domain.util.Mockable
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -49,8 +49,8 @@ interface MessageManager {
  *         )
  *     )
  */
-@Mockable // TODO remove
-@ApplicationScope
+@com.sample.todo.domain.util.Mockable // TODO remove
+@AppScope
 class SnackbarMessageManager @Inject constructor() : MessageManager {
     companion object {
         // Keep a fixed number of old items

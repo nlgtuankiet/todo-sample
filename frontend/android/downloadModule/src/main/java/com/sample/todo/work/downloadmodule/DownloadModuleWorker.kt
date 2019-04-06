@@ -15,7 +15,7 @@ import com.sample.todo.base.notification.NotificationChannelInformation
 import com.sample.todo.base.usecase.IsModuleInstalled
 import com.sample.todo.base.usecase.IsModuleInstalling
 import com.sample.todo.base.usecase.StartInstallModule
-import com.sample.todo.core.checkAllMatched
+import com.sample.todo.domain.util.checkAllMatched
 import com.sample.todo.work.BaseWorker
 import com.sample.todo.work.ListenableWorkerFactory
 import com.squareup.inject.assisted.Assisted

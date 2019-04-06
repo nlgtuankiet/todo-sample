@@ -1,11 +1,11 @@
 package com.sample.todo.base.usecase
 
 import com.google.android.play.core.splitinstall.SplitInstallManager
-import com.sample.todo.base.di.ApplicationScope
+import com.sample.todo.base.di.AppScope
 import com.sample.todo.base.entity.DynamicFeatureModule
 import javax.inject.Inject
 
-@ApplicationScope
+@AppScope
 class IsModuleInstalled @Inject constructor(
     private val splitInstallManager: SplitInstallManager
 ) {

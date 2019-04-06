@@ -6,20 +6,22 @@ import androidx.work.WorkManager
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.sample.todo.MainActivityModule
 import com.sample.todo.TodoApplication
-import com.sample.todo.base.di.ApplicationScope
+import com.sample.todo.base.di.AppScope
 import com.sample.todo.base.message.MessageManagerBindingModule
 import com.sample.todo.data.DataComponent
 import com.sample.todo.domain.di.DomainComponent
 import com.sample.todo.initializer.InitializerBindingModule
+import com.sample.todo.ui.UiModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 
-@ApplicationScope
+// TODO make UiModule to UiComponent
+@AppScope
 @Component(
     modules = [
-        MainActivityModule::class,
+        UiModule::class,
         AndroidSupportInjectionModule::class,
         AndroidModule::class,
         MessageManagerBindingModule::class,

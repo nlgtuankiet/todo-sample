@@ -1,7 +1,7 @@
 package com.sample.todo.data
 
 import androidx.paging.PagedList
-import com.sample.todo.core.checkAllMatched
+import com.sample.todo.domain.util.checkAllMatched
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.domain.model.SearchResult
 import com.sample.todo.domain.model.SearchResultStatistics

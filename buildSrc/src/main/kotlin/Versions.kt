@@ -115,7 +115,7 @@ object Versions {
 
     const val org_jetbrains_kotlin: String = "1.3.20" // available: "1.3.30-eap-45"
 
-    const val org_jetbrains_kotlinx: String = "1.1.1" 
+    const val org_jetbrains_kotlinx: String = "1.1.1"
 
     const val org_mockito: String = "2.23.18" // available: "2.25.5"
 

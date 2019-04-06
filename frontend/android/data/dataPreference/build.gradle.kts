@@ -44,7 +44,6 @@ dependencies {
     implementation(Libs.room_runtime)
     implementation(Libs.room_rxjava2)
     implementation(Libs.timber)
-    implementation(project(":frontend:android:core"))
     implementation(project(":frontend:android:data:dataCore"))
     implementation(project(":frontend:android:domain"))
     kapt(Libs.dagger_compiler)

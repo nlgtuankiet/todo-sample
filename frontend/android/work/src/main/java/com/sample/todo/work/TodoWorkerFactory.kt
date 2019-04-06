@@ -15,10 +15,11 @@ class TodoWorkerFactory @Inject constructor(
         workerClassName: String,
         workerParameters: WorkerParameters
     ): ListenableWorker? {
-        val foundEntry =
-            workerFactories.entries.find { Class.forName(workerClassName).isAssignableFrom(it.key) }
-        val factory =
-            foundEntry?.value ?: throw IllegalArgumentException("unknown worker class name: $workerClassName")
-        return factory.get().create(appContext, workerParameters)
+        return workerFactories
+            .entries
+            .find { Class.forName(workerClassName).isAssignableFrom(it.key) }
+            ?.value
+            ?.get()
+            ?.create(appContext, workerParameters)
     }
 }
