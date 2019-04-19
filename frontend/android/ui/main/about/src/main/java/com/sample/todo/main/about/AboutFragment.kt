@@ -1,28 +1,32 @@
 package com.sample.todo.main.about
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.work.WorkManager
 import com.sample.todo.base.entity.DynamicFeatureModule
 import com.sample.todo.main.about.databinding.AboutFragmentBinding
-import com.sample.todo.navigation.MainNavigator
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.work.downloadmodule.DownloadModuleWorker
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
 
-class AboutFragment : DaggerFragment() {
+
+class AboutFragment constructor(
+    private val viewModelFactory: AboutViewModelFactory,
+    private val workManager: WorkManager,
+    private val provider: AboutFragmentProvider,
+    private val navigator: AboutNavigator
+) : Fragment()  {
     private lateinit var binding: AboutFragmentBinding
-    @Inject
-    lateinit var factory: AboutViewModelFactory
-    private val aboutViewModel: AboutViewModel by viewModels(factoryProducer = { factory })
-    @Inject
-    lateinit var workManager: WorkManager
+    private val aboutViewModel: AboutViewModel by viewModels(factoryProducer = { viewModelFactory })
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        provider.set(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,15 +37,15 @@ class AboutFragment : DaggerFragment() {
             viewModel = aboutViewModel
             lifecycleOwner = viewLifecycleOwner
             seedDatabaseButton.setOnClickListener {
-                MainNavigator.toSeedDatabaseActivity(requireActivity())
+                navigator.navigateToSeedDatabaseActivity()
             }
         }
         aboutViewModel.apply {
             navigateToStatisticsEvent.observeEvent(viewLifecycleOwner) {
-                findNavController().navigate(R.id.statisticsFragment)
+                navigator.navigateToStatisticsFragment()
             }
             navigateToSettingsEvent.observeEvent(viewLifecycleOwner) {
-                navigateToSettings()
+                navigator.navigateToSettingActivity()
             }
             displayModuleDetailDialogEvent.observeEvent(viewLifecycleOwner) {
                 // TODO download module for now, display module detail dialog later
@@ -49,11 +53,5 @@ class AboutFragment : DaggerFragment() {
             }
         }
         return binding.root
-    }
-
-    private fun navigateToSettings() {
-        val navigated = MainNavigator.toSettingsActivity(requireActivity())
-        if (!navigated)
-            throw IllegalArgumentException("Why?")
     }
 }

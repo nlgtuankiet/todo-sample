@@ -11,6 +11,7 @@ import com.sample.todo.base.message.MessageManagerBindingModule
 import com.sample.todo.data.DataComponent
 import com.sample.todo.domain.di.DomainComponent
 import com.sample.todo.initializer.InitializerBindingModule
+import com.sample.todo.main.about.AboutSubcomponent
 import com.sample.todo.ui.UiModule
 import dagger.BindsInstance
 import dagger.Component
@@ -26,7 +27,8 @@ import dagger.android.support.AndroidSupportInjectionModule
         AndroidModule::class,
         MessageManagerBindingModule::class,
         WorkModule::class,
-        InitializerBindingModule::class
+        InitializerBindingModule::class,
+        ApplicationBindingModule::class
     ],
     dependencies = [
         DataComponent::class,
@@ -34,6 +36,8 @@ import dagger.android.support.AndroidSupportInjectionModule
     ]
 )
 interface AppComponent : AndroidInjector<TodoApplication> {
+    fun aboutFactory(): AboutSubcomponent.Factory
+
     fun provideNotificationManager(): NotificationManagerCompat
     fun provideSharePreference(): SharedPreferences
     fun provideWorkManager(): WorkManager

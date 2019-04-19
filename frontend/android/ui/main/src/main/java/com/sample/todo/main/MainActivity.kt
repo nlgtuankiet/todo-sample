@@ -1,16 +1,23 @@
 package com.sample.todo.main
 
 import android.os.Bundle
+import androidx.fragment.app.FragmentFactory
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sample.todo.base.extension.setupWithNavController
+import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
     private var currentNavController: LiveData<NavController>? = null
 
+    @Inject
+    lateinit var fragmentFactory: FragmentFactory
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+        supportFragmentManager.fragmentFactory = fragmentFactory
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {

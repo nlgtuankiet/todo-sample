@@ -7,7 +7,7 @@ import kotlin.String
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
-    const val android_arch_navigation: String = "1.0.0" 
+    const val android_arch_navigation: String = "2.1.0-alpha02"
 
     const val android_arch_work: String = "1.0.0-rc02" // available: "1.0.0"
 
@@ -23,7 +23,7 @@ object Versions {
 
     const val androidx_databinding: String = "3.3.2" 
 
-    const val androidx_fragment: String = "1.1.0-alpha03" 
+    const val androidx_fragment: String = "1.1.0-alpha06"
 
     const val androidx_lifecycle: String = "2.1.0-alpha01" 
 
