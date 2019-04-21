@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.sample.todo.base.di.FragmentComponent
 import com.sample.todo.base.di.FragmentScoped
 import com.sample.todo.base.di.ViewModelKey
-import com.sample.todo.base.entity.Holder
+import com.sample.todo.base.Holder
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

@@ -2,7 +2,15 @@ package com.sample.todo.domain.di
 
 import com.sample.todo.domain.repository.PreferenceRepository
 import com.sample.todo.domain.repository.TaskRepository
-import com.sample.todo.domain.usecase.*
+import com.sample.todo.domain.usecase.GetTask
+import com.sample.todo.domain.usecase.GetTaskFilterTypeObservable
+import com.sample.todo.domain.usecase.GetTaskMiniList
+import com.sample.todo.domain.usecase.GetTaskStatObservable
+import com.sample.todo.domain.usecase.GetTasksCountObservable
+import com.sample.todo.domain.usecase.InsertNewTask
+import com.sample.todo.domain.usecase.SetTaskFilterType
+import com.sample.todo.domain.usecase.UpdateComplete
+import com.sample.todo.domain.usecase.UpdateTask
 import dagger.BindsInstance
 import dagger.Component
 

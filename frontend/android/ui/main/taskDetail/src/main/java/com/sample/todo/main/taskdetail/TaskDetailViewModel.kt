@@ -1,6 +1,10 @@
 package com.sample.todo.main.taskdetail
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.toLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.sample.todo.base.entity.Event
 import com.sample.todo.base.extension.map
@@ -95,12 +99,7 @@ class TaskDetailViewModel @Inject constructor(
         get() = _loading
 
     fun onFabButtonClick() {
-        _navigationEvent.value =
-            Event(
-                TaskDetailFragmentDirections.actionTaskDetailFragmentToAddEditFragment(
-                    args.taskId
-                )
-            )
+        _navigationEvent.value = Event(TaskDetailFragmentDirections.toAddEditFragment(args.taskId))
     }
 
     private fun onNavigationClick() {

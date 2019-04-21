@@ -4,7 +4,6 @@ import com.sample.todo.androidComponent
 import com.sample.todo.di.AndroidComponent
 import dagger.Component
 
-
 @Component(
     dependencies = [
         AndroidComponent::class

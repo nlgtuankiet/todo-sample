@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.sample.todo.base.di.FragmentComponent
 import com.sample.todo.base.di.FragmentScoped
 import com.sample.todo.base.di.ViewModelKey
-import com.sample.todo.base.entity.Holder
+import com.sample.todo.base.Holder
 import com.sample.todo.base.message.MessageManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
-
 
 @Subcomponent(
     modules = [
@@ -24,7 +23,7 @@ import dagger.multibindings.IntoMap
 @FragmentScoped
 interface AddEditComponent : FragmentComponent<AddEditFragment> {
     @Subcomponent.Factory
-    interface Factory: FragmentComponent.Factory<AddEditComponent>
+    interface Factory : FragmentComponent.Factory<AddEditComponent>
 
     @Module
     object Provision {
@@ -46,11 +45,13 @@ interface AddEditComponent : FragmentComponent<AddEditFragment> {
         fun fragment(
             viewModelFactory: ViewModelProvider.Factory,
             messageManager: MessageManager,
-            holder: Holder<AddEditFragment>
+            holder: Holder<AddEditFragment>,
+            navigator: AddEditNavigator
         ): AddEditFragment {
             return AddEditFragment(
                 viewModelFactory = viewModelFactory,
-                messageManager = messageManager
+                messageManager = messageManager,
+                navigator = navigator
             ).also { holder.instance = it }
         }
     }

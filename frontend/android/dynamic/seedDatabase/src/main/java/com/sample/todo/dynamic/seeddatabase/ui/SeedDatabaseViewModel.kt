@@ -3,7 +3,6 @@ package com.sample.todo.dynamic.seeddatabase.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -16,7 +15,6 @@ class SeedDatabaseViewModel @Inject constructor(
     private val workManager: WorkManager
 ) : ViewModel() {
     val totalTask = MutableLiveData<String>().apply { value = 10.toString() }
-
 
     fun onSeedButtonClick() {
         val param = Parameter()

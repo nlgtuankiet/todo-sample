@@ -16,7 +16,8 @@ import com.sample.todo.main.addedit.databinding.AddEditFragmentBinding
 
 class AddEditFragment(
     private val viewModelFactory: ViewModelProvider.Factory,
-    private val messageManager: MessageManager
+    private val messageManager: MessageManager,
+    private val navigator: AddEditNavigator
 ) : Fragment() {
     private lateinit var binding: AddEditFragmentBinding
     private val addEditViewModel: AddEditViewModel by viewModels { viewModelFactory }
@@ -38,7 +39,7 @@ class AddEditFragment(
         addEditViewModel.apply {
             navigateUpEvent.observeEvent(viewLifecycleOwner) {
                 binding.root.hideKeyboard()
-                findNavController().navigateUp()
+                navigator.up()
             }
         }
         return binding.root

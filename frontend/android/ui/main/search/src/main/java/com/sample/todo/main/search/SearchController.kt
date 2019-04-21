@@ -3,7 +3,7 @@ package com.sample.todo.main.search
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.sample.todo.base.di.FragmentScoped
-import com.sample.todo.base.entity.Holder
+import com.sample.todo.base.Holder
 import com.sample.todo.domain.model.SearchResult
 import javax.inject.Inject
 

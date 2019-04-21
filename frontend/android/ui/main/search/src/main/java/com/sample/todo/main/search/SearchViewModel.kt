@@ -23,6 +23,31 @@ class SearchViewModel @AssistedInject constructor(
     private val getSearchResultStatisticsObservable: GetSearchResultStatisticsObservable
 ) : com.sample.todo.base.MvRxViewModel<SearchState>(initialState) {
 
+    private var query = BehaviorSubject.create<String>()
+
+    init {
+        query.debounce(500L, TimeUnit.MILLISECONDS)
+            .distinctUntilChanged().apply {
+                switchMap { searchTask(it) }.execute { copy(searchResult = it) }
+                switchMap { getSearchResultStatisticsObservable(it) }.execute { copy(searchResultStatistics = it) }
+            }
+    }
+
+    private val _navigateToTaskDetailEvent = MutableLiveData<Event<NavDirections>>()
+    val navigateToTaskDetailEvent: LiveData<Event<NavDirections>>
+        get() = _navigateToTaskDetailEvent
+
+    fun onResultItemClick(taskId: String) {
+        Timber.d("onResultItemClick(taskId=$taskId)")
+        _navigateToTaskDetailEvent.value = Event(SearchFragmentDirections.toTaskDetailFragment(taskId))
+    }
+
+    fun onSearchTextChange(text: String?): Boolean {
+        Timber.d("onSearchTextChange(text=$text)")
+        query.onNext(text ?: "")
+        return true
+    }
+
     @AssistedInject.Factory
     interface Factory {
         fun create(initialState: SearchState): SearchViewModel
@@ -42,35 +67,5 @@ class SearchViewModel @AssistedInject constructor(
                 searchResultStatistics = Uninitialized
             )
         }
-    }
-
-    var query = BehaviorSubject.create<String>()
-
-    init {
-        query.debounce(500L, TimeUnit.MILLISECONDS)
-            .distinctUntilChanged().apply {
-                switchMap { searchTask(it) }.execute { copy(searchResult = it) }
-                switchMap { getSearchResultStatisticsObservable(it) }.execute { copy(searchResultStatistics = it) }
-            }
-    }
-
-    private val _navigationEvent = MutableLiveData<Event<NavDirections>>()
-    val navigationEvent: LiveData<Event<NavDirections>>
-        get() = _navigationEvent
-
-    fun onResultItemClick(taskId: String) {
-        Timber.d("onResultItemClick(taskId=$taskId)")
-        _navigationEvent.value =
-            Event(
-                SearchFragmentDirections.actionSearchFragmentToTaskDetailFragment(
-                    taskId
-                )
-            )
-    }
-
-    fun onSearchTextChange(text: String?): Boolean {
-        Timber.d("onSearchTextChange(text=$text)")
-        query.onNext(text ?: "")
-        return true
     }
 }

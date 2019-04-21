@@ -18,7 +18,6 @@ class SeedDatabaseActivity : AppCompatActivity() {
             .get(SeedDatabaseViewModel::class.java)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         SeedDatabaseActivityComponent(this)
         super.onCreate(savedInstanceState)

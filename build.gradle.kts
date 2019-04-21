@@ -27,7 +27,7 @@ buildscript {
 plugins {
     id("de.fayard.buildSrcVersions") version "0.3.2"
     id("project-report")
-    id("com.diffplug.gradle.spotless") version "3.17.0"
+    id("com.diffplug.gradle.spotless") version "3.22.0"
     `build-scan`
 }
 
@@ -80,11 +80,15 @@ subprojects {
     // TODO how to config kapt
     spotless {
         kotlin {
+            trimTrailingWhitespace()
+            endWithNewline()
+            ignoreErrorForPath("./frontend/android/data/dataTask/dataTaskSqlDelight/common/build")
             target("**/*.kt")
-            ktlint("0.29.0")
+            ktlint("0.31.0")
         }
         xml {
         }
+
     }
     tasks.withType<KotlinCompile>().configureEach {
         println("Configuring $name in project ${project.name}...")

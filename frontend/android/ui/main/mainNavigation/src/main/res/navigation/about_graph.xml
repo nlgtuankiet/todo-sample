@@ -13,7 +13,7 @@
         android:name="com.sample.todo.main.about.AboutFragment"
         android:label="AboutFragment" >
         <action
-            android:id="@+id/action_aboutFragment_to_statisticsFragment"
+            android:id="@+id/to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
     </fragment>
 </navigation>

@@ -12,9 +12,9 @@ import javax.inject.Inject
 @ApplicationScope
 class DataImplementationRepositoryImpl @Inject constructor(
     private val todoApplication: TodoApplication
-): DataImplementationRepository {
+) : DataImplementationRepository {
     override fun currentImplementation() = when (todoApplication.dataComponent) {
-        is RoomDataComponent ->  DataImplementation.ROOM
+        is RoomDataComponent -> DataImplementation.ROOM
         is FirestoreDataComponent -> DataImplementation.FIRESTORE
         is SqlDelightDataComponent -> DataImplementation.SQLDELIGHT
         else -> throw RuntimeException("Unknown data component")

@@ -6,7 +6,7 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.airbnb.mvrx.withState
 import com.sample.todo.base.di.FragmentScoped
-import com.sample.todo.base.entity.Holder
+import com.sample.todo.base.Holder
 import javax.inject.Inject
 
 @FragmentScoped

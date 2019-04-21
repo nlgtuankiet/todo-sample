@@ -12,7 +12,7 @@ import javax.inject.Inject
 @ApplicationScope
 class DataPreferenceRepositoryImpl @Inject constructor(
     private val application: TodoApplication
-): DataPreferenceRepository {
+) : DataPreferenceRepository {
     private val sharedPreferences: SharedPreferences by lazy {
         application.getSharedPreferences(SHARE_PREFERENCE_NAME, Context.MODE_PRIVATE)
     }

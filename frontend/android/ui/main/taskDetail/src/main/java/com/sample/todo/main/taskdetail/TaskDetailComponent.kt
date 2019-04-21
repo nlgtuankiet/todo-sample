@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.sample.todo.base.di.FragmentComponent
 import com.sample.todo.base.di.FragmentScoped
 import com.sample.todo.base.di.ViewModelKey
-import com.sample.todo.base.entity.Holder
+import com.sample.todo.base.Holder
 import com.sample.todo.base.message.MessageManager
 import dagger.Binds
 import dagger.Module
@@ -47,7 +47,6 @@ interface TaskDetailComponent : FragmentComponent<TaskDetailFragment> {
         @JvmStatic
         @FragmentScoped
         fun holder() = Holder<TaskDetailFragment>()
-
 
         @Provides
         @JvmStatic

@@ -9,18 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.work.WorkManager
 import com.sample.todo.base.entity.DynamicFeatureModule
-import com.sample.todo.base.entity.Holder
+import com.sample.todo.base.Holder
 import com.sample.todo.main.about.databinding.AboutFragmentBinding
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.work.downloadmodule.DownloadModuleWorker
-
 
 class AboutFragment(
     private val viewModelFactory: AboutViewModelFactory,
     private val workManager: WorkManager,
     private val holder: Holder<AboutFragment>,
     private val navigator: AboutNavigator
-) : Fragment()  {
+) : Fragment() {
     private lateinit var binding: AboutFragmentBinding
     private val aboutViewModel: AboutViewModel by viewModels(factoryProducer = { viewModelFactory })
 
@@ -38,15 +37,13 @@ class AboutFragment(
             viewModel = aboutViewModel
             lifecycleOwner = viewLifecycleOwner
             seedDatabaseButton.setOnClickListener {
-                navigator.navigateToSeedDatabaseActivity()
+                navigator.toSeedDatabaseActivity()
             }
         }
         aboutViewModel.apply {
-            navigateToStatisticsEvent.observeEvent(viewLifecycleOwner) {
-                navigator.navigateToStatisticsFragment()
-            }
+            navigationEvent.observeEvent(viewLifecycleOwner, navigator::to)
             navigateToSettingsEvent.observeEvent(viewLifecycleOwner) {
-                navigator.navigateToSettingActivity()
+                navigator.toSettingActivity()
             }
             displayModuleDetailDialogEvent.observeEvent(viewLifecycleOwner) {
                 // TODO download module for now, display module detail dialog later

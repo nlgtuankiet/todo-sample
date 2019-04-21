@@ -6,7 +6,6 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 
-
 @Component(
     modules = [
         SeedDatabaseActivityComponent.Provision::class

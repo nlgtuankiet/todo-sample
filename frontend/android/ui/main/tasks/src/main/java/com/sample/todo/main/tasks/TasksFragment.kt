@@ -22,7 +22,8 @@ import timber.log.Timber
 class TasksFragment(
     val viewModelFactory: TasksViewModel.Factory,
     private val messageManager: MessageManager,
-    private val tasksController: TasksController
+    private val tasksController: TasksController,
+    private val navigator: TasksNavigator
 ) : Fragment(), MvRxView {
 
     override val mvrxViewModelStore by lazy { MvRxViewModelStore(viewModelStore) }
@@ -67,9 +68,7 @@ class TasksFragment(
             }
         }
         tasksViewModel.apply {
-            navigationEvent.observeEvent(viewLifecycleOwner) {
-                findNavController().navigate(it)
-            }
+            navigationEvent.observeEvent(viewLifecycleOwner, navigator::to)
         }
 
         setUpSnackbar(

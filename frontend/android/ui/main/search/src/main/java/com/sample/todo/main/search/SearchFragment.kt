@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
-import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.airbnb.mvrx.MvRxView
 import com.airbnb.mvrx.MvRxViewModelStore
 import com.airbnb.mvrx.fragmentViewModel
@@ -17,12 +15,12 @@ import com.sample.todo.base.message.MessageManager
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.base.widget.LinearOffsetsItemDecoration
 import com.sample.todo.main.search.databinding.SearchFragmentBinding
-import javax.inject.Inject
 
 class SearchFragment(
     val viewModelFactory: SearchViewModel.Factory,
     private val messageManager: MessageManager,
-    private val searchController: SearchController
+    private val controller: SearchController,
+    private val navigator: SearchNavigator
 ) : Fragment(), MvRxView {
     override val mvrxViewModelStore by lazy { MvRxViewModelStore(viewModelStore) }
     val searchViewModel: SearchViewModel by fragmentViewModel()
@@ -39,7 +37,7 @@ class SearchFragment(
             viewModel = searchViewModel
             lifecycleOwner = viewLifecycleOwner
             searchResultRecyclerView.apply {
-                setController(searchController)
+                setController(controller)
                 addItemDecoration(LinearOffsetsItemDecoration())
             }
             toolbar.apply {
@@ -58,9 +56,9 @@ class SearchFragment(
             }
         }
         searchViewModel.apply {
-            navigationEvent.observeEvent(viewLifecycleOwner) {
+            navigateToTaskDetailEvent.observeEvent(viewLifecycleOwner) {
                 binding.root.hideKeyboard()
-                findNavController().navigate(it)
+                navigator.to(it)
             }
         }
         return binding.root
@@ -83,7 +81,7 @@ class SearchFragment(
     override fun invalidate() {
         withState(searchViewModel) {
             binding.state = it
-            searchController.submitList(it.searchResult())
+            controller.submitList(it.searchResult())
         }
     }
 }

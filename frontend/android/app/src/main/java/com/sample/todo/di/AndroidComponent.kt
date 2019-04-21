@@ -7,9 +7,12 @@ import androidx.work.WorkManager
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.sample.todo.TodoApplication
-import dagger.*
+import dagger.Binds
+import dagger.BindsInstance
+import dagger.Component
+import dagger.Module
+import dagger.Provides
 import javax.inject.Scope
-
 
 interface AndroidComponent {
     fun application(): TodoApplication

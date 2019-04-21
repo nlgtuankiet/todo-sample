@@ -2,7 +2,7 @@ package com.sample.todo.main.tasks
 
 import com.sample.todo.base.di.FragmentComponent
 import com.sample.todo.base.di.FragmentScoped
-import com.sample.todo.base.entity.Holder
+import com.sample.todo.base.Holder
 import com.sample.todo.base.message.MessageManager
 import dagger.Module
 import dagger.Provides
@@ -28,11 +28,13 @@ interface TasksComponent : FragmentComponent<TasksFragment> {
             holder: Holder<TasksFragment>,
             messageManager: MessageManager,
             viewModelFactory: TasksViewModel.Factory,
-            tasksController: TasksController
+            tasksController: TasksController,
+            navigator: TasksNavigator
         ) = TasksFragment(
             messageManager = messageManager,
             viewModelFactory = viewModelFactory,
-            tasksController = tasksController
+            tasksController = tasksController,
+            navigator = navigator
         ).also { holder.instance = it }
 
         @JvmStatic

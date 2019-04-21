@@ -1,27 +1,22 @@
 package com.sample.todo.main.about
 
 import androidx.navigation.fragment.findNavController
+import com.sample.todo.base.FragmentNavigator
 import com.sample.todo.base.di.FragmentScoped
-import com.sample.todo.base.entity.Holder
+import com.sample.todo.base.Holder
 import com.sample.todo.navigation.MainNavigator
 import javax.inject.Inject
 
 @FragmentScoped
 class AboutNavigator @Inject constructor(
-    private val holder: Holder<AboutFragment>
-) {
-    private val fragment by lazy { holder.instance }
-    private val activity by lazy { fragment.requireActivity() }
+    holder: Holder<AboutFragment>
+): FragmentNavigator(holder) {
 
-    fun navigateToSettingActivity() {
+    fun toSettingActivity() {
         MainNavigator.toSettingsActivity(activity)
     }
 
-    fun navigateToStatisticsFragment() {
-        fragment.findNavController().navigate(R.id.statisticsFragment)
-    }
-
-    fun navigateToSeedDatabaseActivity() {
+    fun toSeedDatabaseActivity() {
         MainNavigator.toSeedDatabaseActivity(activity)
     }
 }

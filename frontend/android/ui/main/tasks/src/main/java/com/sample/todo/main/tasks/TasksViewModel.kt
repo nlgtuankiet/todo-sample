@@ -225,7 +225,7 @@ class TasksViewModel @AssistedInject constructor(
                 if (taskId != null) {
                     _navigationEvent.postValue(
                         Event(
-                            TasksFragmentDirections.actionTasksFragmentToTaskDetailFragment(
+                            TasksFragmentDirections.toTaskDetailFragment(
                                 taskId
                             )
                         )

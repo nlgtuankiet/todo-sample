@@ -53,7 +53,7 @@ object Versions {
 
     const val aapt2: String = "3.3.2-5309881" 
 
-    const val com_android_tools_build_gradle: String = "3.5.0-alpha09"
+    const val com_android_tools_build_gradle: String = "3.5.0-alpha12"
 
     const val lint_gradle: String = "26.3.2" 
 
@@ -69,7 +69,7 @@ object Versions {
 
     const val com_google_android_play_core: String = "1.4.0" 
 
-    const val com_google_dagger: String = "2.22"
+    const val com_google_dagger: String = "2.22.1"
 
     const val firebase_core: String = "16.0.1" // available: "16.0.8"
 

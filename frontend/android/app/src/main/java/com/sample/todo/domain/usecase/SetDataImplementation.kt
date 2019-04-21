@@ -2,7 +2,6 @@ package com.sample.todo.domain.usecase
 
 import com.sample.todo.base.di.ApplicationScope
 import com.sample.todo.domain.entity.DataImplementation
-import com.sample.todo.domain.repository.DataImplementationRepository
 import com.sample.todo.domain.repository.DataPreferenceRepository
 import javax.inject.Inject
 

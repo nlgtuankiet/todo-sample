@@ -3,7 +3,7 @@ package com.sample.todo.main.about
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sample.todo.base.entity.DynamicFeatureModule
+import androidx.navigation.NavDirections
 import com.sample.todo.base.entity.Event
 import com.sample.todo.base.extension.setNewEvent
 import com.sample.todo.base.usecase.IsModuleInstalled
@@ -14,12 +14,10 @@ class AboutViewModel @Inject constructor(
     private val isModuleInstalled: IsModuleInstalled,
     private val isModuleInstalling: IsModuleInstalling
 ) : ViewModel() {
+    private val _navigationEvent = MutableLiveData<Event<NavDirections>>()
+    val navigationEvent: LiveData<Event<NavDirections>>
+        get() = _navigationEvent
 
-
-
-    private val _navigateToStatisticsEvent = MutableLiveData<Event<Unit>>()
-    val navigateToStatisticsEvent: LiveData<Event<Unit>>
-        get() = _navigateToStatisticsEvent
 
     private val _navigateToSettingsEvent = MutableLiveData<Event<Unit>>()
     val navigateToSettingsEvent: LiveData<Event<Unit>>
@@ -30,11 +28,10 @@ class AboutViewModel @Inject constructor(
         get() = _displayModuleDetailDialogEvent
 
     fun onStatisticsLabelClick() {
-        _navigateToStatisticsEvent.value = Event(Unit)
+        _navigationEvent.value = Event(AboutFragmentDirections.toStatisticsFragment())
     }
 
     fun onSettingsLabelClick() {
-            _navigateToSettingsEvent.setNewEvent()
-
+        _navigateToSettingsEvent.setNewEvent()
     }
 }

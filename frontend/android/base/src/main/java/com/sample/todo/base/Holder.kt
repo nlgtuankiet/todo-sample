@@ -1,4 +1,4 @@
-package com.sample.todo.base.entity
+package com.sample.todo.base
 
 class Holder<T : Any> {
     private var _instance: T? = null

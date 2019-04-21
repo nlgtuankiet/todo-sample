@@ -1,17 +1,14 @@
 package com.sample.todo.dynamic.seeddatabase.worker
 
-import android.content.Context
-import androidx.core.app.NotificationManagerCompat
-import androidx.work.WorkManager
-import com.sample.todo.TodoApplication
 import com.sample.todo.androidComponent
 import com.sample.todo.data.DataComponent
 import com.sample.todo.dataComponent
 import com.sample.todo.di.AndroidComponent
-import com.sample.todo.dynamic.seeddatabase.service.SeedDatabaseControllerScope
 import com.sample.todo.dynamic.seeddatabase.lorem.Lorem
 import com.sample.todo.dynamic.seeddatabase.lorem.LoremImpl
-import dagger.*
+import dagger.Binds
+import dagger.Component
+import dagger.Module
 
 @Component(
     dependencies = [
@@ -48,6 +45,4 @@ interface SeedDatabaseWorkerComponent {
                 .inject(target)
         }
     }
-
-
 }

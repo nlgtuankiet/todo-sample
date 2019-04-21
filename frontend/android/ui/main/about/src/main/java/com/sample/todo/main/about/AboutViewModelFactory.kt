@@ -7,7 +7,7 @@ import javax.inject.Provider
 
 class AboutViewModelFactory @Inject constructor(
     private val provider: Provider<AboutViewModel>
-): ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return provider.get() as T
     }

@@ -8,7 +8,6 @@ import com.sample.todo.domain.usecase.GetDataComponent
 import dagger.BindsInstance
 import dagger.Component
 
-
 @Component(modules = [
     DataPreferenceBindingModule::class,
     DataImplementationBindingModule::class
