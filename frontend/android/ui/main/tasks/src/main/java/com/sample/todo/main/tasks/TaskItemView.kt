@@ -10,7 +10,6 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.sample.todo.domain.model.TaskMini
 
-
 @EpoxyModelClass(layout = R2.layout.task_item)
 abstract class TaskItemView : EpoxyModelWithHolder<TaskItemView.TaskItemHolder>() {
 
@@ -42,7 +41,6 @@ abstract class TaskItemView : EpoxyModelWithHolder<TaskItemView.TaskItemHolder>(
 
             holder.is_completed.visibility = View.GONE
             holder.is_completed.setOnCheckedChangeListener { _, _ ->
-
             }
         }
     }
@@ -52,12 +50,10 @@ abstract class TaskItemView : EpoxyModelWithHolder<TaskItemView.TaskItemHolder>(
         lateinit var title: TextView
         lateinit var is_completed: CheckBox
 
-
         override fun bindView(itemView: View) {
             container = itemView.findViewById(R.id.container)
             title = itemView.findViewById(R.id.title)
             is_completed = itemView.findViewById(R.id.is_completed)
         }
-
     }
 }

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +19,7 @@ import com.sample.todo.main.tasks.databinding.TasksFragmentBinding
 import timber.log.Timber
 
 // TODO fix bug when user double click navigation icon
-class TasksFragment (
+class TasksFragment(
     val viewModelFactory: TasksViewModel.Factory,
     private val messageManager: MessageManager,
     private val tasksController: TasksController

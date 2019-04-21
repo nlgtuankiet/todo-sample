@@ -21,8 +21,6 @@ buildscript {
         classpath(Libs.google_services)
         classpath(Libs.io_fabric_tools_gradle)
         classpath("org.jetbrains.kotlin:kotlin-allopen:${Versions.org_jetbrains_kotlin}")
-//        classpath("com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta04")
-
     }
 }
 
@@ -30,7 +28,6 @@ plugins {
     id("de.fayard.buildSrcVersions") version "0.3.2"
     id("project-report")
     id("com.diffplug.gradle.spotless") version "3.17.0"
-
     `build-scan`
 }
 
@@ -87,7 +84,6 @@ subprojects {
             ktlint("0.29.0")
         }
         xml {
-
         }
     }
     tasks.withType<KotlinCompile>().configureEach {

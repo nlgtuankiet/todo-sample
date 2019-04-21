@@ -19,7 +19,7 @@ import dagger.multibindings.IntoMap
     ]
 )
 @FragmentScoped
-interface StatisticsComponent: FragmentComponent<StatisticsFragment> {
+interface StatisticsComponent : FragmentComponent<StatisticsFragment> {
     @Subcomponent.Factory
     interface Factory : FragmentComponent.Factory<StatisticsComponent>
 
@@ -31,7 +31,7 @@ interface StatisticsComponent: FragmentComponent<StatisticsFragment> {
         fun fragment(
             viewModelFactory: ViewModelProvider.Factory,
             holder: Holder<StatisticsFragment>
-            ): StatisticsFragment {
+        ): StatisticsFragment {
             return StatisticsFragment(
                 viewModelFactory = viewModelFactory
             ).also { holder.instance = it }

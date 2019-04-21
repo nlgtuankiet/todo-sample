@@ -22,5 +22,4 @@ class StatisticsViewModel @Inject constructor(
     val completedTasksCount = stat.map { it.completedTaskCount.toString() }
 
     val activeTasksCount = stat.map { it.activeTaskCount.toString() }
-
 }

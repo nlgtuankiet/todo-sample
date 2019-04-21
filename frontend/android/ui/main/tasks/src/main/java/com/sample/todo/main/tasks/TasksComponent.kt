@@ -15,9 +15,9 @@ import dagger.Subcomponent
     ]
 )
 @FragmentScoped
-interface TasksComponent: FragmentComponent<TasksFragment> {
+interface TasksComponent : FragmentComponent<TasksFragment> {
     @Subcomponent.Factory
-    interface Factory: FragmentComponent.Factory<TasksComponent>
+    interface Factory : FragmentComponent.Factory<TasksComponent>
 
     @Module
     object Provision {

@@ -13,15 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.airbnb.mvrx.fragmentViewModel
-import com.airbnb.mvrx.withState
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.base.message.MessageManager
 import com.sample.todo.base.message.setUpSnackbar
 import com.sample.todo.main.taskdetail.databinding.TaskDetailFragmentBinding
-import javax.inject.Inject
 
-class TaskDetailFragment (
+class TaskDetailFragment(
     private val messageManager: MessageManager,
     private val notificationManager: NotificationManagerCompat,
     private val viewModelFactory: ViewModelProvider.Factory

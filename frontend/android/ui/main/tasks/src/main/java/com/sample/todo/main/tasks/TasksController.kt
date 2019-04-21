@@ -1,7 +1,6 @@
 
 package com.sample.todo.main.tasks
 
-import com.airbnb.epoxy.EpoxyHolder
 import com.sample.todo.domain.model.TaskMini
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
