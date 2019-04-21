@@ -58,7 +58,6 @@ dependencies {
     api(project(":frontend:android:ui:main:about"))
     api(project(":frontend:android:ui:main:addedit"))
     api(project(":frontend:android:ui:main:search"))
-    api(project(":frontend:android:ui:main:setting"))
     api(project(":frontend:android:ui:main:statistics"))
     implementation(project(":frontend:android:navigation"))
     implementation(Libs.epoxy)

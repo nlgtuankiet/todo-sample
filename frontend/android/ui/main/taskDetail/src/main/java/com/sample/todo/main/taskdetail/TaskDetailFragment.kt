@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
@@ -18,15 +21,13 @@ import com.sample.todo.base.message.setUpSnackbar
 import com.sample.todo.main.taskdetail.databinding.TaskDetailFragmentBinding
 import javax.inject.Inject
 
-class TaskDetailFragment : com.sample.todo.base.BaseFragment() {
-    @Inject
-    lateinit var viewModelFactory: TaskDetailViewModel.Factory
-    @Inject
-    lateinit var messageManager: MessageManager
-    @Inject
-    lateinit var notificationManager: NotificationManagerCompat
+class TaskDetailFragment (
+    private val messageManager: MessageManager,
+    private val notificationManager: NotificationManagerCompat,
+    private val viewModelFactory: ViewModelProvider.Factory
+) : Fragment() {
     private lateinit var binding: TaskDetailFragmentBinding
-    private val taskDetailViewModel: TaskDetailViewModel by fragmentViewModel()
+    private val taskDetailViewModel: TaskDetailViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,12 +55,6 @@ class TaskDetailFragment : com.sample.todo.base.BaseFragment() {
             messageManager
         )
         return binding.root
-    }
-
-    override fun invalidate() {
-        withState(taskDetailViewModel) {
-            binding.state = it
-        }
     }
 
     /**

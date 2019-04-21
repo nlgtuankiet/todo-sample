@@ -21,7 +21,7 @@ buildscript {
         classpath(Libs.google_services)
         classpath(Libs.io_fabric_tools_gradle)
         classpath("org.jetbrains.kotlin:kotlin-allopen:${Versions.org_jetbrains_kotlin}")
-
+//        classpath("com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta04")
 
     }
 }
@@ -45,6 +45,18 @@ allprojects {
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
         maven("https://kotlin.bintray.com/kotlinx/")
 
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+        kotlinOptions {
+            freeCompilerArgs = listOf(
+                "-Adagger.formatGeneratedSource=disabled".also {
+                    println("config kapt lol")
+                },
+                "-AFORMAT_GENERATED_SOURCE=DISABLED"
+
+            )
+        }
     }
 }
 subprojects {

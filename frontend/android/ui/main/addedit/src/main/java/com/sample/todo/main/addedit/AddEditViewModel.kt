@@ -2,69 +2,36 @@ package com.sample.todo.main.addedit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.airbnb.mvrx.MvRxViewModelFactory
-import com.airbnb.mvrx.ViewModelContext
 import com.sample.todo.base.entity.Event
+import com.sample.todo.base.extension.postNewEvent
+import com.sample.todo.base.extension.postNewMessage
+import com.sample.todo.base.extension.postValueIfNew
+import com.sample.todo.base.extension.setNewEvent
+import com.sample.todo.base.message.Message
+import com.sample.todo.base.widget.ToolbarData
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskId
 import com.sample.todo.domain.usecase.GetTask
 import com.sample.todo.domain.usecase.InsertNewTask
 import com.sample.todo.domain.usecase.UpdateTask
-import com.sample.todo.base.message.Message
-import com.sample.todo.base.widget.ToolbarData
-import com.sample.todo.base.extension.arguments
-import com.sample.todo.base.extension.getFragment
-import com.sample.todo.base.extension.postNewEvent
-import com.sample.todo.base.extension.postNewMessage
-import com.sample.todo.base.extension.postValueIfNew
-import com.sample.todo.base.extension.setNewEvent
 import com.sample.todo.domain.util.autoId
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 // need a way to disable the save button
-class AddEditViewModel @AssistedInject constructor(
-    @Assisted private val initialState: AddEditState,
-    @Assisted private val args: AddEditFragmentArgs,
+class AddEditViewModel @Inject constructor(
+    private val args: AddEditFragmentArgs,
     private val getTask: GetTask,
     private val insertNewTask: InsertNewTask,
     private val updateTask: UpdateTask
-) : com.sample.todo.base.MvRxViewModel<AddEditState>(initialState) {
-
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(initialState: AddEditState, args: AddEditFragmentArgs): AddEditViewModel
-    }
-
-    companion object : MvRxViewModelFactory<AddEditViewModel, AddEditState> {
-        override fun create(
-            viewModelContext: ViewModelContext,
-            state: AddEditState
-        ): AddEditViewModel? {
-            val fragment = viewModelContext.getFragment<AddEditFragment>()
-            val args: AddEditFragmentArgs = AddEditFragmentArgs.fromBundle(
-                viewModelContext.arguments
-            )
-            return fragment.viewModelFactory.create(state, args)
-        }
-
-        override fun initialState(viewModelContext: ViewModelContext): AddEditState? {
-            val args: AddEditFragmentArgs = AddEditFragmentArgs.fromBundle(
-                viewModelContext.arguments
-            )
-            return AddEditState(
-                toolbarTitle = if (args.taskId == null)
-                    R.string.add_edit_add_title
-                else R.string.add_edit_edit_title,
-                isLoading = false
-            )
-        }
-    }
+) : ViewModel() {
 
     private val taskId: String? = args.taskId
+
+    val toolbarTitle = if (args.taskId == null) R.string.add_edit_add_title else R.string.add_edit_edit_title
 
     val toolbarListenerData = ToolbarData(
         navigationIcon = R.drawable.toolbar_navigation_icon,
@@ -76,6 +43,10 @@ class AddEditViewModel @AssistedInject constructor(
     private val _navigateUpEvent = MutableLiveData<Event<Unit>>()
     val navigateUpEvent: LiveData<Event<Unit>>
         get() = _navigateUpEvent
+
+    private val _loading = MutableLiveData<Boolean>().apply { value = false }
+    val loading: LiveData<Boolean>
+        get() = _loading
 
     val title = MutableLiveData<String>()
     val description = MutableLiveData<String?>()
@@ -92,7 +63,7 @@ class AddEditViewModel @AssistedInject constructor(
     private fun loadTask() {
         if (taskId != null) {
             viewModelScope.launch {
-                setState { copy(isLoading = true) }
+                _loading.postValueIfNew(true)
                 runCatching { getTask(TaskId(taskId)) }
                     .onSuccess { task ->
                         title.postValueIfNew(task.title)
@@ -102,7 +73,7 @@ class AddEditViewModel @AssistedInject constructor(
                     .onFailure {
                         Timber.e("cannot get task with id: $taskId, ex=$it")
                     }
-                setState { copy(isLoading = false) }
+                _loading.postValueIfNew(false)
             }
         }
     }

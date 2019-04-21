@@ -1,11 +1,9 @@
-package com.sample.todo
+package com.sample.todo.main
 
 import com.sample.todo.main.about.AboutModule
 import com.sample.todo.main.addedit.AddEditModule
 import com.sample.todo.base.di.ActivityScoped
-import com.sample.todo.main.MainActivity
 import com.sample.todo.main.search.SearchModule
-import com.sample.todo.main.setting.SettingModule
 import com.sample.todo.main.statistics.StatisticsModule
 import com.sample.todo.main.taskdetail.TaskDetailModule
 import com.sample.todo.main.tasks.TasksModule
@@ -22,7 +20,6 @@ abstract class MainActivityModule {
             AddEditModule::class,
             SearchModule::class,
             StatisticsModule::class,
-            SettingModule::class,
             AboutModule::class
         ]
     )

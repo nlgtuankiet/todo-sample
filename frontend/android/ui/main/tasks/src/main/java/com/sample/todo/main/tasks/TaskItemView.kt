@@ -1,12 +1,13 @@
 package com.sample.todo.main.tasks
 
-import android.content.Context
-import android.util.AttributeSet
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.airbnb.epoxy.*
+import com.airbnb.epoxy.EpoxyAttribute
+import com.airbnb.epoxy.EpoxyHolder
+import com.airbnb.epoxy.EpoxyModelClass
+import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.sample.todo.domain.model.TaskMini
 
 
@@ -31,15 +32,15 @@ abstract class TaskItemView : EpoxyModelWithHolder<TaskItemView.TaskItemHolder>(
             holder.title.text = task.title
 
             holder.is_completed.isChecked = task.isCompleted
-            holder.is_completed.visibility  = View.VISIBLE
+            holder.is_completed.visibility = View.VISIBLE
             holder.is_completed.setOnCheckedChangeListener { _, isChecked ->
                 taskViewModel.onTaskCheckBoxClick(task, isChecked)
             }
         } else {
-            holder.container.setOnClickListener {  }
+            holder.container.setOnClickListener { }
             holder.title.text = ""
 
-            holder.is_completed.visibility  = View.GONE
+            holder.is_completed.visibility = View.GONE
             holder.is_completed.setOnCheckedChangeListener { _, _ ->
 
             }

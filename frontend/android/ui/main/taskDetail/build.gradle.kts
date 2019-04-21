@@ -72,6 +72,7 @@ dependencies {
     implementation(Libs.epoxy_paging)
     implementation(Libs.lifecycle_viewmodel_ktx)
     implementation(Libs.core_ktx)
+    implementation(Libs.lifecycle_reactivestreams_ktx)
 }
 
 kapt {

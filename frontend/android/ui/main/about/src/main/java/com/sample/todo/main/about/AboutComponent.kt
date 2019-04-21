@@ -1,7 +1,9 @@
 package com.sample.todo.main.about
 
 import androidx.work.WorkManager
+import com.sample.todo.base.di.FragmentComponent
 import com.sample.todo.base.di.FragmentScoped
+import com.sample.todo.base.entity.Holder
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -9,19 +11,14 @@ import dagger.Subcomponent
 
 @Subcomponent(
     modules = [
-        AboutSubcomponent.Provision::class
+        AboutComponent.Provision::class
     ]
 )
 @FragmentScoped
-interface AboutSubcomponent {
+interface AboutComponent : FragmentComponent<AboutFragment> {
 
-
-    fun fragment(): AboutFragment
     @Subcomponent.Factory
-    interface Factory {
-        fun create(): AboutSubcomponent
-    }
-
+    interface Factory: FragmentComponent.Factory<AboutComponent>
 
     @Module
     object Provision {
@@ -31,15 +28,19 @@ interface AboutSubcomponent {
         fun fragment(
             viewModelFactory: AboutViewModelFactory,
             workManager: WorkManager,
-            provider: AboutFragmentProvider,
+            holder: Holder<AboutFragment>,
             navigator: AboutNavigator
         ): AboutFragment {
             return AboutFragment(
                 viewModelFactory,
                 workManager,
-                provider,
+                holder,
                 navigator
             )
         }
+        @JvmStatic
+        @Provides
+        @FragmentScoped
+        fun holder(): Holder<AboutFragment> = Holder()
     }
 }

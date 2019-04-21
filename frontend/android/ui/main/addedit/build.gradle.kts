@@ -71,13 +71,15 @@ dependencies {
 }
 
 kapt {
-    arguments {
-        arg("dagger.formatGeneratedSource", "disabled")
-        arg("dagger.gradle.incremental", "enabled")
-    }
+//    arguments {
+//        arg("-Adagger.formatGeneratedSource=disabled")
+//        arg("-Adagger.formatGeneratedSource","disabled")
+//        arg("dagger.gradle.incremental", "enabled")
+//        arg("dagger.formatGeneratedSource", "disabled")
+//    }
     javacOptions {
         option("-Xmaxerrs", 500)
     }
-    // not sure
-    useBuildCache = true
+    useBuildCache = false
+    correctErrorTypes = true
 }

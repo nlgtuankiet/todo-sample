@@ -3,11 +3,7 @@ package com.sample.todo.base.extension
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.MainThread
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import com.sample.todo.base.entity.Event
 import com.sample.todo.base.message.Message
 
@@ -54,4 +50,14 @@ fun MutableLiveData<Event<Unit>>.setNewEvent() {
 
 fun MutableLiveData<Event<Unit>>.postNewEvent() {
     postValue(Event(Unit))
+}
+
+/** Uses `Transformations.map` on a LiveData */
+fun <X, Y> LiveData<X>.map(body: (X) -> Y): LiveData<Y> {
+    return Transformations.map(this, body)
+}
+
+/** Uses `Transformations.switchMap` on a LiveData */
+fun <X, Y> LiveData<X>.switchMap(body: (X) -> LiveData<Y>): LiveData<Y> {
+    return Transformations.switchMap(this, body)
 }

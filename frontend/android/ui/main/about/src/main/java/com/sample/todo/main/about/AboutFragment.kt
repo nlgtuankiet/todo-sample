@@ -9,15 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.work.WorkManager
 import com.sample.todo.base.entity.DynamicFeatureModule
+import com.sample.todo.base.entity.Holder
 import com.sample.todo.main.about.databinding.AboutFragmentBinding
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.work.downloadmodule.DownloadModuleWorker
 
 
-class AboutFragment constructor(
+class AboutFragment(
     private val viewModelFactory: AboutViewModelFactory,
     private val workManager: WorkManager,
-    private val provider: AboutFragmentProvider,
+    private val holder: Holder<AboutFragment>,
     private val navigator: AboutNavigator
 ) : Fragment()  {
     private lateinit var binding: AboutFragmentBinding
@@ -25,7 +26,7 @@ class AboutFragment constructor(
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        provider.set(this)
+        holder.instance = this
     }
 
     override fun onCreateView(

@@ -5,7 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.airbnb.mvrx.MvRxView
+import com.airbnb.mvrx.MvRxViewModelStore
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.sample.todo.base.extension.hideKeyboard
@@ -15,21 +19,15 @@ import com.sample.todo.base.widget.LinearOffsetsItemDecoration
 import com.sample.todo.main.search.databinding.SearchFragmentBinding
 import javax.inject.Inject
 
-class SearchFragment : com.sample.todo.base.BaseFragment() {
-    override fun invalidate() {
-        withState(searchViewModel) {
-            binding.state = it
-            searchController.submitList(it.searchResult())
-        }
-    }
+class SearchFragment(
+    val viewModelFactory: SearchViewModel.Factory,
+    private val messageManager: MessageManager,
+    private val searchController: SearchController
+) : Fragment(), MvRxView {
+    override val mvrxViewModelStore by lazy { MvRxViewModelStore(viewModelStore) }
+    val searchViewModel: SearchViewModel by fragmentViewModel()
 
-    @Inject
-    lateinit var viewModelFactory: SearchViewModel.Factory
-    @Inject
-    lateinit var messageManager: MessageManager
     private lateinit var binding: SearchFragmentBinding
-    private val searchViewModel: SearchViewModel by fragmentViewModel()
-    private lateinit var searchController: SearchController
 
     // TODO android:onTextChanged="@{(text, start, before, count) -> viewModel.onUsernameTextChanged(text)}"
     override fun onCreateView(
@@ -41,8 +39,7 @@ class SearchFragment : com.sample.todo.base.BaseFragment() {
             viewModel = searchViewModel
             lifecycleOwner = viewLifecycleOwner
             searchResultRecyclerView.apply {
-                searchController = SearchController(searchViewModel)
-                adapter = searchController.adapter
+                setController(searchController)
                 addItemDecoration(LinearOffsetsItemDecoration())
             }
             toolbar.apply {
@@ -67,5 +64,26 @@ class SearchFragment : com.sample.todo.base.BaseFragment() {
             }
         }
         return binding.root
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        mvrxViewModelStore.restoreViewModels(this, savedInstanceState)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mvrxViewModelStore.saveViewModels(outState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        postInvalidate()
+    }
+
+    override fun invalidate() {
+        withState(searchViewModel) {
+            binding.state = it
+            searchController.submitList(it.searchResult())
+        }
     }
 }

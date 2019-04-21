@@ -5,9 +5,6 @@
 
     <data>
         <variable
-            name="state"
-            type="com.sample.todo.main.addedit.AddEditState" />
-        <variable
             name="viewModel"
             type="com.sample.todo.main.addedit.AddEditViewModel" />
     </data>
@@ -36,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:theme="@style/Widget.Todo.Toolbar"
                     app:data="@{viewModel.toolbarListenerData}"
-                    app:title="@{state.toolbarTitle}" />
+                    app:title="@{viewModel.toolbarTitle}" />
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.core.widget.NestedScrollView
@@ -47,7 +44,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:goneUnless="@{!state.isLoading}"
+                    app:goneUnless="@{!viewModel.loading}"
                     tools:layout_height="match_parent">
 
                     <EditText
@@ -95,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:goneUnless="@{state.isLoading}" />
+                app:goneUnless="@{viewModel.loading}" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

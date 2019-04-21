@@ -1,24 +1,19 @@
 package com.sample.todo.base.di
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.work.ListenableWorker
 import dagger.MapKey
 import kotlin.reflect.KClass
 
-@Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.BINARY)
 @MapKey
-@Target(
-    AnnotationTarget.FUNCTION,
-    AnnotationTarget.PROPERTY_GETTER,
-    AnnotationTarget.PROPERTY_SETTER
-)
 annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
-@Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.BINARY)
 @MapKey
-@Target(
-    AnnotationTarget.FUNCTION,
-    AnnotationTarget.PROPERTY_GETTER,
-    AnnotationTarget.PROPERTY_SETTER
-)
 annotation class WorkerKey(val value: KClass<out ListenableWorker>)
+
+@Retention(AnnotationRetention.BINARY)
+@MapKey
+annotation class FragmentKey(val value: KClass<out Fragment>)

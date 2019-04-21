@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="state"
-            type="com.sample.todo.main.statistics.StatisticsState" />
-
         <variable
             name="viewModel"
             type="com.sample.todo.main.statistics.StatisticsViewModel" />
@@ -53,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:text="@{state.tasksCount}"
+                    android:text="@{viewModel.tasksCount}"
                     app:layout_constraintBottom_toBottomOf="@+id/task_count_label"
                     app:layout_constraintStart_toEndOf="@+id/label_barrier"
                     tools:text="10" />
@@ -64,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:text="@{state.completedTasksCount}"
+                    android:text="@{viewModel.completedTasksCount}"
                     app:layout_constraintBottom_toBottomOf="@+id/completed_task_count_label"
                     app:layout_constraintStart_toEndOf="@+id/label_barrier"
                     tools:text="6" />
@@ -75,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:text="@{state.activeTasksCount}"
+                    android:text="@{viewModel.activeTasksCount}"
                     app:layout_constraintBottom_toBottomOf="@+id/active_task_label"
                     app:layout_constraintStart_toEndOf="@+id/label_barrier"
                     tools:text="4" />

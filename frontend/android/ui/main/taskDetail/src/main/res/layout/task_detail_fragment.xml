@@ -4,14 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.sample.todo.main.taskdetail.TaskDetailViewModel" />
-
-        <variable
-            name="state"
-            type="com.sample.todo.main.taskdetail.TaskDetailState" />
     </data>
 
     <!--TODO how map :app:kaptDebugKotlin viewModel.isLoading.getValue() is a boxed field but needs-->
@@ -51,7 +46,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:goneUnless="@{!state.isLoading}"
+                    app:goneUnless="@{!viewModel.loading}"
                     tools:layout_height="match_parent">
 
                     <CheckBox
@@ -60,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
-                        android:checked="@{state.originalTask.isCompleted}"
+                        android:checked="@{viewModel.isCompleted}"
                         android:onCheckedChanged="@{(view, checked) -> viewModel.onCheckedChange(checked)}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +68,7 @@
                         android:layout_marginEnd="16dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="@{state.originalTask.title}"
+                        android:text="@{viewModel.title}"
                         app:layout_constraintBottom_toBottomOf="@+id/completed"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/completed"
@@ -87,7 +82,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="88dp"
-                        android:text="@{state.originalTask.description}"
+                        android:text="@{viewModel.description}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -131,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:goneUnless="@{state.isLoading}" />
+                app:goneUnless="@{viewModel.loading}" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

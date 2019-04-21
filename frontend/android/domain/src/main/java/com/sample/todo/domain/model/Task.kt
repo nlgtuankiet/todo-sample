@@ -9,4 +9,15 @@ data class Task(
     val isCompleted: Boolean = false,
     val createTime: Instant = Instant.now(),
     val updateTime: Instant = Instant.now()
-)
+) {
+    companion object {
+        val DEFAULT = Task(
+            id = "",
+            title = "",
+            description = null,
+            isCompleted = false,
+            createTime = Instant.MIN,
+            updateTime = Instant.MIN
+        )
+    }
+}

@@ -23,7 +23,6 @@ include(":frontend:android:ui:main:moduleDetail")
 include(":frontend:android:ui:main:about")
 include(":frontend:android:ui:main:addedit")
 include(":frontend:android:ui:main:search")
-include(":frontend:android:ui:main:setting")
 include(":frontend:android:ui:main:statistics")
 
 include(":frontend:android:ui:splash")

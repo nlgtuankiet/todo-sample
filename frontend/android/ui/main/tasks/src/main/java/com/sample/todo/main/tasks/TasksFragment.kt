@@ -5,29 +5,47 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.mvrx.MvRxView
+import com.airbnb.mvrx.MvRxViewModelStore
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
-import com.sample.todo.base.BaseFragment
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.base.message.MessageManager
 import com.sample.todo.base.message.setUpSnackbar
 import com.sample.todo.main.tasks.databinding.TasksFragmentBinding
 import timber.log.Timber
-import javax.inject.Inject
 
 // TODO fix bug when user double click navigation icon
-class TasksFragment : BaseFragment() {
+class TasksFragment (
+    val viewModelFactory: TasksViewModel.Factory,
+    private val messageManager: MessageManager,
+    private val tasksController: TasksController
+) : Fragment(), MvRxView {
 
-    @Inject
-    lateinit var messageManager: MessageManager
-    @Inject
-    lateinit var viewModelFactory: TasksViewModel.Factory
+    override val mvrxViewModelStore by lazy { MvRxViewModelStore(viewModelStore) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        mvrxViewModelStore.restoreViewModels(this, savedInstanceState)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mvrxViewModelStore.saveViewModels(outState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        postInvalidate()
+    }
+
     private lateinit var binding: TasksFragmentBinding
-    private val tasksViewModel: TasksViewModel by fragmentViewModel()
+    val tasksViewModel: TasksViewModel by fragmentViewModel()
     private var filterPopupMenu: PopupMenu? = null
-    private lateinit var tasksController: TasksController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +56,6 @@ class TasksFragment : BaseFragment() {
             viewModel = tasksViewModel
             lifecycleOwner = viewLifecycleOwner
             tasksRecyclerView.apply {
-                tasksController = TasksController(tasksViewModel)
                 adapter = tasksController.adapter
                 addOnScrollListener(object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

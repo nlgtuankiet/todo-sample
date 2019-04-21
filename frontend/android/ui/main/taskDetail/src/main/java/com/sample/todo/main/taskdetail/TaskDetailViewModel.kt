@@ -1,85 +1,35 @@
 package com.sample.todo.main.taskdetail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.navigation.NavDirections
-import com.airbnb.mvrx.MvRxViewModelFactory
-import com.airbnb.mvrx.ViewModelContext
 import com.sample.todo.base.entity.Event
-import com.sample.todo.base.extension.arguments
-import com.sample.todo.base.extension.getFragment
+import com.sample.todo.base.extension.map
 import com.sample.todo.base.extension.postNewEvent
 import com.sample.todo.base.extension.postNewMessage
+import com.sample.todo.base.extension.postValueIfNew
 import com.sample.todo.base.message.Message
 import com.sample.todo.base.widget.ToolbarData
+import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskId
 import com.sample.todo.domain.usecase.DeleteTask
 import com.sample.todo.domain.usecase.GetTaskObservable
 import com.sample.todo.domain.usecase.UpdateComplete
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
+import io.reactivex.BackpressureStrategy
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * [ViewModel] for [TaskDetailFragment]
  */
-class TaskDetailViewModel @AssistedInject constructor(
-    @Assisted private val initialState: TaskDetailState,
-    @Assisted private val args: TaskDetailFragmentArgs,
+class TaskDetailViewModel @Inject constructor(
+    private val args: TaskDetailFragmentArgs,
     private val getTaskFlowable: GetTaskObservable,
     private val updateComplete: UpdateComplete,
     private val deleteTask: DeleteTask
-) : com.sample.todo.base.MvRxViewModel<TaskDetailState>(initialState = initialState) {
-
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(initialState: TaskDetailState, args: TaskDetailFragmentArgs): TaskDetailViewModel
-    }
-
-    companion object : MvRxViewModelFactory<TaskDetailViewModel, TaskDetailState> {
-        override fun create(
-            viewModelContext: ViewModelContext,
-            state: TaskDetailState
-        ): TaskDetailViewModel? {
-            val fragment = viewModelContext.getFragment<TaskDetailFragment>()
-            val args: TaskDetailFragmentArgs = TaskDetailFragmentArgs.fromBundle(
-                viewModelContext.arguments
-            )
-            return fragment.viewModelFactory.create(state, args)
-        }
-
-        override fun initialState(viewModelContext: ViewModelContext): TaskDetailState? {
-            return TaskDetailState(
-                originalTask = null,
-                isLoading = null,
-                taskNotFound = null
-            )
-        }
-    }
-
-    init {
-        setState {
-            copy(isLoading = true)
-        }
-        getTaskFlowable(TaskId(args.taskId)).execute { asyncResult ->
-            when (val result = asyncResult()) {
-                is GetTaskObservable.Result.Found -> copy(
-                    isLoading = false,
-                    originalTask = result.task,
-                    taskNotFound = false
-                )
-                is GetTaskObservable.Result.TaskNotFound -> copy(
-                    isLoading = false,
-                    originalTask = null,
-                    taskNotFound = true
-                )
-                else -> this
-            }
-        }
-    }
+) : ViewModel() {
+    private val compositeDisposable = CompositeDisposable()
 
     val toolbarData = ToolbarData(
         navigationIcon = R.drawable.toolbar_navigation_icon,
@@ -104,9 +54,45 @@ class TaskDetailViewModel @AssistedInject constructor(
     val loadErrorEvent: LiveData<Event<Unit>>
         get() = _loadErrorEvent
 
+    private val _taskNotFound = MutableLiveData<Boolean>().apply { value = false }
+    val taskNotFound: LiveData<Boolean>
+        get() = _taskNotFound
+
     private val _addNotificationEvent = MutableLiveData<Event<String>>()
     val addNotificationEvent: LiveData<Event<String>>
         get() = _addNotificationEvent
+
+    private var originalTask: Task? = null
+
+    val currentTask = getTaskFlowable(TaskId(args.taskId))
+        .doOnNext {
+            _loading.postValueIfNew(false)
+            val found = when (it) {
+                is GetTaskObservable.Result.Found -> true
+                is GetTaskObservable.Result.TaskNotFound -> false
+            }
+            _taskNotFound.postValueIfNew(!found)
+        }
+        .map {
+            val task = when (it) {
+                is GetTaskObservable.Result.Found -> it.task
+                is GetTaskObservable.Result.TaskNotFound -> Task.DEFAULT
+            }
+            originalTask = task
+            task
+        }
+        .toFlowable(BackpressureStrategy.LATEST)
+        .toLiveData()
+
+    val title = currentTask.map { it.title }
+
+    val description = currentTask.map { it.description ?: "" }
+
+    val isCompleted = currentTask.map { it.isCompleted }
+
+    private val _loading = MutableLiveData<Boolean>().apply { value = true }
+    val loading: LiveData<Boolean>
+        get() = _loading
 
     fun onFabButtonClick() {
         _navigationEvent.value =
@@ -148,18 +134,21 @@ class TaskDetailViewModel @AssistedInject constructor(
 
     fun onCheckedChange(checked: Boolean) {
         Timber.d("onCheckedChange(checked: $checked)")
-        withState { state ->
-            if (state.originalTask?.isCompleted != checked) {
-                viewModelScope.launch {
-                    runCatching { updateComplete(args.taskId, checked) }
-                        .onSuccess {
-                            _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_success)
-                        }
-                        .onFailure {
-                            _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_fail)
-                        }
-                }
+        if (originalTask?.isCompleted != checked) {
+            viewModelScope.launch {
+                runCatching { updateComplete(args.taskId, checked) }
+                    .onSuccess {
+                        _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_success)
+                    }
+                    .onFailure {
+                        _snackBarMessage.postNewMessage(messageId = R.string.task_detail_update_complete_fail)
+                    }
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
     }
 }

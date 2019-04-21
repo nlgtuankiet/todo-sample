@@ -5,7 +5,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-abstract class WorkerFactoryBindingModule {
+interface WorkerFactoryBindingModule {
     @Binds
-    abstract fun bindWorkerFactory(factory: TodoWorkerFactory): WorkerFactory
+    fun bindWorkerFactory(factory: TodoWorkerFactory): WorkerFactory
 }

@@ -42,6 +42,14 @@ android {
     }
     defaultConfig {
         applicationId = "com.sample.todo"
+//
+//        val minSdk = run {
+//            if (project.hasProperty("minSdk")) {
+//                project.property("minSdk").toString().toIntOrNull() ?: Android.minSdkVersion
+//            } else {
+//                Android.minSdkVersion
+//            }
+//        }
         minSdkVersion(Android.minSdkVersion)
         targetSdkVersion(Android.targetSdkVersion)
         versionCode = 56
@@ -190,6 +198,7 @@ kapt {
         option("-Xmaxerrs", 500)
     }
     useBuildCache = true
+//    correctErrorTypes = true
 }
 
 apply(mapOf("plugin" to "com.google.gms.google-services"))

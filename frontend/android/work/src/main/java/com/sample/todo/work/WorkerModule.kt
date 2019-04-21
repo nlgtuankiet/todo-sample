@@ -4,8 +4,7 @@ import dagger.Module
 
 @Module(
     includes = [
-        WorkerFactoryBindingModule::class,
-        WorkManagerModule::class
+        WorkerFactoryBindingModule::class
     ]
 )
 abstract class WorkerModule

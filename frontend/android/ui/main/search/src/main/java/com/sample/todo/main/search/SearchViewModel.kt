@@ -49,10 +49,8 @@ class SearchViewModel @AssistedInject constructor(
     init {
         query.debounce(500L, TimeUnit.MILLISECONDS)
             .distinctUntilChanged().apply {
-                switchMap { searchTask(it) }
-                    .execute { copy(searchResult = it) }
-                switchMap { getSearchResultStatisticsObservable(it) }
-                    .execute { copy(searchResultStatistics = it) }
+                switchMap { searchTask(it) }.execute { copy(searchResult = it) }
+                switchMap { getSearchResultStatisticsObservable(it) }.execute { copy(searchResultStatistics = it) }
             }
     }
 

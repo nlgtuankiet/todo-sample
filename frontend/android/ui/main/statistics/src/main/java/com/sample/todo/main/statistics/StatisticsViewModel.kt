@@ -1,48 +1,26 @@
 package com.sample.todo.main.statistics
 
-import com.airbnb.mvrx.MvRxViewModelFactory
-import com.airbnb.mvrx.ViewModelContext
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.toLiveData
+import com.sample.todo.base.extension.map
+import com.sample.todo.domain.model.TaskStatistics
 import com.sample.todo.domain.usecase.GetTaskStatObservable
-import com.sample.todo.base.extension.getFragment
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
+import io.reactivex.BackpressureStrategy
+import javax.inject.Inject
 
-class StatisticsViewModel @AssistedInject constructor(
-    @Assisted private val initialState: StatisticsState,
+class StatisticsViewModel @Inject constructor(
     getTaskStatLive: GetTaskStatObservable
-) : com.sample.todo.base.MvRxViewModel<StatisticsState>(initialState) {
+) : ViewModel() {
 
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(initialState: StatisticsState): StatisticsViewModel
-    }
+    private val stat = getTaskStatLive()
+        .startWith(TaskStatistics(0, 0, 0))
+        .toFlowable(BackpressureStrategy.LATEST)
+        .toLiveData()
 
-    companion object : MvRxViewModelFactory<StatisticsViewModel, StatisticsState> {
-        override fun create(
-            viewModelContext: ViewModelContext,
-            state: StatisticsState
-        ): StatisticsViewModel? {
-            return viewModelContext.getFragment<StatisticsFragment>().viewModelFactory.create(state)
-        }
+    val tasksCount = stat.map { it.taskCount.toString() }
 
-        override fun initialState(viewModelContext: ViewModelContext): StatisticsState? {
-            return StatisticsState(
-                tasksCount = "",
-                completedTasksCount = "",
-                activeTasksCount = ""
-            )
-        }
-    }
+    val completedTasksCount = stat.map { it.completedTaskCount.toString() }
 
-    init {
-        getTaskStatLive().execute {
-            it()?.let {
-                copy(
-                    tasksCount = it.taskCount.toString(),
-                    completedTasksCount = it.completedTaskCount.toString(),
-                    activeTasksCount = it.activeTaskCount.toString()
-                )
-            } ?: this
-        }
-    }
+    val activeTasksCount = stat.map { it.activeTaskCount.toString() }
+
 }
