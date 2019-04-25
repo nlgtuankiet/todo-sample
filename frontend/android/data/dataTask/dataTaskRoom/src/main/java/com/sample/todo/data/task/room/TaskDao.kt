@@ -54,7 +54,12 @@ abstract class TaskDao {
 
     @Query("SELECT completed FROM task WHERE id = :taskId")
     abstract fun getComplete(taskId: String): Boolean
-
+    /**
+     * EXPLAIN QUERY PLAN SELECT [id], [title], [completed] FROM task ORDER BY create_time ASC LIMIT 10
+     *
+     *  EXPLAIN QUERY PLAN SELECT [id], [title], [completed] where [id] in (select [id] from task ORDER BY create_time ASC LIMIT 10)
+     *
+     */
     @Query("SELECT [id], [title], [completed] FROM task ORDER BY create_time ASC")
     abstract fun getTaskMiniDataSourceFactory(): DataSource.Factory<Int, TaskMiniEntity>
 
@@ -73,16 +78,21 @@ abstract class TaskDao {
         return changes()
     }
 
+    /**
+     * SELECT snippet(task_fts) AS snippet,task_fts.title AS title FROM task_fts WHERE title MATCH '$a*' OR description MATCH $a*'
+     * select * from (select id from task) join (select title from task)
+     */
+
     @Query("""
         SELECT
             snippet(task_fts) AS snippet,
-            task.id AS id,
-            task.title AS title
+            task_fts.id AS id,
+            task_fts.title AS title
         FROM
-            task JOIN task_fts ON (task.rowid = task_fts.rowid)
+            task_fts
         WHERE
-            task_fts MATCH :query
-        ORDER BY create_time ASC
+            title MATCH :query OR description MATCH :query
+        ORDER BY create_time DESC
     """)
     abstract fun getSearchResultDataSourceWith(query: String): DataSource.Factory<Int, SearchResultEntity>
 

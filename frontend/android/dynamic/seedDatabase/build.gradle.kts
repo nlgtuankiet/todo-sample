@@ -14,7 +14,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        minSdkVersion(Android.minSdkVersion)
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -47,6 +47,8 @@ dependencies {
     implementation(Libs.epoxy)
     implementation(Libs.epoxy_paging)
     implementation(Libs.lifecycle_viewmodel_ktx)
+    implementation(Libs.fragment_ktx)
+    implementation(Libs.activity_ktx)
     implementation(Libs.work_runtime_ktx)
     implementation(Libs.work_testing)
     implementation(project(":frontend:android:work"))

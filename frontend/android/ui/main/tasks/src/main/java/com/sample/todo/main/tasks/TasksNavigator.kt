@@ -8,4 +8,4 @@ import javax.inject.Inject
 @FragmentScoped
 class TasksNavigator @Inject constructor(
     holder: Holder<TasksFragment>
-): FragmentNavigator(holder)
+) : FragmentNavigator(holder)

@@ -1,5 +1,8 @@
 package com.sample.todo.data.task.sqldelight
 
-typealias SqlDelightTask = com.sample.todo.data.task.sqldelight.Task
-typealias SqlDelightTaskImp = com.sample.todo.data.task.sqldelight.Task.Impl
-typealias SqlDelightTaskStatistics = com.sample.todo.data.task.sqldelight.TaskStatistics
+typealias TaskEntity = com.sample.todo.data.task.sqldelight.Task
+typealias TaskEntityImp = com.sample.todo.data.task.sqldelight.Task.Impl
+typealias TaskStatisticsEntity = com.sample.todo.data.task.sqldelight.TaskStatistics
+typealias TaskMiniEntity = com.sample.todo.data.task.sqldelight.SelectTaskMini
+typealias ActiveTaskMiniEntity = com.sample.todo.data.task.sqldelight.SelectActiveTaskMini
+typealias CompletedTaskMiniEntity = com.sample.todo.data.task.sqldelight.SelectCompletedTaskMini

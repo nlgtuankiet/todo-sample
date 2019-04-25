@@ -12,6 +12,10 @@ import androidx.room.PrimaryKey
         Index(
             value = ["completed", "create_time"],
             unique = false
+        ),
+        Index(
+            value = ["title"],
+            unique = false
         )
     ]
 )

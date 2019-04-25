@@ -2,9 +2,9 @@ package com.sample.todo.data.task.sqldelight
 
 import androidx.paging.PagedList
 import androidx.paging.toObservable
-import com.sample.todo.data.Mapper
 import com.sample.todo.data.TaskDataSource
 import com.sample.todo.data.core.DataScope
+import com.sample.todo.data.core.Mapper
 import com.sample.todo.domain.model.SearchResult
 import com.sample.todo.domain.model.SearchResultStatistics
 import com.sample.todo.domain.model.Task
@@ -20,12 +20,12 @@ import javax.inject.Inject
 class TaskSqlDelightDataSource @Inject constructor(
     private val taskQueries: TaskQueries,
     private val database: TodoSqlDelightDatabase,
-    private val sqlDelightTaskMapper: Mapper<SqlDelightTask, Task>,
-    private val taskMapper: Mapper<Task, SqlDelightTask>,
+    private val sqlDelightTaskMapper: Mapper<TaskEntity, Task>,
+    private val taskMapper: Mapper<Task, TaskEntity>,
     private val selectTaskMiniMapper: Mapper<SelectTaskMini, TaskMini>,
     private val selectActiveTaskMiniMapper: Mapper<SelectActiveTaskMini, TaskMini>,
     private val selectCompletedTaskMiniMapper: Mapper<SelectCompletedTaskMini, TaskMini>,
-    private val sqlDelightTaskStatisticsMapper: Mapper<SqlDelightTaskStatistics, TaskStatistics>
+    private val sqlDelightTaskStatisticsMapper: Mapper<TaskStatisticsEntity, TaskStatistics>
 ) : TaskDataSource {
     override fun getTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>> {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
@@ -45,12 +45,12 @@ class TaskSqlDelightDataSource @Inject constructor(
 
     override suspend fun findTaskById(taskId: String): Task? {
         return taskQueries.selectTaskById(taskId).executeAsOneOrNull()
-            ?.let { sqlDelightTaskMapper.map(it) }
+            ?.let { sqlDelightTaskMapper(it) }
     }
 
     override suspend fun insert(entity: Task): Long {
         return database.inTransaction {
-            taskQueries.insert(taskMapper.map(entity))
+            taskQueries.insert(taskMapper(entity))
             taskQueries.changes().executeAsOne()
         }
     }
@@ -58,7 +58,7 @@ class TaskSqlDelightDataSource @Inject constructor(
     override suspend fun insertAll(entities: List<Task>): Long {
         return database.inTransaction {
             entities.forEach { task ->
-                taskQueries.insert(taskMapper.map(task))
+                taskQueries.insert(taskMapper(task))
             }
             taskQueries.changes().executeAsOne()
         }
@@ -81,7 +81,7 @@ class TaskSqlDelightDataSource @Inject constructor(
             .asObservable()
             .map { query ->
                 query.executeAsOne().let {
-                    sqlDelightTaskStatisticsMapper.map(it)
+                    sqlDelightTaskStatisticsMapper(it)
                 }
             }
     }
@@ -91,7 +91,7 @@ class TaskSqlDelightDataSource @Inject constructor(
             .asObservable()
             .map {
                 it.executeAsList().map {
-                    sqlDelightTaskMapper.map(it)
+                    sqlDelightTaskMapper(it)
                 }
             }
     }
@@ -118,6 +118,10 @@ class TaskSqlDelightDataSource @Inject constructor(
         query: String,
         pageSize: Int
     ): Observable<PagedList<SearchResult>> {
+        val ftsQuery = query
+            .splitToSequence(" ")
+            .map { "$it*" }
+            .joinToString(" ", "\"", "\"")
         return QueryDataSourceFactory(
             queryProvider = taskQueries::selectTaskMini,
             countQuery = taskQueries.countTasks()

@@ -37,9 +37,9 @@ class TaskDetailViewModel @Inject constructor(
 
     val toolbarData = ToolbarData(
         navigationIcon = R.drawable.toolbar_navigation_icon,
-        navigationClickHandler = this::onNavigationClick,
+        navigationClickHandler = { onNavigationClick() },
         menu = R.menu.task_detail_menu,
-        menuItemClickHandler = this::onToolbarMenuClick
+        menuItemClickHandler = { id -> onToolbarMenuClick(id) }
     )
 
     private val _snackBarMessage = MutableLiveData<Event<Message>>()

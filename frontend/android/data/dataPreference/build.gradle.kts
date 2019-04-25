@@ -14,7 +14,7 @@ android {
         isEnabled = true
     }
     defaultConfig {
-        minSdkVersion(Android.minSdkVersion)
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

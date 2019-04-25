@@ -9,9 +9,9 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.functions.FirebaseFunctions
-import com.sample.todo.data.Mapper
 import com.sample.todo.data.TaskDataSource
 import com.sample.todo.data.core.DataScope
+import com.sample.todo.data.core.Mapper
 import com.sample.todo.data.task.firestore.entity.TaskFieldName
 import com.sample.todo.data.task.firestore.function.SearchResultDataSourcefactory
 import com.sample.todo.data.task.firestore.function.entity.SearchResponce
@@ -36,8 +36,8 @@ import kotlin.coroutines.suspendCoroutine
 @DataScope
 class TaskDataSourceImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
-    private val taskMapper: Mapper<DocumentSnapshot, Task>,
-    private val taskMiniMapper: Mapper<DocumentSnapshot, TaskMini>,
+    private val documentSnapshotToTask: Mapper<DocumentSnapshot, Task>,
+    private val documentSnapshotToTaskMini: Mapper<DocumentSnapshot, TaskMini>,
     private val firebaseFunctions: FirebaseFunctions,
     private val searchResponceAdapter: JsonAdapter<SearchResponce>,
     private val searchResultDataSourceFactoryFactory: SearchResultDataSourcefactory.Factory
@@ -52,7 +52,7 @@ class TaskDataSourceImpl @Inject constructor(
         return withContext(Dispatchers.IO) {
             delay(2000) // fake load
             val snapShot = taskCollectionRef.document(taskId).getDocumentSnapshot()
-            taskMapper.map(snapShot)
+            documentSnapshotToTask(snapShot)
         }
     }
 
@@ -160,7 +160,7 @@ class TaskDataSourceImpl @Inject constructor(
             .orderBy(TaskFieldName.createTime, Query.Direction.ASCENDING)
             .build()
         return FirestoreItemKeyedDataSource.Factory(queryFactory)
-            .map(taskMiniMapper::map)
+            .map(documentSnapshotToTaskMini::invoke)
             .toObservable(
                 config = getConfig(pageSize)
             )
@@ -172,7 +172,7 @@ class TaskDataSourceImpl @Inject constructor(
             .orderBy(TaskFieldName.createTime, Query.Direction.ASCENDING)
             .build()
         return FirestoreItemKeyedDataSource.Factory(queryFactory)
-            .map(taskMiniMapper::map)
+            .map(documentSnapshotToTaskMini::invoke)
             .toObservable(config = getConfig(pageSize))
     }
 
@@ -182,7 +182,7 @@ class TaskDataSourceImpl @Inject constructor(
             .orderBy(TaskFieldName.createTime, Query.Direction.ASCENDING)
             .build()
         return FirestoreItemKeyedDataSource.Factory(queryFactory)
-            .map(taskMiniMapper::map)
+            .map(documentSnapshotToTaskMini::invoke)
             .toObservable(config = getConfig(pageSize))
     }
 
@@ -207,7 +207,7 @@ class TaskDataSourceImpl @Inject constructor(
                 if (exception != null || snapshot == null) {
                     result.onNext(emptyList())
                 } else {
-                    runCatching { taskMapper.map(snapshot) }
+                    runCatching { documentSnapshotToTask(snapshot) }
                         .onSuccess { result.onNext(listOf(it)) }
                         .onFailure { result.onNext(emptyList()) }
                 }

@@ -29,7 +29,7 @@ object Versions {
 
     const val androidx_paging: String = "2.1.0" 
 
-    const val androidx_room: String = "2.1.0-alpha04" 
+    const val androidx_room: String = "2.1.0-alpha04"
 
     const val espresso_core: String = "3.1.0" // available: "3.1.1"
 

@@ -25,10 +25,8 @@ import dagger.android.support.AndroidSupportInjectionModule
         AndroidSupportInjectionModule::class,
         MessageManagerBindingModule::class,
         WorkModule::class,
-        FragmentComponentBindingModule::class,
         InitializerBindingModule::class,
         ApplicationBindingModule::class
-
     ],
     dependencies = [
         DataComponent::class,

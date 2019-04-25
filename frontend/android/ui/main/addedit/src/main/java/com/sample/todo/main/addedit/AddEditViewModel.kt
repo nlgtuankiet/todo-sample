@@ -35,9 +35,9 @@ class AddEditViewModel @Inject constructor(
 
     val toolbarListenerData = ToolbarData(
         navigationIcon = R.drawable.toolbar_navigation_icon,
-        navigationClickHandler = this::onNavigationClick,
+        navigationClickHandler = { onNavigationClick() },
         menu = R.menu.add_edit_menu,
-        menuItemClickHandler = this::onMenuClick
+        menuItemClickHandler = { id -> onMenuClick(id) }
     )
 
     private val _navigateUpEvent = MutableLiveData<Event<Unit>>()

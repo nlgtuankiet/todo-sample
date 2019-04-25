@@ -1,12 +1,12 @@
 package com.sample.todo.data.task.sqldelight.mapper
 
-import com.sample.todo.data.Mapper
-import com.sample.todo.data.task.sqldelight.SqlDelightTask
+import com.sample.todo.data.core.Mapper
+import com.sample.todo.data.task.sqldelight.TaskEntity
 import com.sample.todo.domain.model.Task
 import javax.inject.Inject
 
-class SqlDelightTaskMapper @Inject constructor() : Mapper<SqlDelightTask, Task> {
-    override fun map(from: SqlDelightTask): Task {
+class TaskEntityToTask @Inject constructor() : Mapper<TaskEntity, Task> {
+    override fun invoke(from: TaskEntity): Task {
         return Task(
             id = from.id,
             title = from.title,

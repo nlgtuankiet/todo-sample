@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
-import com.sample.todo.base.entity.Event
 import com.sample.todo.base.MvRxViewModel
+import com.sample.todo.base.entity.Event
 import com.sample.todo.base.extension.getFragment
 import com.sample.todo.base.extension.postNewMessage
 import com.sample.todo.base.extension.setValueIfNew
@@ -112,7 +112,7 @@ class TasksViewModel @AssistedInject constructor(
     private val toolbarDataInNormalState = run {
         ToolbarData(
             menu = R.menu.tasks_toolbar_normal,
-            menuItemClickHandler = this::onToolbarMenuClickInNormalState
+            menuItemClickHandler = { id -> onToolbarMenuClickInNormalState(id) }
         )
     }.also {
         setState { copy(toolbarData = it) }
@@ -121,7 +121,7 @@ class TasksViewModel @AssistedInject constructor(
     private val fabDataInNormalState = run {
         FabData(
             icon = R.drawable.ic_add_24dp,
-            onClickHandler = this::onFabButtonClickInNormalState
+            onClickHandler = { onFabButtonClickInNormalState() }
         )
     }.also {
         setState { copy(fabData = it) }
@@ -129,12 +129,12 @@ class TasksViewModel @AssistedInject constructor(
 
     private val fabDataInEditState = FabData(
         icon = R.drawable.check_box,
-        onClickHandler = this::onFabButtonClickInEditState
+        onClickHandler = { onFabButtonClickInEditState() }
     )
 
     private val toolbarDataInEditState = ToolbarData(
         menu = R.menu.tasks_toolbar_editing,
-        menuItemClickHandler = this::onToolbarMenuClickInEditState
+        menuItemClickHandler = { id -> onToolbarMenuClickInEditState(id) }
     )
 
     private fun onToolbarMenuClickInNormalState(menuId: Int): Boolean {

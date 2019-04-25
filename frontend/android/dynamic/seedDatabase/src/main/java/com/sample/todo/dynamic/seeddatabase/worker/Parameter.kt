@@ -6,7 +6,7 @@ import com.sample.todo.base.extension.getOrThrow
 data class Parameter(
     val isBrandNew: Boolean = true,
     val totalTasks: Long = 10,
-    val itemPerTrunk: Long = 1000,
+    val itemPerTrunk: Long = 10000,
     val minTitleLength: Int = 1,
     val maxTitleLength: Int = 3,
     val minDescriptionParagraph: Int = 1,

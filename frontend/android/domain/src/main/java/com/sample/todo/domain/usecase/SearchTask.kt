@@ -12,9 +12,8 @@ class SearchTask @Inject constructor(
     operator fun invoke(rawQuery: String, pageSize: Int = 20): Observable<PagedList<SearchResult>> {
         val query = rawQuery
             .splitToSequence(" ")
-            .filter { it.isNotBlank() }
-//            .map { "$it*" }
-//            .joinToString(" ", "\"", "\"")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
             .joinToString(" ")
             .toLowerCase()
         return taskRepository.getSearchResultObservablePaged(query, pageSize)

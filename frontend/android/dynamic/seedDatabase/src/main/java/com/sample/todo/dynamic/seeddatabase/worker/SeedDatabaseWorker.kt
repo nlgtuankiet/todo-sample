@@ -70,7 +70,9 @@ class SeedDatabaseWorker constructor(
             val result = kotlin.runCatching {
                 insertAllTasks(tasks)
             }
-            result.onFailure { TODO() }
+            result.onFailure {
+                TODO()
+            }
                 .onSuccess { onTasksSeeded(nextTrunk) }
 
             delay(1000)
@@ -105,7 +107,6 @@ class SeedDatabaseWorker constructor(
     private suspend fun createRandomTasks(numberOfTasks: Long): List<Task> {
         val tasks = mutableListOf<Task>()
         (0 until numberOfTasks).forEach {
-            delay(300)
             tasks.add(createRandomTask())
         }
         return tasks

@@ -58,7 +58,7 @@ class SearchResultDataSource(
                     Timber.d("json result is: $resultJson")
                     val searchResponce = searchResponceJsonAdapter.fromJson(resultJson) ?: TODO()
                     Timber.d("searchResponce is: $searchResponce")
-                    val searchResults = searchResultMapper.map(searchResponce)
+                    val searchResults = searchResultMapper.invoke(searchResponce)
                     callback(searchResults)
                 } else {
                     Timber.e(task.exception)

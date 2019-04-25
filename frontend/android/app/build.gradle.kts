@@ -42,15 +42,14 @@ android {
     }
     defaultConfig {
         applicationId = "com.sample.todo"
-//
-//        val minSdk = run {
-//            if (project.hasProperty("minSdk")) {
-//                project.property("minSdk").toString().toIntOrNull() ?: Android.minSdkVersion
-//            } else {
-//                Android.minSdkVersion
-//            }
-//        }
-        minSdkVersion(Android.minSdkVersion)
+        val minSdk = run {
+            if (project.hasProperty("minSdk")) {
+                project.property("minSdk").toString().toIntOrNull() ?: Android.minSdkVersion
+            } else {
+                Android.minSdkVersion
+            }
+        }
+        minSdkVersion(minSdk)
         targetSdkVersion(Android.targetSdkVersion)
         versionCode = 56
         versionName = "1.2.0"

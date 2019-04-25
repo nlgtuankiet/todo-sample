@@ -17,18 +17,10 @@ class SeedDatabaseViewModel @Inject constructor(
     val totalTask = MutableLiveData<String>().apply { value = 10.toString() }
 
     fun onSeedButtonClick() {
-        val param = Parameter()
+        val param = Parameter(totalTasks = totalTask.value?.toLong() ?: 10)
         val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>()
             .setInputData(param.toData())
             .build()
         workManager.enqueueUniqueWork("aka", ExistingWorkPolicy.REPLACE, request)
-    }
-
-    class Factory @Inject constructor(
-        private val provider: Provider<SeedDatabaseViewModel>
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return provider.get() as T
-        }
     }
 }

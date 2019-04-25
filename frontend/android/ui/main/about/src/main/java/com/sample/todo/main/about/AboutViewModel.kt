@@ -18,7 +18,6 @@ class AboutViewModel @Inject constructor(
     val navigationEvent: LiveData<Event<NavDirections>>
         get() = _navigationEvent
 
-
     private val _navigateToSettingsEvent = MutableLiveData<Event<Unit>>()
     val navigateToSettingsEvent: LiveData<Event<Unit>>
         get() = _navigateToSettingsEvent

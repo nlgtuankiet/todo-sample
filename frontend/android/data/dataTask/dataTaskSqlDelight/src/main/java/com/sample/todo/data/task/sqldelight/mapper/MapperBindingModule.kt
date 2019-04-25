@@ -1,11 +1,11 @@
 package com.sample.todo.data.task.sqldelight.mapper
 
-import com.sample.todo.data.Mapper
+import com.sample.todo.data.core.Mapper
 import com.sample.todo.data.task.sqldelight.SelectActiveTaskMini
 import com.sample.todo.data.task.sqldelight.SelectCompletedTaskMini
 import com.sample.todo.data.task.sqldelight.SelectTaskMini
-import com.sample.todo.data.task.sqldelight.SqlDelightTask
-import com.sample.todo.data.task.sqldelight.SqlDelightTaskStatistics
+import com.sample.todo.data.task.sqldelight.TaskEntity
+import com.sample.todo.data.task.sqldelight.TaskStatisticsEntity
 import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskMini
 import com.sample.todo.domain.model.TaskStatistics
@@ -15,15 +15,20 @@ import dagger.Module
 @Module
 interface MapperBindingModule {
     @Binds
-    fun bindSqlDelightTaskMapper(mapper: SqlDelightTaskMapper): Mapper<SqlDelightTask, Task>
+    fun bindSqlDelightTaskMapper(mapper: TaskEntityToTask): Mapper<TaskEntity, Task>
+
     @Binds
-    fun bindTaskMapper(mapper: TaskMapper): Mapper<Task, SqlDelightTask>
+    fun bindTaskMapper(mapper: TaskToTaskEntity): Mapper<Task, TaskEntity>
+
     @Binds
-    fun bindSelectTaskMiniMapper(mapper: SelectTaskMiniMapper): Mapper<SelectTaskMini, TaskMini>
+    fun bindSelectTaskMiniMapper(mapper: TaskMiniToTaskMini): Mapper<SelectTaskMini, TaskMini>
+
     @Binds
-    fun bindSelectActiveTaskMiniMapper(mapper: SelectActiveTaskMiniMapper): Mapper<SelectActiveTaskMini, TaskMini>
+    fun bindSelectActiveTaskMiniMapper(mapper: ActiveTaskMiniToTaskMini): Mapper<SelectActiveTaskMini, TaskMini>
+
     @Binds
-    fun bindSelectCompletedTaskMiniMapper(mapper: SelectCompletedTaskMiniMapper): Mapper<SelectCompletedTaskMini, TaskMini>
+    fun bindSelectCompletedTaskMiniMapper(mapper: CompletedTaskMiniToTaskMini): Mapper<SelectCompletedTaskMini, TaskMini>
+
     @Binds
-    fun bindSqlDelightTaskStatisticsMapper(mapper: SqlDelightTaskStatisticsMapper): Mapper<SqlDelightTaskStatistics, TaskStatistics>
+    fun bindSqlDelightTaskStatisticsMapper(mapper: TaskStatisticsEntityToTaskStatistics): Mapper<TaskStatisticsEntity, TaskStatistics>
 }

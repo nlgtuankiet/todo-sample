@@ -1,8 +1,8 @@
 package com.sample.todo.data.task.firestore.mapper
 
 import com.google.firebase.firestore.DocumentSnapshot
-import com.sample.todo.data.Mapper
 import com.sample.todo.data.core.DataScope
+import com.sample.todo.data.core.Mapper
 import com.sample.todo.data.task.firestore.entity.TaskFieldName
 import com.sample.todo.data.task.firestore.getOrThrow
 import com.sample.todo.domain.model.Task
@@ -10,8 +10,8 @@ import org.threeten.bp.Instant
 import javax.inject.Inject
 
 @DataScope
-class TaskSnapshotMapper @Inject constructor() : Mapper<DocumentSnapshot, Task> {
-    override fun map(from: DocumentSnapshot): Task {
+class DocumentSnapshotToTask @Inject constructor() : Mapper<DocumentSnapshot, Task> {
+    override fun invoke(from: DocumentSnapshot): Task {
         val createTime = from.getLong(TaskFieldName.createTime) ?: throw RuntimeException("")
         val updateTime = from.getLong(TaskFieldName.updateTime) ?: throw RuntimeException("")
         return Task(

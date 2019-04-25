@@ -28,7 +28,7 @@ plugins {
     id("de.fayard.buildSrcVersions") version "0.3.2"
     id("project-report")
     id("com.diffplug.gradle.spotless") version "3.22.0"
-    `build-scan`
+//    `build-scan`
 }
 
 allprojects {
@@ -47,9 +47,7 @@ allprojects {
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
         kotlinOptions {
             freeCompilerArgs = listOf(
-                "-Adagger.formatGeneratedSource=disabled".also {
-                    println("config kapt lol")
-                },
+                "-Adagger.formatGeneratedSource=disabled",
                 "-AFORMAT_GENERATED_SOURCE=DISABLED"
 
             )
@@ -79,6 +77,9 @@ subprojects {
     apply(plugin = "com.diffplug.gradle.spotless")
     // TODO how to config kapt
     spotless {
+        xml {
+            target("**/*.xml")
+        }
         kotlin {
             trimTrailingWhitespace()
             endWithNewline()
@@ -86,9 +87,6 @@ subprojects {
             target("**/*.kt")
             ktlint("0.31.0")
         }
-        xml {
-        }
-
     }
     tasks.withType<KotlinCompile>().configureEach {
         println("Configuring $name in project ${project.name}...")
