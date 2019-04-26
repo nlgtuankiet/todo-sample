@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="viewModel"
-            type="com.sample.todo.main.about.AboutViewModel" />
+            type="com.sample.todo.main.about.AboutViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/Widget.Todo.Toolbar"
-                    app:title="About" />
+                    app:title="About"/>
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,8 +48,19 @@
                     android:text="// introduve about application"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginLeft="8dp" />
-
+                    android:layout_marginLeft="8dp"/>
+                <TextView
+                    android:id="@+id/settings_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{viewModel.onSettingsLabelClick}"
+                    android:text="Settings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/statistics_text_view"
+                    android:layout_marginLeft="16dp"/>
                 <TextView
                     android:id="@+id/statistics_text_view"
                     android:layout_width="wrap_content"
@@ -58,11 +68,11 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:gravity="center_vertical"
-                    android:onClick="@{() -> viewModel.onStatisticsLabelClick()}"
+                    android:onClick="@{viewModel.onStatisticsLabelClick}"
                     android:text="Statistics"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/about_text_view"
-                    android:layout_marginLeft="16dp" />
+                    android:layout_marginLeft="16dp"/>
 
                 <Button
                     android:id="@+id/seed_database_button"
@@ -73,20 +83,9 @@
                     android:text="Button"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/settings_text_view"
-                    android:layout_marginLeft="8dp" />
+                    android:layout_marginLeft="8dp"/>
 
-                <TextView
-                    android:id="@+id/settings_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center_vertical"
-                    android:onClick="@{() -> viewModel.onSettingsLabelClick()}"
-                    android:text="Settings"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/statistics_text_view"
-                    android:layout_marginLeft="16dp" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

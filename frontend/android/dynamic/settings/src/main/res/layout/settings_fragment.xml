@@ -17,7 +17,7 @@
         android:layout_height="match_parent">
 
         <Button
-            android:onClick="@{() -> viewModel.onSetNameClick()}"
+            android:onClick="@{viewModel.onSetNameClick}"
             android:id="@+id/set_name_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

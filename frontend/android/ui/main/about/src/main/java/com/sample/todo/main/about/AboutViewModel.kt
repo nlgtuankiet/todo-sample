@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.sample.todo.base.entity.Event
 import com.sample.todo.base.extension.setNewEvent
+import com.sample.todo.base.listener.Listener
 import com.sample.todo.base.usecase.IsModuleInstalled
 import com.sample.todo.base.usecase.IsModuleInstalling
 import javax.inject.Inject
@@ -26,11 +27,11 @@ class AboutViewModel @Inject constructor(
     val displayModuleDetailDialogEvent: LiveData<Event<Unit>>
         get() = _displayModuleDetailDialogEvent
 
-    fun onStatisticsLabelClick() {
+    val onStatisticsLabelClick = Listener {
         _navigationEvent.value = Event(AboutFragmentDirections.toStatisticsFragment())
     }
 
-    fun onSettingsLabelClick() {
+    val onSettingsLabelClick = Listener {
         _navigateToSettingsEvent.setNewEvent()
     }
 }

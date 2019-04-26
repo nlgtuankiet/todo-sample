@@ -12,6 +12,9 @@ import com.sample.todo.base.entity.Event
 import com.sample.todo.base.extension.getFragment
 import com.sample.todo.base.extension.postNewMessage
 import com.sample.todo.base.extension.setValueIfNew
+import com.sample.todo.base.listener.ListenerKt.listenerOf
+import com.sample.todo.base.listener.MenuListener
+import com.sample.todo.base.listener.MenuListenerKt.menuListenerOf
 import com.sample.todo.base.message.Message
 import com.sample.todo.base.widget.FabData
 import com.sample.todo.base.widget.ToolbarData
@@ -109,35 +112,7 @@ class TasksViewModel @AssistedInject constructor(
             }
     }
 
-    private val toolbarDataInNormalState = run {
-        ToolbarData(
-            menu = R.menu.tasks_toolbar_normal,
-            menuItemClickHandler = { id -> onToolbarMenuClickInNormalState(id) }
-        )
-    }.also {
-        setState { copy(toolbarData = it) }
-    }
-
-    private val fabDataInNormalState = run {
-        FabData(
-            icon = R.drawable.ic_add_24dp,
-            onClickHandler = { onFabButtonClickInNormalState() }
-        )
-    }.also {
-        setState { copy(fabData = it) }
-    }
-
-    private val fabDataInEditState = FabData(
-        icon = R.drawable.check_box,
-        onClickHandler = { onFabButtonClickInEditState() }
-    )
-
-    private val toolbarDataInEditState = ToolbarData(
-        menu = R.menu.tasks_toolbar_editing,
-        menuItemClickHandler = { id -> onToolbarMenuClickInEditState(id) }
-    )
-
-    private fun onToolbarMenuClickInNormalState(menuId: Int): Boolean {
+    private val onToolbarMenuClickInNormalState: MenuListener = menuListenerOf { menuId ->
         when (menuId) {
             R.id.edit -> {
                 setState {
@@ -154,10 +129,41 @@ class TasksViewModel @AssistedInject constructor(
                 _openFilterPopupEvent.value = Event(Unit)
             }
         }
-        return true
+        true
     }
 
-    private fun onToolbarMenuClickInEditState(menuId: Int): Boolean {
+    private val toolbarDataInNormalState = run {
+        ToolbarData(
+            menu = R.menu.tasks_toolbar_normal,
+            menuItemClickHandler = onToolbarMenuClickInNormalState
+        )
+    }.also {
+        setState { copy(toolbarData = it) }
+    }
+
+    private val onFabButtonClickInNormalState = listenerOf {
+        _navigationEvent.value =
+            Event(TasksFragmentDirections.actionTasksFragmentToAddEditFragment(null))
+    }
+
+    private val fabDataInNormalState = run {
+        FabData(
+            icon = R.drawable.ic_add_24dp,
+            onClickHandler = onFabButtonClickInNormalState
+        )
+    }.also {
+        setState { copy(fabData = it) }
+    }
+
+    private val onFabButtonClickInEditState = listenerOf {
+    }
+
+    private val fabDataInEditState = FabData(
+        icon = R.drawable.check_box,
+        onClickHandler = onFabButtonClickInEditState
+    )
+
+    private val onToolbarMenuClickInEditState = menuListenerOf { menuId ->
         when (menuId) {
             R.id.cancel -> {
                 setState {
@@ -171,8 +177,13 @@ class TasksViewModel @AssistedInject constructor(
                 }
             }
         }
-        return true
+        true
     }
+
+    private val toolbarDataInEditState = ToolbarData(
+        menu = R.menu.tasks_toolbar_editing,
+        menuItemClickHandler = onToolbarMenuClickInEditState
+    )
 
     // TODO what the heck is this?
     fun onSelectCheckedChange(taskId: String, checked: Boolean) {
@@ -233,14 +244,6 @@ class TasksViewModel @AssistedInject constructor(
                 }
             }
         }
-    }
-
-    private fun onFabButtonClickInNormalState() {
-        _navigationEvent.value =
-            Event(TasksFragmentDirections.actionTasksFragmentToAddEditFragment(null))
-    }
-
-    private fun onFabButtonClickInEditState() {
     }
 
     fun onFilterMenuSelected(menuId: Int) {

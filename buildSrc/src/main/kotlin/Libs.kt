@@ -104,7 +104,7 @@ object Libs {
      * https://developer.android.com/topic/libraries/architecture/index.html */
     const val room_compiler: String = "androidx.room:room-compiler:" + Versions.androidx_room
 
-    const val room_coroutines: String = "androidx.room:room-coroutines:" + Versions.androidx_room
+    const val room_coroutines: String = "androidx.room:room-coroutines:" + "2.1.0-alpha04"
 
     /**
      * https://developer.android.com/topic/libraries/architecture/index.html */

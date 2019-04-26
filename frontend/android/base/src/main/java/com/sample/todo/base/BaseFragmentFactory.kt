@@ -7,7 +7,7 @@ import javax.inject.Provider
 
 class BaseFragmentFactory(
     private val providers: Map<Class<out Fragment>, @JvmSuppressWildcards Provider<FragmentComponent.Factory<*>>>
-): FragmentFactory() {
+) : FragmentFactory() {
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         val fragmentClass = classLoader.loadClass(className)
         return providers.entries.find { it.key.isAssignableFrom(fragmentClass) }

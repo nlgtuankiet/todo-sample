@@ -6,6 +6,7 @@ import androidx.paging.toObservable
 import com.sample.todo.data.TaskDataSource
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.data.core.Mapper
+import com.sample.todo.data.task.room.datasource.TaskMiniDataSource
 import com.sample.todo.data.task.room.entity.SearchResultEntity
 import com.sample.todo.data.task.room.entity.SearchResultStatisticsEntity
 import com.sample.todo.data.task.room.entity.TaskEntity
@@ -30,7 +31,7 @@ import javax.inject.Inject
 @DataScope
 class TaskDataSourceImpl @Inject constructor(
     private val taskDao: TaskDao,
-//    private val taskNewDao: TaskNewDao
+    private val taskMiniDataSourceFactoryProvider: TaskMiniDataSource.FactoryProvider,
     private val taskEntityToTask: Mapper<TaskEntity, Task>,
     private val taskStatisticsEntityToTaskStatistics: Mapper<TaskStatisticsEntity, TaskStatistics>,
     private val taskToTaskEntity: Mapper<Task, TaskEntity>,
@@ -77,24 +78,36 @@ class TaskDataSourceImpl @Inject constructor(
     }
 
     override fun getTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>> {
-        return taskDao
-            .getTaskMiniDataSourceFactory()
+        return taskMiniDataSourceFactoryProvider
+            .create(TaskNewDao.OrderBy.CreateTime, TaskNewDao.OrderDirection.Descending)
             .map(taskMiniEntityToTaskMini::invoke)
             .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
+//        return taskDao
+//            .getTaskMiniDataSourceFactory()
+//            .map(taskMiniEntityToTaskMini::invoke)
+//            .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
     }
 
     override fun getCompletedTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>> {
-        return taskDao
-            .getCompletedTaskMiniDataSourceFactory()
+        return taskMiniDataSourceFactoryProvider
+            .create(TaskNewDao.OrderBy.CreateTime, TaskNewDao.OrderDirection.Descending)
             .map(taskMiniEntityToTaskMini::invoke)
             .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
+//        return taskDao
+//            .getCompletedTaskMiniDataSourceFactory()
+//            .map(taskMiniEntityToTaskMini::invoke)
+//            .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
     }
 
     override fun getActiveTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>> {
-        return taskDao
-            .getActiveTaskMiniDataSourceFactory()
+        return taskMiniDataSourceFactoryProvider
+            .create(TaskNewDao.OrderBy.CreateTime, TaskNewDao.OrderDirection.Descending)
             .map(taskMiniEntityToTaskMini::invoke)
             .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
+//        return taskDao
+//            .getActiveTaskMiniDataSourceFactory()
+//            .map(taskMiniEntityToTaskMini::invoke)
+//            .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
     }
 
     override fun getSearchResultObservablePaged(

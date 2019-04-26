@@ -83,21 +83,14 @@ fun data(toolbar: Toolbar, data: ToolbarData?) {
             toolbar.navigationIcon = null
         }
 
-        navigationClickHandler?.let { navigationClickHandler ->
-            toolbar.setNavigationOnClickListener {
-                navigationClickHandler()
-            }
-        }
+        toolbar.setNavigationOnClickListener(navigationClickHandler)
+
         toolbar.menu?.clear()
         if (menu != null) {
             toolbar.inflateMenu(menu)
         }
 
-        menuItemClickHandler?.let { menuClickHandler ->
-            toolbar.setOnMenuItemClickListener {
-                menuClickHandler(it.itemId)
-            }
-        }
+        toolbar.setOnMenuItemClickListener(menuItemClickHandler)
     }
 }
 
@@ -107,9 +100,6 @@ fun data(fab: FloatingActionButton, data: FabData?) {
     data.apply {
         val drawable = AppCompatResources.getDrawable(fab.context, icon)
         fab.setImageDrawable(drawable)
-
-        fab.setOnClickListener {
-            onClickHandler?.invoke()
-        }
+        fab.setOnClickListener(onClickHandler)
     }
 }

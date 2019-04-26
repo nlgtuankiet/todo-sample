@@ -11,6 +11,8 @@ import com.sample.todo.base.extension.map
 import com.sample.todo.base.extension.postNewEvent
 import com.sample.todo.base.extension.postNewMessage
 import com.sample.todo.base.extension.postValueIfNew
+import com.sample.todo.base.listener.ListenerKt.listenerOf
+import com.sample.todo.base.listener.MenuListenerKt.menuListenerOf
 import com.sample.todo.base.message.Message
 import com.sample.todo.base.widget.ToolbarData
 import com.sample.todo.domain.model.Task
@@ -35,11 +37,25 @@ class TaskDetailViewModel @Inject constructor(
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
+    private val onNavigationClick = listenerOf {
+        _navigateUpEvent.value = Event(Unit)
+    }
+
+    private val onToolbarMenuClick = menuListenerOf { menuId ->
+        Timber.d("onToolbarMenuClick(menuId=$menuId)")
+        when (menuId) {
+            R.id.add_notification -> _addNotificationEvent.value =
+                Event(args.taskId)
+            R.id.delete -> deleteTask()
+        }
+        true
+    }
+
     val toolbarData = ToolbarData(
         navigationIcon = R.drawable.toolbar_navigation_icon,
-        navigationClickHandler = { onNavigationClick() },
+        navigationClickHandler = onNavigationClick,
         menu = R.menu.task_detail_menu,
-        menuItemClickHandler = { id -> onToolbarMenuClick(id) }
+        menuItemClickHandler = onToolbarMenuClick
     )
 
     private val _snackBarMessage = MutableLiveData<Event<Message>>()
@@ -98,23 +114,8 @@ class TaskDetailViewModel @Inject constructor(
     val loading: LiveData<Boolean>
         get() = _loading
 
-    fun onFabButtonClick() {
+    val onFabButtonClick = listenerOf {
         _navigationEvent.value = Event(TaskDetailFragmentDirections.toAddEditFragment(args.taskId))
-    }
-
-    private fun onNavigationClick() {
-        _navigateUpEvent.value = Event(Unit)
-    }
-
-    private fun onToolbarMenuClick(menuId: Int): Boolean {
-        Timber.d("onToolbarMenuClick(menuId=$menuId)")
-        when (menuId) {
-            R.id.add_notification -> _addNotificationEvent.value =
-                Event(args.taskId)
-            R.id.delete -> deleteTask()
-        }
-
-        return true
     }
 
     private fun deleteTask() {

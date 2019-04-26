@@ -5,6 +5,7 @@ import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
 import com.sample.todo.base.extension.getFragment
+import com.sample.todo.base.listener.ListenerKt.listenerOf
 import com.sample.todo.dynamic.settings.domain.usecase.GetNameObservable
 import com.sample.todo.dynamic.settings.domain.usecase.SetName
 import com.squareup.inject.assisted.Assisted
@@ -48,7 +49,7 @@ class SettingsViewModel @AssistedInject constructor(
         textTemp = name?.toString()
     }
 
-    fun onSetNameClick() {
+    val onSetNameClick = listenerOf {
         viewModelScope.launch {
             setName(textTemp ?: TODO())
         }

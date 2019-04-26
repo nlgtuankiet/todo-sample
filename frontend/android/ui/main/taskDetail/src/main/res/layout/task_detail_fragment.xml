@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_margin="16dp"
-                android:onClick="@{() -> viewModel.onFabButtonClick()}"
+                android:onClick="@{viewModel.onFabButtonClick}"
                 android:theme="@style/Widget.Todo.FloatingActionButton"
                 app:backgroundTint="@color/white"
                 app:srcCompat="@drawable/ic_edit_24dp"

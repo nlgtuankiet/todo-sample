@@ -49,7 +49,10 @@ android {
                 Android.minSdkVersion
             }
         }
-        minSdkVersion(minSdk)
+        minSdkVersion(Android.minSdkVersion)
+        if (minSdk != Android.minSdkVersion) {
+            minSdkVersion(minSdk)
+        }
         targetSdkVersion(Android.targetSdkVersion)
         versionCode = 56
         versionName = "1.2.0"

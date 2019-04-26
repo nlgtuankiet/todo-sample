@@ -9,6 +9,8 @@ import com.sample.todo.base.extension.postNewEvent
 import com.sample.todo.base.extension.postNewMessage
 import com.sample.todo.base.extension.postValueIfNew
 import com.sample.todo.base.extension.setNewEvent
+import com.sample.todo.base.listener.ListenerKt.listenerOf
+import com.sample.todo.base.listener.MenuListenerKt.menuListenerOf
 import com.sample.todo.base.message.Message
 import com.sample.todo.base.widget.ToolbarData
 import com.sample.todo.domain.model.Task
@@ -33,11 +35,23 @@ class AddEditViewModel @Inject constructor(
 
     val toolbarTitle = if (args.taskId == null) R.string.add_edit_add_title else R.string.add_edit_edit_title
 
+    private val onNavigationClick = listenerOf {
+        _navigateUpEvent.setNewEvent()
+    }
+
+    private val onMenuClick = menuListenerOf { menuId ->
+        when (menuId) {
+            R.id.save -> onSaveButtonClick()
+            else -> TODO()
+        }
+        true
+    }
+
     val toolbarListenerData = ToolbarData(
         navigationIcon = R.drawable.toolbar_navigation_icon,
-        navigationClickHandler = { onNavigationClick() },
+        navigationClickHandler = onNavigationClick,
         menu = R.menu.add_edit_menu,
-        menuItemClickHandler = { id -> onMenuClick(id) }
+        menuItemClickHandler = onMenuClick
     )
 
     private val _navigateUpEvent = MutableLiveData<Event<Unit>>()
@@ -106,17 +120,5 @@ class AddEditViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun onNavigationClick() {
-        _navigateUpEvent.setNewEvent()
-    }
-
-    private fun onMenuClick(menuId: Int): Boolean {
-        when (menuId) {
-            R.id.save -> onSaveButtonClick()
-            else -> TODO()
-        }
-        return true
     }
 }

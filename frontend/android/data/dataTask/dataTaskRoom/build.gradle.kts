@@ -14,7 +14,6 @@ android {
         isEnabled = true
     }
     defaultConfig {
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -53,7 +52,7 @@ dependencies {
     implementation(Libs.room_coroutines)
     implementation(Libs.room_runtime)
     implementation(Libs.room_rxjava2)
-//    implementation("androidx.room:room-ktx:2.1.0-alpha06")
+//    implementation("androidx.room:room-ktx:2.1.0-alpha07")
     implementation(Libs.rxjava2_extensions)
     implementation(Libs.timber)
     implementation(project(":frontend:android:data:dataPreference"))

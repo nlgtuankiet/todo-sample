@@ -29,4 +29,11 @@ object TodoDatabaseModule {
     fun provideTaskDao(db: TodoDatabase): TaskDao {
         return db.taskDao()
     }
+
+    @Provides
+    @JvmStatic
+    @DataScope
+    fun provideTaskDaoNew(db: TodoDatabase): TaskNewDao {
+        return db.taskNewDao()
+    }
 }

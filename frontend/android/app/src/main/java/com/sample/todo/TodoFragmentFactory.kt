@@ -2,7 +2,6 @@ package com.sample.todo
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
-import com.sample.todo.base.di.AppScope
 import com.sample.todo.base.di.FragmentComponent
 import javax.inject.Inject
 import javax.inject.Provider
