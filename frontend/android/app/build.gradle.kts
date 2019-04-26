@@ -100,6 +100,7 @@ android {
     testBuildType = "release"
     dynamicFeatures.add(":frontend:android:dynamic:settings")
     dynamicFeatures.add(":frontend:android:dynamic:seedDatabase")
+    dynamicFeatures.add(":frontend:android:dynamic:leak")
 
 }
 
@@ -189,6 +190,7 @@ dependencies {
     implementation(project(":frontend:android:downloadModule"))
 
     implementation("androidx.multidex:multidex:2.0.1")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.0-alpha-1")
 }
 
 kapt {

@@ -44,8 +44,8 @@ interface SearchComponent : FragmentComponent<SearchFragment> {
         @FragmentScoped
         fun holder(): Holder<SearchFragment> = Holder()
 
-        @JvmStatic
-        @Provides
-        fun viewModel(fragment: SearchFragment): SearchViewModel = fragment.searchViewModel
+//        @JvmStatic
+//        @Provides
+//        fun viewModel(holder: Holder<SearchFragment>): SearchViewModel = holder.instance.searchViewModel
     }
 }

@@ -1,27 +1,54 @@
 package com.sample.todo.main.search
 
+import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.EpoxyViewHolder
 import com.airbnb.epoxy.paging.PagedListEpoxyController
-import com.sample.todo.base.di.FragmentScoped
+import com.airbnb.mvrx.withState
 import com.sample.todo.base.Holder
+import com.sample.todo.base.di.FragmentScoped
 import com.sample.todo.domain.model.SearchResult
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @FragmentScoped
 class SearchController @Inject constructor(
-    private val holder: Holder<SearchFragment>
-) : PagedListEpoxyController<SearchResult>() {
-    private val viewModel by lazy { holder.instance.searchViewModel }
+    private val fragmentHolder: Holder<SearchFragment>
+) : EpoxyController() {
+    private var requestLoadedMore = false;
 
-    override fun buildItemModel(currentPosition: Int, item: SearchResult?): EpoxyModel<*> {
-        return SearchItemBindingModel_().apply {
-            id(item?.hashCode() ?: -1)
-            viewModel(viewModel)
-            item(item)
+    override fun buildModels() {
+        requestLoadedMore = false
+        val state = withState(fragmentHolder.instance.searchViewModel) { it }
+        state.searchResultStatistics?.let { searchResultStatistics ->
+            searchStatisticsItem {
+                id("searchStatisticsItem")
+                statistics(searchResultStatistics)
+            }
+        }
+        state.searchResult?.let { items ->
+            val loadedCount = items.loadedCount
+            items.take(loadedCount).forEach { searchResult ->
+                searchResultItem {
+                    id(searchResult.id)
+                    item(searchResult)
+                    viewModel(fragmentHolder.instance.searchViewModel)
+                }
+            }
         }
     }
 
-    override fun onExceptionSwallowed(exception: RuntimeException) {
-        throw exception
+    override fun onModelBound(
+        holder: EpoxyViewHolder,
+        boundModel: EpoxyModel<*>,
+        position: Int,
+        previouslyBoundModel: EpoxyModel<*>?
+    ) {
+        super.onModelBound(holder, boundModel, position, previouslyBoundModel)
+        val state = withState(fragmentHolder.instance.searchViewModel) { it }
+        if (position > ((state.searchResult?.loadedCount ?: 0) * 0.8).roundToInt() && !requestLoadedMore) {
+            requestLoadedMore = true
+            state.searchResult?.loadAround(position)
+        }
     }
 }

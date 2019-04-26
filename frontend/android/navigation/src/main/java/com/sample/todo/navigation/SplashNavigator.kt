@@ -44,6 +44,20 @@ object MainNavigator {
             false
         }
     }
+
+    fun toLeakActivity(componentActivity: android.app.Activity): Boolean {
+        return if (componentActivity.isAssisableTo(Activity.Main) && Activity.Leak.getIsAvailable()) {
+            ActivityNavigator(componentActivity).apply {
+                val des = createDestination().apply {
+                    intent = Intent(componentActivity, Activity.Leak.getJavaClass())
+                }
+                navigate(des, componentActivity.intent.extras, null, null)
+            }
+            true
+        } else {
+            false
+        }
+    }
 }
 
 private fun android.app.Activity.isAssisableTo(activity: Activity): Boolean {

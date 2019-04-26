@@ -45,6 +45,9 @@ class AboutFragment(
             navigateToSettingsEvent.observeEvent(viewLifecycleOwner) {
                 navigator.toSettingActivity()
             }
+            navigateToLeakEvent.observeEvent(viewLifecycleOwner) {
+                navigator.toLeakActivity()
+            }
             displayModuleDetailDialogEvent.observeEvent(viewLifecycleOwner) {
                 // TODO download module for now, display module detail dialog later
                 DownloadModuleWorker.enqueNewWorker(DynamicFeatureModule.SETTINGS)

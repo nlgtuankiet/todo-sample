@@ -7,6 +7,6 @@ import com.sample.todo.domain.model.SearchResult
 import com.sample.todo.domain.model.SearchResultStatistics
 
 data class SearchState(
-    val searchResult: Async<PagedList<SearchResult>>,
-    val searchResultStatistics: Async<SearchResultStatistics>
+    val searchResult: PagedList<SearchResult>?,
+    val searchResultStatistics: SearchResultStatistics?
 ) : MvRxState

@@ -6,7 +6,6 @@ import androidx.paging.toObservable
 import com.sample.todo.data.TaskDataSource
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.data.core.Mapper
-import com.sample.todo.data.task.room.datasource.TaskMiniDataSource
 import com.sample.todo.data.task.room.entity.SearchResultEntity
 import com.sample.todo.data.task.room.entity.SearchResultStatisticsEntity
 import com.sample.todo.data.task.room.entity.TaskEntity
@@ -18,8 +17,10 @@ import com.sample.todo.domain.model.Task
 import com.sample.todo.domain.model.TaskMini
 import com.sample.todo.domain.model.TaskStatistics
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 /**
@@ -31,7 +32,6 @@ import javax.inject.Inject
 @DataScope
 class TaskDataSourceImpl @Inject constructor(
     private val taskDao: TaskDao,
-    private val taskMiniDataSourceFactoryProvider: TaskMiniDataSource.FactoryProvider,
     private val taskEntityToTask: Mapper<TaskEntity, Task>,
     private val taskStatisticsEntityToTaskStatistics: Mapper<TaskStatisticsEntity, TaskStatistics>,
     private val taskToTaskEntity: Mapper<Task, TaskEntity>,
@@ -39,6 +39,8 @@ class TaskDataSourceImpl @Inject constructor(
     private val searchResultEntityToSearchResult: Mapper<SearchResultEntity, SearchResult>,
     private val searchResultStatisticsEntityToSearchResultStatistics: Mapper<SearchResultStatisticsEntity, SearchResultStatistics>
 ) : TaskDataSource {
+    private val ex = Executors.newSingleThreadExecutor()
+
     override fun getSearchResultStatisticsObservable(query: String): Observable<SearchResultStatistics> {
         return taskDao.getSearchResultStatisticsObservable(query)
             .map(searchResultStatisticsEntityToSearchResultStatistics::invoke)
@@ -78,36 +80,24 @@ class TaskDataSourceImpl @Inject constructor(
     }
 
     override fun getTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>> {
-        return taskMiniDataSourceFactoryProvider
-            .create(TaskNewDao.OrderBy.CreateTime, TaskNewDao.OrderDirection.Descending)
+        return taskDao
+            .getTaskMiniDataSourceFactory()
             .map(taskMiniEntityToTaskMini::invoke)
             .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
-//        return taskDao
-//            .getTaskMiniDataSourceFactory()
-//            .map(taskMiniEntityToTaskMini::invoke)
-//            .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
     }
 
     override fun getCompletedTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>> {
-        return taskMiniDataSourceFactoryProvider
-            .create(TaskNewDao.OrderBy.CreateTime, TaskNewDao.OrderDirection.Descending)
+        return taskDao
+            .getCompletedTaskMiniDataSourceFactory()
             .map(taskMiniEntityToTaskMini::invoke)
             .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
-//        return taskDao
-//            .getCompletedTaskMiniDataSourceFactory()
-//            .map(taskMiniEntityToTaskMini::invoke)
-//            .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
     }
 
     override fun getActiveTaskMiniObservablePaged(pageSize: Int): Observable<PagedList<TaskMini>> {
-        return taskMiniDataSourceFactoryProvider
-            .create(TaskNewDao.OrderBy.CreateTime, TaskNewDao.OrderDirection.Descending)
+        return taskDao
+            .getActiveTaskMiniDataSourceFactory()
             .map(taskMiniEntityToTaskMini::invoke)
             .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
-//        return taskDao
-//            .getActiveTaskMiniDataSourceFactory()
-//            .map(taskMiniEntityToTaskMini::invoke)
-//            .toObservable(Config(pageSize = pageSize, enablePlaceholders = false))
     }
 
     override fun getSearchResultObservablePaged(
@@ -121,7 +111,7 @@ class TaskDataSourceImpl @Inject constructor(
         return taskDao
             .getSearchResultDataSourceWith(ftsQuery)
             .map(searchResultEntityToSearchResult::invoke)
-            .toObservable(pageSize)
+            .toObservable(pageSize, fetchScheduler = Schedulers.io())
     }
 
     override suspend fun deleteTask(id: String): Long {

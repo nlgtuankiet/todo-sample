@@ -81,7 +81,7 @@ class SearchFragment(
     override fun invalidate() {
         withState(searchViewModel) {
             binding.state = it
-            controller.submitList(it.searchResult())
+            controller.requestModelBuild()
         }
     }
 }

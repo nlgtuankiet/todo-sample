@@ -62,6 +62,17 @@
                     app:layout_constraintTop_toBottomOf="@+id/statistics_text_view"
                     android:layout_marginLeft="16dp"/>
                 <TextView
+                    android:id="@+id/leak_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="16dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{viewModel.onLeakLabelClick}"
+                    android:text="Settings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_text_view"
+                    android:layout_marginLeft="16dp" android:layout_marginTop="16dp"/>
+                <TextView
                     android:id="@+id/statistics_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
@@ -78,12 +89,10 @@
                     android:id="@+id/seed_database_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     android:text="Button"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/settings_text_view"
-                    android:layout_marginLeft="8dp"/>
+                    app:layout_constraintTop_toBottomOf="@+id/leak_text_view"
+                    android:layout_marginTop="16dp" android:layout_marginLeft="16dp" android:layout_marginStart="16dp"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

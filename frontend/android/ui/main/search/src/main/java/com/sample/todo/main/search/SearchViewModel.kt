@@ -28,8 +28,8 @@ class SearchViewModel @AssistedInject constructor(
     init {
         query.debounce(500L, TimeUnit.MILLISECONDS)
             .distinctUntilChanged().apply {
-                switchMap { searchTask(it) }.execute { copy(searchResult = it) }
-                switchMap { getSearchResultStatisticsObservable(it) }.execute { copy(searchResultStatistics = it) }
+                switchMap { searchTask(it) }.execute { copy(searchResult = it()) }
+                switchMap { getSearchResultStatisticsObservable(it) }.execute { copy(searchResultStatistics = it()) }
             }
     }
 
@@ -63,8 +63,8 @@ class SearchViewModel @AssistedInject constructor(
 
         override fun initialState(viewModelContext: ViewModelContext): SearchState? {
             return SearchState(
-                searchResult = Uninitialized,
-                searchResultStatistics = Uninitialized
+                searchResult = null,
+                searchResultStatistics = null
             )
         }
     }

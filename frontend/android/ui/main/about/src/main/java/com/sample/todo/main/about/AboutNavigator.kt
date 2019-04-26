@@ -18,4 +18,8 @@ class AboutNavigator @Inject constructor(
     fun toSeedDatabaseActivity() {
         MainNavigator.toSeedDatabaseActivity(activity)
     }
+
+    fun toLeakActivity() {
+        MainNavigator.toLeakActivity(activity)
+    }
 }

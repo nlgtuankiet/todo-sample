@@ -9,6 +9,7 @@ import com.sample.todo.base.extension.setNewEvent
 import com.sample.todo.base.listener.Listener
 import com.sample.todo.base.usecase.IsModuleInstalled
 import com.sample.todo.base.usecase.IsModuleInstalling
+import com.sample.todo.navigation.MainNavigator
 import javax.inject.Inject
 
 class AboutViewModel @Inject constructor(
@@ -23,6 +24,10 @@ class AboutViewModel @Inject constructor(
     val navigateToSettingsEvent: LiveData<Event<Unit>>
         get() = _navigateToSettingsEvent
 
+    private val _navigateToLeakEvent = MutableLiveData<Event<Unit>>()
+    val navigateToLeakEvent: LiveData<Event<Unit>>
+        get() = _navigateToLeakEvent
+
     private val _displayModuleDetailDialogEvent = MutableLiveData<Event<Unit>>()
     val displayModuleDetailDialogEvent: LiveData<Event<Unit>>
         get() = _displayModuleDetailDialogEvent
@@ -33,5 +38,9 @@ class AboutViewModel @Inject constructor(
 
     val onSettingsLabelClick = Listener {
         _navigateToSettingsEvent.setNewEvent()
+    }
+
+    val onLeakLabelClick = Listener {
+        _navigateToLeakEvent.setNewEvent()
     }
 }

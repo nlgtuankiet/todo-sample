@@ -30,6 +30,7 @@ include(":frontend:android:ui:splash")
 include(":frontend:android:base")
 
 include(":frontend:android:dynamic:settings")
+include(":frontend:android:dynamic:leak")
 include(":frontend:android:dynamic:seedDatabase")
 
 enableFeaturePreview("GRADLE_METADATA")
