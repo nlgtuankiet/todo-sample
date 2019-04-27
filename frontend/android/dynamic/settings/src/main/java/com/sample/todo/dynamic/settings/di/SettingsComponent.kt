@@ -1,7 +1,7 @@
 package com.sample.todo.dynamic.settings.di
 
 import com.sample.todo.androidComponent
-import com.sample.todo.di.AndroidComponent
+import com.sample.todo.di.android.AndroidComponent
 import com.sample.todo.dynamic.settings.data.SettingsPreferenceRepositoryBindingModule
 import com.sample.todo.dynamic.settings.ui.SettingsActivity
 import com.sample.todo.dynamic.settings.ui.SettingsModule

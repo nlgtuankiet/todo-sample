@@ -12,6 +12,7 @@ import com.sample.todo.base.entity.DynamicFeatureModule
 import com.sample.todo.base.Holder
 import com.sample.todo.main.about.databinding.AboutFragmentBinding
 import com.sample.todo.base.extension.observeEvent
+import com.sample.todo.navigation.MainNavigator
 import com.sample.todo.work.downloadmodule.DownloadModuleWorker
 
 class AboutFragment(
@@ -38,6 +39,9 @@ class AboutFragment(
             lifecycleOwner = viewLifecycleOwner
             seedDatabaseButton.setOnClickListener {
                 navigator.toSeedDatabaseActivity()
+            }
+            roomButton.setOnClickListener {
+                MainNavigator.toDataImplementationActivity(requireActivity())
             }
         }
         aboutViewModel.apply {

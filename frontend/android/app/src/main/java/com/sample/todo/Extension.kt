@@ -2,8 +2,8 @@ package com.sample.todo
 
 import android.content.Context
 import com.sample.todo.data.DataComponent
-import com.sample.todo.di.AndroidComponent
-import com.sample.todo.di.AppComponent
+import com.sample.todo.di.android.AndroidComponent
+import com.sample.todo.di.app.AppComponent
 import com.sample.todo.domain.di.DomainComponent
 
 val Context.androidComponent: AndroidComponent

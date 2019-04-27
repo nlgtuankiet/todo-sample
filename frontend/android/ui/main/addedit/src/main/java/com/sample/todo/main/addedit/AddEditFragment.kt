@@ -9,13 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.sample.todo.base.extension.hideKeyboard
 import com.sample.todo.base.extension.observeEvent
-import com.sample.todo.base.message.MessageManager
-import com.sample.todo.base.message.setUpSnackbar
+import com.sample.todo.domain.repository.MessageManager
+import com.sample.todo.domain.repository.setUpSnackbar
 import com.sample.todo.main.addedit.databinding.AddEditFragmentBinding
 
 class AddEditFragment(
     private val viewModelFactory: ViewModelProvider.Factory,
-    private val messageManager: MessageManager,
+    private val messageManager: com.sample.todo.domain.repository.MessageManager,
     private val navigator: AddEditNavigator
 ) : Fragment() {
     private lateinit var binding: AddEditFragmentBinding

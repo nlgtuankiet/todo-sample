@@ -3,7 +3,7 @@ package com.sample.todo.main.tasks
 import com.sample.todo.base.di.FragmentComponent
 import com.sample.todo.base.di.FragmentScoped
 import com.sample.todo.base.Holder
-import com.sample.todo.base.message.MessageManager
+import com.sample.todo.domain.repository.MessageManager
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -26,7 +26,7 @@ interface TasksComponent : FragmentComponent<TasksFragment> {
         @FragmentScoped
         fun fragment(
             holder: Holder<TasksFragment>,
-            messageManager: MessageManager,
+            messageManager: com.sample.todo.domain.repository.MessageManager,
             viewModelFactory: TasksViewModel.Factory,
             tasksController: TasksController,
             navigator: TasksNavigator

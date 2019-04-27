@@ -11,14 +11,14 @@ import com.airbnb.mvrx.MvRxViewModelStore
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.sample.todo.base.extension.hideKeyboard
-import com.sample.todo.base.message.MessageManager
+import com.sample.todo.domain.repository.MessageManager
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.base.widget.LinearOffsetsItemDecoration
 import com.sample.todo.main.search.databinding.SearchFragmentBinding
 
 class SearchFragment(
     val viewModelFactory: SearchViewModel.Factory,
-    private val messageManager: MessageManager,
+    private val messageManager: com.sample.todo.domain.repository.MessageManager,
     private val controller: SearchController,
     private val navigator: SearchNavigator
 ) : Fragment(), MvRxView {

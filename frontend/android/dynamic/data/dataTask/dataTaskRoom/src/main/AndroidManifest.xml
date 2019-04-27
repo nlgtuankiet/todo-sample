@@ -1,0 +1,11 @@
+<manifest
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.sample.todo.dynamic.data.task.room">
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="true"
+        dist:title="asd">
+        <dist:fusing dist:include="true"/>
+    </dist:module>
+</manifest>

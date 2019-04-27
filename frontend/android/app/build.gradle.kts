@@ -101,6 +101,10 @@ android {
     dynamicFeatures.add(":frontend:android:dynamic:settings")
     dynamicFeatures.add(":frontend:android:dynamic:seedDatabase")
     dynamicFeatures.add(":frontend:android:dynamic:leak")
+    dynamicFeatures.add(":frontend:android:dynamic:dataImplementation")
+    dynamicFeatures.add(":frontend:android:dynamic:data:dataTask:dataTaskFirestore")
+    dynamicFeatures.add(":frontend:android:dynamic:data:dataTask:dataTaskRoom")
+    dynamicFeatures.add(":frontend:android:dynamic:data:dataTask:dataTaskSqlDelight")
 
 }
 
@@ -182,9 +186,6 @@ dependencies {
     implementation(project(":frontend:android:ui"))
     implementation(project(":frontend:android:data"))
     implementation(project(":frontend:android:data:dataPreference"))
-    implementation(project(":frontend:android:data:dataTask:dataTaskRoom"))
-    implementation(project(":frontend:android:data:dataTask:dataTaskFirestore"))
-    implementation(project(":frontend:android:data:dataTask:dataTaskSqldelight"))
 
     implementation(project(":frontend:android:domain"))
     implementation(project(":frontend:android:downloadModule"))
@@ -202,7 +203,7 @@ kapt {
         option("-Xmaxerrs", 500)
     }
     useBuildCache = true
-//    correctErrorTypes = true
+    correctErrorTypes = true
 }
 
 apply(mapOf("plugin" to "com.google.gms.google-services"))

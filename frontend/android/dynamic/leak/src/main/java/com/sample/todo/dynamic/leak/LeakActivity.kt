@@ -31,5 +31,3 @@ class LeakActivity : Activity() {
         Thread(work).start()
     }
 }
-
-

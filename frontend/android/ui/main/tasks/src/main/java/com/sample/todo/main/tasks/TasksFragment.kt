@@ -12,15 +12,15 @@ import com.airbnb.mvrx.MvRxViewModelStore
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.sample.todo.base.extension.observeEvent
-import com.sample.todo.base.message.MessageManager
-import com.sample.todo.base.message.setUpSnackbar
+import com.sample.todo.domain.repository.MessageManager
+import com.sample.todo.domain.repository.setUpSnackbar
 import com.sample.todo.main.tasks.databinding.TasksFragmentBinding
 import timber.log.Timber
 
 // TODO fix bug when user double click navigation icon
 class TasksFragment(
     val viewModelFactory: TasksViewModel.Factory,
-    private val messageManager: MessageManager,
+    private val messageManager: com.sample.todo.domain.repository.MessageManager,
     private val tasksController: TasksController,
     private val navigator: TasksNavigator
 ) : Fragment(), MvRxView {

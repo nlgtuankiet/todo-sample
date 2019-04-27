@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
+import com.sample.todo.base.domain.usecase.IsModuleInstalled
+import com.sample.todo.base.domain.usecase.IsModuleInstalling
 import com.sample.todo.base.entity.Event
 import com.sample.todo.base.extension.setNewEvent
 import com.sample.todo.base.listener.Listener
-import com.sample.todo.base.usecase.IsModuleInstalled
-import com.sample.todo.base.usecase.IsModuleInstalling
-import com.sample.todo.navigation.MainNavigator
 import javax.inject.Inject
 
 class AboutViewModel @Inject constructor(

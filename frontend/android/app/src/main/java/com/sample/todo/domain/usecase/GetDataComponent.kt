@@ -1,26 +1,24 @@
 package com.sample.todo.domain.usecase
 
 import android.content.Context
-import com.sample.todo.base.di.ApplicationScope
+import com.sample.todo.di.application.ApplicationScope
 import com.sample.todo.data.DataComponent
-import com.sample.todo.data.task.firestore.FirestoreDataComponent
-import com.sample.todo.data.task.room.RoomDataComponent
-import com.sample.todo.data.task.sqldelight.SqlDelightDataComponent
 import com.sample.todo.domain.entity.DataImplementation
 import com.sample.todo.domain.repository.DataPreferenceRepository
 import javax.inject.Inject
+import kotlin.reflect.full.companionObjectInstance
 
 @ApplicationScope
 class GetDataComponent @Inject constructor(
-    private val dataPreferenceRepository: DataPreferenceRepository
+    private val dataPreferenceRepository: DataPreferenceRepository,
+    private val context: Context
 ) {
-    operator fun invoke(context: Context): DataComponent {
+    operator fun invoke(): DataComponent {
         val ordinal = dataPreferenceRepository.getDataImplementationOrdinal()
-        val implementation = DataImplementation.parse(ordinal)
-        return when (implementation) {
-            DataImplementation.FIRESTORE -> FirestoreDataComponent(context)
-            DataImplementation.SQLDELIGHT -> SqlDelightDataComponent(context)
-            else -> RoomDataComponent(context)
+        val dataImplementation = DataImplementation.fromOdinal(ordinal) ?: DataImplementation.ROOM
+        return dataImplementation.componentClassName.let { className ->
+            val companion = Class.forName(className).kotlin.companionObjectInstance as DataComponent.Companion
+            companion.invoke(context)
         }
     }
 }

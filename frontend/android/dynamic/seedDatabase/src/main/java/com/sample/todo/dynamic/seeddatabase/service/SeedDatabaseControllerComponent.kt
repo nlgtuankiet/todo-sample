@@ -1,7 +1,7 @@
 package com.sample.todo.dynamic.seeddatabase.service
 
 import com.sample.todo.androidComponent
-import com.sample.todo.di.AndroidComponent
+import com.sample.todo.di.android.AndroidComponent
 import dagger.Component
 
 @Component(

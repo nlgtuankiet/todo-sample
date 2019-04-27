@@ -89,10 +89,17 @@
                     android:id="@+id/seed_database_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button"
+                    android:text="Seed DB"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/leak_text_view"
                     android:layout_marginTop="16dp" android:layout_marginLeft="16dp" android:layout_marginStart="16dp"/>
+                <Button
+                    android:text="Data Implementation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/room_button" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/seed_database_button" android:layout_marginTop="16dp"
+                    android:layout_marginLeft="16dp" android:layout_marginStart="16dp"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

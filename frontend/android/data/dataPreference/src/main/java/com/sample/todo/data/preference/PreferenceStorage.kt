@@ -14,4 +14,3 @@ interface PreferenceStorage {
     fun getDataImplementationOrdinal(): Int
     fun setDataImplementationOrdinal(value: Int)
 }
-

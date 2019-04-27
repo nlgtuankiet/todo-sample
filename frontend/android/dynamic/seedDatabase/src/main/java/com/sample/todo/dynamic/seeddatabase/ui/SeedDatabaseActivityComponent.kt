@@ -3,7 +3,7 @@ package com.sample.todo.dynamic.seeddatabase.ui
 import androidx.lifecycle.ViewModel
 import com.sample.todo.androidComponent
 import com.sample.todo.base.di.ViewModelKey
-import com.sample.todo.di.AndroidComponent
+import com.sample.todo.di.android.AndroidComponent
 import com.sample.todo.di.ViewModelFactoryBindingModule
 import dagger.Binds
 import dagger.BindsInstance

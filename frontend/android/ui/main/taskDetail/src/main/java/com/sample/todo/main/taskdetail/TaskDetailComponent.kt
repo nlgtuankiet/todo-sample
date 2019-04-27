@@ -8,7 +8,7 @@ import com.sample.todo.base.di.FragmentComponent
 import com.sample.todo.base.di.FragmentScoped
 import com.sample.todo.base.di.ViewModelKey
 import com.sample.todo.base.Holder
-import com.sample.todo.base.message.MessageManager
+import com.sample.todo.domain.repository.MessageManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -33,7 +33,7 @@ interface TaskDetailComponent : FragmentComponent<TaskDetailFragment> {
         @JvmStatic
         @FragmentScoped
         fun fragment(
-            messageManager: MessageManager,
+            messageManager: com.sample.todo.domain.repository.MessageManager,
             notificationManager: NotificationManagerCompat,
             viewModelFactory: ViewModelProvider.Factory,
             holder: Holder<TaskDetailFragment>

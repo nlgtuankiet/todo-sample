@@ -10,10 +10,8 @@ include(":frontend:android:domain")
 include(":frontend:android:data")
 include(":frontend:android:data:dataPreference")
 include(":frontend:android:data:dataCore")
-include(":frontend:android:data:dataTask:dataTaskRoom")
-include(":frontend:android:data:dataTask:dataTaskFirestore")
-include(":frontend:android:data:dataTask:dataTaskSqldelight")
-include(":frontend:android:data:dataTask:dataTaskSqldelight:common")
+
+
 
 include(":frontend:android:ui:main")
 include(":frontend:android:ui:main:mainNavigation")
@@ -32,5 +30,10 @@ include(":frontend:android:base")
 include(":frontend:android:dynamic:settings")
 include(":frontend:android:dynamic:leak")
 include(":frontend:android:dynamic:seedDatabase")
+include(":frontend:android:dynamic:dataImplementation")
+include(":frontend:android:dynamic:data:dataTask:dataTaskFirestore")
+include(":frontend:android:dynamic:data:dataTask:dataTaskSqlDelight")
+include(":frontend:android:dynamic:data:dataTask:dataTaskSqlDelight:common")
+include(":frontend:android:dynamic:data:dataTask:dataTaskRoom")
 
 enableFeaturePreview("GRADLE_METADATA")

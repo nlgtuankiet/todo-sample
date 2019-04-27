@@ -70,4 +70,5 @@ kapt {
     }
     // not sure
     useBuildCache = true
+    correctErrorTypes = true
 }

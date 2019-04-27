@@ -5,10 +5,11 @@ package com.sample.todo
 import android.content.Context
 import androidx.multidex.MultiDex
 import com.google.android.play.core.splitcompat.SplitCompat
+import com.google.firebase.FirebaseApp
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.sample.todo.data.DataComponent
-import com.sample.todo.di.AndroidComponent
-import com.sample.todo.di.AppComponent
+import com.sample.todo.di.android.AndroidComponent
+import com.sample.todo.di.app.AppComponent
 import com.sample.todo.di.application.ApplicationComponent
 import com.sample.todo.domain.di.DomainComponent
 import com.sample.todo.initializer.AppInitializer
@@ -20,28 +21,30 @@ open class TodoApplication : DaggerApplication() {
     @Inject
     lateinit var appInitializer: AppInitializer
 
-    val applicationComponent: ApplicationComponent by lazy { ApplicationComponent(this) }
-    val dataComponent: DataComponent by lazy { applicationComponent.provideGetDataComponent()(this) }
-    val androidComponent: AndroidComponent by lazy { AndroidComponent(this) }
-    val domainComponent: DomainComponent by lazy {
-        DomainComponent(
-            taskRepository = dataComponent.provideTaskRepository(),
-            preferenceRepository = dataComponent.providePreferenceRepository()
-        )
-    }
-    val appComponent: AppComponent by lazy {
-        AppComponent(
-            androidComponent = androidComponent,
-            domainComponent = domainComponent,
-            dataComponent = dataComponent
-        )
-    }
+    lateinit var androidComponent: AndroidComponent
+    lateinit var applicationComponent: ApplicationComponent
+    lateinit var dataComponent: DataComponent
+    lateinit var domainComponent: DomainComponent
+    lateinit var appComponent: AppComponent
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return appComponent
     }
 
     override fun onCreate() {
+        FirebaseApp.initializeApp(this)
+        androidComponent = AndroidComponent(this)
+        applicationComponent = ApplicationComponent(androidComponent)
+        dataComponent = applicationComponent.provideGetDataComponent()()
+        domainComponent = DomainComponent(
+            taskRepository = dataComponent.provideTaskRepository(),
+            preferenceRepository = dataComponent.providePreferenceRepository()
+        )
+        appComponent = AppComponent(
+            androidComponent = androidComponent,
+            domainComponent = domainComponent,
+            dataComponent = dataComponent
+        )
         super.onCreate()
         appInitializer.initialize(this)
         AndroidThreeTen.init(this)

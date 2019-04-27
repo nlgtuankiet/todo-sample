@@ -15,13 +15,13 @@ import androidx.work.WorkerParameters
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
+import com.sample.todo.base.domain.usecase.IsModuleInstalled
+import com.sample.todo.base.domain.usecase.IsModuleInstalling
+import com.sample.todo.base.domain.usecase.StartInstallModule
 import com.sample.todo.base.entity.DownloadModuleSessionId
 import com.sample.todo.base.entity.DynamicFeatureModule
 import com.sample.todo.base.notification.AppNotification
 import com.sample.todo.base.notification.NotificationChannelInformation
-import com.sample.todo.base.usecase.IsModuleInstalled
-import com.sample.todo.base.usecase.IsModuleInstalling
-import com.sample.todo.base.usecase.StartInstallModule
 import com.sample.todo.domain.util.checkAllMatched
 import com.sample.todo.work.BaseWorker
 import com.sample.todo.work.ListenableWorkerFactory

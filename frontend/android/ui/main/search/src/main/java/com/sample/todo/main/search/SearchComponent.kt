@@ -3,7 +3,7 @@ package com.sample.todo.main.search
 import com.sample.todo.base.di.FragmentComponent
 import com.sample.todo.base.di.FragmentScoped
 import com.sample.todo.base.Holder
-import com.sample.todo.base.message.MessageManager
+import com.sample.todo.domain.repository.MessageManager
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -26,7 +26,7 @@ interface SearchComponent : FragmentComponent<SearchFragment> {
         @FragmentScoped
         fun fragment(
             viewModelFactory: SearchViewModel.Factory,
-            messageManager: MessageManager,
+            messageManager: com.sample.todo.domain.repository.MessageManager,
             searchController: SearchController,
             holder: Holder<SearchFragment>,
             navigator: SearchNavigator

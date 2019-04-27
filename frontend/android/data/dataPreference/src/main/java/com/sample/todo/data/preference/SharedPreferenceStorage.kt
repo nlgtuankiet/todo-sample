@@ -10,7 +10,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
 /**
  * from the doc: https://developer.android.com/reference/android/content/SharedPreferences
  * For any particular set of preferences, there is a single instance of this class that all clients share.
@@ -49,7 +48,6 @@ class SharedPreferenceStorage @Inject constructor(
         name = PREFS_DATA_IMPLEMENTATION_ORDINAL,
         defaultValue = -1
     )
-
 
     private val _taskFilterTypeOrdinalObservable by lazy {
         prefs.observableOf(PREFS_TASK_FILTER_TYPE, 0)

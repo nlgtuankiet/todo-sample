@@ -58,6 +58,20 @@ object MainNavigator {
             false
         }
     }
+
+    fun toDataImplementationActivity(componentActivity: android.app.Activity): Boolean {
+        return if (componentActivity.isAssisableTo(Activity.Main) && Activity.DataImplementation.getIsAvailable()) {
+            ActivityNavigator(componentActivity).apply {
+                val des = createDestination().apply {
+                    intent = Intent(componentActivity, Activity.DataImplementation.getJavaClass())
+                }
+                navigate(des, componentActivity.intent.extras, null, null)
+            }
+            true
+        } else {
+            false
+        }
+    }
 }
 
 private fun android.app.Activity.isAssisableTo(activity: Activity): Boolean {

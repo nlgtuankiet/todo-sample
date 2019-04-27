@@ -5,7 +5,8 @@ enum class Activity(val fullName: String) {
     Main("com.sample.todo.main.MainActivity"),
     Settings("com.sample.todo.dynamic.settings.ui.SettingsActivity"),
     SeedDatabase("com.sample.todo.dynamic.seeddatabase.ui.SeedDatabaseActivity"),
-    Leak("com.sample.todo.dynamic.leak.LeakActivity");
+    Leak("com.sample.todo.dynamic.leak.LeakActivity"),
+    DataImplementation("com.sample.todo.dynamic.dataimplementation.ui.DataImplementationActivity");
     fun getIsAvailable(): Boolean {
         return try {
             Class.forName(fullName)
