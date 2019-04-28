@@ -1,6 +1,6 @@
 package com.sample.todo.main
 
-import com.sample.todo.base.di.ActivityScoped
+import com.sample.todo.base.di.ActivityScope
 import com.sample.todo.base.di.FragmentComponent
 import com.sample.todo.base.di.FragmentKey
 import com.sample.todo.main.about.AboutComponent
@@ -35,6 +35,7 @@ interface MainActivityModule {
         ]
     )
     interface Binding {
+
         @Module
         interface FragmentComponentFactories {
             @Binds
@@ -69,7 +70,7 @@ interface MainActivityModule {
         }
     }
 
-    @ActivityScoped
+    @ActivityScope
     @ContributesAndroidInjector(
         modules = [
             TasksModule::class,

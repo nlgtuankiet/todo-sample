@@ -49,6 +49,9 @@ dependencies {
 
     implementation(Libs.navigation_fragment_ktx)
     implementation(Libs.navigation_ui_ktx)
+    implementation(project(":frontend:android:base"))
+    implementation(project(":frontend:android:navigation"))
+    implementation(Libs.javax_inject)
 }
 
 kapt {

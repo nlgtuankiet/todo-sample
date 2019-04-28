@@ -179,6 +179,7 @@ dependencies {
     testImplementation(Libs.rxjava)
 
     implementation(project(":frontend:android:ui:main"))
+    implementation(project(":frontend:android:navigation"))
     implementation(project(":frontend:android:ui:main:mainNavigation"))
     implementation(project(":frontend:android:ui:splash"))
     implementation(project(":frontend:android:work"))

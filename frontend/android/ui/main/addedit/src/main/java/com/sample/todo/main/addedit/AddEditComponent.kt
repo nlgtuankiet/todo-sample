@@ -4,10 +4,9 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.todo.base.di.FragmentComponent
-import com.sample.todo.base.di.FragmentScoped
+import com.sample.todo.base.di.FragmentScope
 import com.sample.todo.base.di.ViewModelKey
 import com.sample.todo.base.Holder
-import com.sample.todo.domain.repository.MessageManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,7 +19,7 @@ import dagger.multibindings.IntoMap
         AddEditComponent.Binding::class
     ]
 )
-@FragmentScoped
+@FragmentScope
 interface AddEditComponent : FragmentComponent<AddEditFragment> {
     @Subcomponent.Factory
     interface Factory : FragmentComponent.Factory<AddEditComponent>
@@ -28,19 +27,19 @@ interface AddEditComponent : FragmentComponent<AddEditFragment> {
     @Module
     object Provision {
         @JvmStatic
-        @FragmentScoped
+        @FragmentScope
         @Provides
         fun args(holder: Holder<AddEditFragment>): AddEditFragmentArgs {
             return AddEditFragmentArgs.fromBundle(holder.instance.arguments ?: Bundle.EMPTY)
         }
 
         @JvmStatic
-        @FragmentScoped
+        @FragmentScope
         @Provides
         fun holder(): Holder<AddEditFragment> = Holder()
 
         @JvmStatic
-        @FragmentScoped
+        @FragmentScope
         @Provides
         fun fragment(
             viewModelFactory: ViewModelProvider.Factory,

@@ -1,9 +1,8 @@
 package com.sample.todo.main.search
 
 import com.sample.todo.base.di.FragmentComponent
-import com.sample.todo.base.di.FragmentScoped
+import com.sample.todo.base.di.FragmentScope
 import com.sample.todo.base.Holder
-import com.sample.todo.domain.repository.MessageManager
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -14,7 +13,7 @@ import dagger.Subcomponent
         SearchBindingModule::class
     ]
 )
-@FragmentScoped
+@FragmentScope
 interface SearchComponent : FragmentComponent<SearchFragment> {
     @Subcomponent.Factory
     interface Factory : FragmentComponent.Factory<SearchComponent>
@@ -23,7 +22,7 @@ interface SearchComponent : FragmentComponent<SearchFragment> {
     object Provision {
         @JvmStatic
         @Provides
-        @FragmentScoped
+        @FragmentScope
         fun fragment(
             viewModelFactory: SearchViewModel.Factory,
             messageManager: com.sample.todo.domain.repository.MessageManager,
@@ -41,7 +40,7 @@ interface SearchComponent : FragmentComponent<SearchFragment> {
 
         @JvmStatic
         @Provides
-        @FragmentScoped
+        @FragmentScope
         fun holder(): Holder<SearchFragment> = Holder()
 
 //        @JvmStatic

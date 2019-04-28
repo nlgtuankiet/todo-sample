@@ -1,14 +1,17 @@
 package com.sample.todo.splash
 
-import android.app.Activity
 import android.os.Bundle
-import com.sample.todo.navigation.SplashNavigator
+import dagger.android.DaggerActivity
 import timber.log.Timber
+import javax.inject.Inject
 
-class SplashActivity : Activity() {
+class SplashActivity : DaggerActivity() {
+    @Inject
+    lateinit var navigator: SplashNavigator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("enter SplashActivity")
-        SplashNavigator.toMainActivity(this)
+        navigator.toMainActivity()
     }
 }

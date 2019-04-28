@@ -1,11 +1,11 @@
 package com.sample.todo.dynamic.dataimplementation.domain.interactor
 
 import com.sample.todo.TodoApplication
-import com.sample.todo.base.di.ActivityScoped
+import com.sample.todo.base.di.ActivityScope
 import com.sample.todo.domain.entity.DataImplementation
 import javax.inject.Inject
 
-@ActivityScoped
+@ActivityScope
 class GetCurrentRunTimeDataImplementation @Inject constructor(
     private val todoApplication: TodoApplication
 ) {

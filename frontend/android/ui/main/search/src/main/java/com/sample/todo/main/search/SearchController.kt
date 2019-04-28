@@ -5,11 +5,11 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.EpoxyViewHolder
 import com.airbnb.mvrx.withState
 import com.sample.todo.base.Holder
-import com.sample.todo.base.di.FragmentScoped
+import com.sample.todo.base.di.FragmentScope
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
-@FragmentScoped
+@FragmentScope
 class SearchController @Inject constructor(
     private val fragmentHolder: Holder<SearchFragment>
 ) : EpoxyController() {

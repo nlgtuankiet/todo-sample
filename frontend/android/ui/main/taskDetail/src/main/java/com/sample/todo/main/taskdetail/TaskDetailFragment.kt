@@ -15,11 +15,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.domain.repository.MessageManager
-import com.sample.todo.domain.repository.setUpSnackbar
+import com.sample.todo.extension.setUpSnackbar
 import com.sample.todo.main.taskdetail.databinding.TaskDetailFragmentBinding
 
 class TaskDetailFragment(
-    private val messageManager: com.sample.todo.domain.repository.MessageManager,
+    private val messageManager: MessageManager,
     private val notificationManager: NotificationManagerCompat,
     private val viewModelFactory: ViewModelProvider.Factory
 ) : Fragment() {

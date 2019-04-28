@@ -3,7 +3,7 @@ package com.sample.todo.main.statistics
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.todo.base.di.FragmentComponent
-import com.sample.todo.base.di.FragmentScoped
+import com.sample.todo.base.di.FragmentScope
 import com.sample.todo.base.di.ViewModelKey
 import com.sample.todo.base.Holder
 import dagger.Binds
@@ -18,7 +18,7 @@ import dagger.multibindings.IntoMap
         StatisticsComponent.Binding::class
     ]
 )
-@FragmentScoped
+@FragmentScope
 interface StatisticsComponent : FragmentComponent<StatisticsFragment> {
     @Subcomponent.Factory
     interface Factory : FragmentComponent.Factory<StatisticsComponent>
@@ -27,7 +27,7 @@ interface StatisticsComponent : FragmentComponent<StatisticsFragment> {
     object Provision {
         @JvmStatic
         @Provides
-        @FragmentScoped
+        @FragmentScope
         fun fragment(
             viewModelFactory: ViewModelProvider.Factory,
             holder: Holder<StatisticsFragment>
@@ -39,7 +39,7 @@ interface StatisticsComponent : FragmentComponent<StatisticsFragment> {
 
         @JvmStatic
         @Provides
-        @FragmentScoped
+        @FragmentScope
         fun holder(): Holder<StatisticsFragment> = Holder()
     }
 

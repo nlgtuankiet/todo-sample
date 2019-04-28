@@ -2,7 +2,7 @@ package com.sample.todo.main.about
 
 import androidx.work.WorkManager
 import com.sample.todo.base.di.FragmentComponent
-import com.sample.todo.base.di.FragmentScoped
+import com.sample.todo.base.di.FragmentScope
 import com.sample.todo.base.Holder
 import dagger.Module
 import dagger.Provides
@@ -13,7 +13,7 @@ import dagger.Subcomponent
         AboutComponent.Provision::class
     ]
 )
-@FragmentScoped
+@FragmentScope
 interface AboutComponent : FragmentComponent<AboutFragment> {
 
     @Subcomponent.Factory
@@ -23,7 +23,7 @@ interface AboutComponent : FragmentComponent<AboutFragment> {
     object Provision {
         @JvmStatic
         @Provides
-        @FragmentScoped
+        @FragmentScope
         fun fragment(
             viewModelFactory: AboutViewModelFactory,
             workManager: WorkManager,
@@ -39,7 +39,7 @@ interface AboutComponent : FragmentComponent<AboutFragment> {
         }
         @JvmStatic
         @Provides
-        @FragmentScoped
+        @FragmentScope
         fun holder(): Holder<AboutFragment> = Holder()
     }
 }

@@ -1,9 +1,8 @@
 package com.sample.todo.main.tasks
 
 import com.sample.todo.base.di.FragmentComponent
-import com.sample.todo.base.di.FragmentScoped
+import com.sample.todo.base.di.FragmentScope
 import com.sample.todo.base.Holder
-import com.sample.todo.domain.repository.MessageManager
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -14,7 +13,7 @@ import dagger.Subcomponent
         TasksBindingModule::class
     ]
 )
-@FragmentScoped
+@FragmentScope
 interface TasksComponent : FragmentComponent<TasksFragment> {
     @Subcomponent.Factory
     interface Factory : FragmentComponent.Factory<TasksComponent>
@@ -23,7 +22,7 @@ interface TasksComponent : FragmentComponent<TasksFragment> {
     object Provision {
         @JvmStatic
         @Provides
-        @FragmentScoped
+        @FragmentScope
         fun fragment(
             holder: Holder<TasksFragment>,
             messageManager: com.sample.todo.domain.repository.MessageManager,
@@ -39,7 +38,7 @@ interface TasksComponent : FragmentComponent<TasksFragment> {
 
         @JvmStatic
         @Provides
-        @FragmentScoped
+        @FragmentScope
         fun holder() = Holder<TasksFragment>()
     }
 }

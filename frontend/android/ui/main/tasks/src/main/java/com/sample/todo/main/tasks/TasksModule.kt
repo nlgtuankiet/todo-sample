@@ -1,6 +1,6 @@
 package com.sample.todo.main.tasks
 
-import com.sample.todo.base.di.FragmentScoped
+import com.sample.todo.base.di.FragmentScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -8,7 +8,7 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class TasksModule {
-    @FragmentScoped
+    @FragmentScope
     @ContributesAndroidInjector(
         modules = [
             TasksBindingModule::class

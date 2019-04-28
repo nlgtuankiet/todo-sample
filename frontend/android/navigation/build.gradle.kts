@@ -31,8 +31,10 @@ android {
 
 dependencies {
     implementation(Libs.core_ktx)
+    implementation(Libs.javax_inject)
     implementation(Libs.kotlin_stdlib_jdk8)
     implementation(Libs.navigation_fragment_ktx)
+    implementation(project(":frontend:android:base"))
 }
 
 kapt {

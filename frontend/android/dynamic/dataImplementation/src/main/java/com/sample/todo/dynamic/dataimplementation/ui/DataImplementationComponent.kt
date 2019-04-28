@@ -1,7 +1,7 @@
 package com.sample.todo.dynamic.dataimplementation.ui
 
 import com.sample.todo.androidComponent
-import com.sample.todo.base.di.ActivityScoped
+import com.sample.todo.base.di.ActivityScope
 import com.sample.todo.di.android.AndroidComponent
 import com.sample.todo.data.DataPreferenceBindingModule
 import dagger.Component
@@ -15,7 +15,7 @@ import dagger.android.AndroidInjector
         DataPreferenceBindingModule::class
     ]
 )
-@ActivityScoped
+@ActivityScope
 interface DataImplementationComponent : AndroidInjector<DataImplementationActivity> {
 
     @Component.Factory

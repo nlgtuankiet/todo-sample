@@ -5,7 +5,7 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class SettingsModule {
-    @com.sample.todo.base.di.FragmentScoped
+    @com.sample.todo.base.di.FragmentScope
     @ContributesAndroidInjector(
         modules = [
             SettingsBindingModule::class

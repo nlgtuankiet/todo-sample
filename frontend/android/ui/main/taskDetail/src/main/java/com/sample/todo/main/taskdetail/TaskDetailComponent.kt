@@ -5,10 +5,9 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.todo.base.di.FragmentComponent
-import com.sample.todo.base.di.FragmentScoped
+import com.sample.todo.base.di.FragmentScope
 import com.sample.todo.base.di.ViewModelKey
 import com.sample.todo.base.Holder
-import com.sample.todo.domain.repository.MessageManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -21,7 +20,7 @@ import dagger.multibindings.IntoMap
         TaskDetailComponent.Provision::class
     ]
 )
-@FragmentScoped
+@FragmentScope
 interface TaskDetailComponent : FragmentComponent<TaskDetailFragment> {
     @Subcomponent.Factory
     interface Factory : FragmentComponent.Factory<TaskDetailComponent>
@@ -31,7 +30,7 @@ interface TaskDetailComponent : FragmentComponent<TaskDetailFragment> {
 
         @Provides
         @JvmStatic
-        @FragmentScoped
+        @FragmentScope
         fun fragment(
             messageManager: com.sample.todo.domain.repository.MessageManager,
             notificationManager: NotificationManagerCompat,
@@ -45,12 +44,12 @@ interface TaskDetailComponent : FragmentComponent<TaskDetailFragment> {
 
         @Provides
         @JvmStatic
-        @FragmentScoped
+        @FragmentScope
         fun holder() = Holder<TaskDetailFragment>()
 
         @Provides
         @JvmStatic
-        @FragmentScoped
+        @FragmentScope
         fun args(holder: Holder<TaskDetailFragment>) =
             TaskDetailFragmentArgs.fromBundle(holder.instance.arguments ?: Bundle.EMPTY)
     }
