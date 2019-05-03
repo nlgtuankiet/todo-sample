@@ -3,9 +3,9 @@ package com.sample.todo.dynamic.data.task.firestore.mapper
 import com.google.firebase.firestore.DocumentSnapshot
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.data.core.Mapper
-import com.sample.todo.domain.model.TaskMini
 import com.sample.todo.dynamic.data.task.firestore.entity.TaskFieldName
 import com.sample.todo.dynamic.data.task.firestore.getOrThrow
+import com.sample.todo.main.tasks.library.domain.entity.TaskMini
 import javax.inject.Inject
 
 @DataScope

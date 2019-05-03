@@ -2,7 +2,7 @@ package com.sample.todo.data.task.room.mapper
 
 import com.sample.todo.data.core.Mapper
 import com.sample.todo.data.task.room.entity.TaskEntity
-import com.sample.todo.domain.model.Task
+import com.sample.todo.domain.entity.Task
 import org.threeten.bp.Instant
 import javax.inject.Inject
 

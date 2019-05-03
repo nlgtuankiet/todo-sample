@@ -6,11 +6,11 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.work.WorkerParameters
 import com.sample.todo.base.notification.AppNotification
 import com.sample.todo.base.notification.NotificationChannelInformation
-import com.sample.todo.domain.model.Task
+import com.sample.todo.domain.entity.Task
 import com.sample.todo.dynamic.seeddatabase.R
+import com.sample.todo.dynamic.seeddatabase.domain.interactor.InsertAllTasks
 import com.sample.todo.dynamic.seeddatabase.lorem.Lorem
 import com.sample.todo.dynamic.seeddatabase.service.SeedDatabaseControllerService
-import com.sample.todo.dynamic.seeddatabase.usecase.InsertAllTasks
 import com.sample.todo.work.BaseWorker
 import kotlinx.coroutines.delay
 import javax.inject.Inject

@@ -3,7 +3,7 @@ package com.sample.todo.data.task.room.mapper
 import com.sample.todo.data.task.room.entity.TaskStatisticsEntity
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.data.core.Mapper
-import com.sample.todo.domain.model.TaskStatistics
+import com.sample.todo.main.statistics.domain.entity.TaskStatistics
 import javax.inject.Inject
 
 @DataScope

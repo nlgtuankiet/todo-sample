@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="state"
+            type="com.sample.todo.main.tasks.ui.TasksState" />
+
+        <variable
+            name="viewModel"
+            type="com.sample.todo.main.tasks.ui.TasksViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/main_coordinator_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stateListAnimator="@animator/toolbar_elevation"
+                app:selected="@{state.isToolbarSelected}">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Widget.Todo.Toolbar"
+                    app:data="@{state.toolbarData}"
+                    app:subTitleStringRes="@{state.toolbarSubTitle}"
+                    app:title="@string/app_name" />
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <com.airbnb.epoxy.EpoxyRecyclerView
+                    android:id="@+id/tasks_recycler_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scrollbars="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/no_task_image_view"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="fitCenter"
+                    android:tint="@color/bottomAppBarIconColor"
+                    app:goneUnless="@{state.isNoTasks}"
+                    app:imageResource="@{state.noTaskIcon}"
+                    app:layout_constraintBottom_toTopOf="@+id/no_task_text_view"
+                    app:layout_constraintEnd_toStartOf="@+id/tasks_recycler_view"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tasks_recycler_view"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:src="@drawable/ic_edit_24dp" />
+
+                <TextView
+                    android:id="@+id/no_task_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:goneUnless="@{state.isNoTasks}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tasks_recycler_view"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tasks_recycler_view"
+                    app:layout_constraintTop_toBottomOf="@+id/no_task_image_view"
+                    app:stringRes="@{state.noTaskLabel}"
+                    tools:text="no task" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:theme="@style/Widget.Todo.FloatingActionButton"
+                app:backgroundTint="@color/white"
+                app:data="@{state.fabData}"
+                app:tint="@color/bottomAppBarIconColor" />
+
+            <!--TODO anchor using gravity instead of margin bottom-->
+            <com.sample.todo.base.widget.FadingSnackbar
+                android:id="@+id/snack_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="64dp"
+                android:visibility="gone"
+                app:layout_anchor="@id/fab" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

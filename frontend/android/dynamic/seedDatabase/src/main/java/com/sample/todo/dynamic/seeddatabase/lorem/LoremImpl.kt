@@ -1,6 +1,6 @@
 package com.sample.todo.dynamic.seeddatabase.lorem
 
-import com.sample.todo.dynamic.seeddatabase.worker.SeedDatabaseWorkerScope
+import com.sample.todo.dynamic.seeddatabase.library.di.SeedDatabaseWorkerScope
 import javax.inject.Inject
 import kotlin.random.Random
 

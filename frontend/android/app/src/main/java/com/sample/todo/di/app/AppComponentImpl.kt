@@ -5,17 +5,18 @@ import com.sample.todo.data.DataComponent
 import com.sample.todo.di.ApplicationBindingModule
 import com.sample.todo.di.WorkModule
 import com.sample.todo.di.android.AndroidComponent
-import com.sample.todo.domain.di.DomainComponent
 import com.sample.todo.initializer.InitializerBindingModule
-import com.sample.todo.ui.UiModule
+import com.sample.todo.main.MainActivityModule
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
+import com.sample.todo.splash.SplashActivityModule
 
 // TODO make UiModule to UiComponent
 @AppScope
 @Component(
     modules = [
-        UiModule::class,
+        MainActivityModule::class,
+        SplashActivityModule::class,
         AndroidSupportInjectionModule::class,
         MessageManagerBindingModule::class,
         WorkModule::class,
@@ -24,7 +25,6 @@ import dagger.android.support.AndroidSupportInjectionModule
     ],
     dependencies = [
         DataComponent::class,
-        DomainComponent::class,
         AndroidComponent::class
     ]
 )
@@ -33,8 +33,7 @@ interface AppComponentImpl : AppComponent {
     interface Factory {
         fun create(
             androidComponent: AndroidComponent,
-            dataComponent: DataComponent,
-            domainComponent: DomainComponent
+            dataComponent: DataComponent
         ): AppComponentImpl
     }
 }

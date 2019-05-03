@@ -1,0 +1,12 @@
+allprojects {
+    tasks.withType(JavaCompile).all {
+        options.compilerArgs += [
+                '-Adagger.formatGeneratedSource=DISABLED'
+        ]
+    }
+    afterEvaluate {
+        extensions.findByName("kapt")?.arguments {
+            arg("dagger.formatGeneratedSource", "DISABLED")
+        }
+    }
+}

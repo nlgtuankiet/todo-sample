@@ -6,3 +6,7 @@ local.properties
 release.keystore
 google-services.json
 service-account-key.json
+*.project
+*.classpath
+*.prefs
+

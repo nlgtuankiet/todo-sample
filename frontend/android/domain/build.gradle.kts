@@ -21,7 +21,7 @@ dependencies {
     kapt(Libs.dagger_compiler)
     testImplementation(Libs.junit_junit)
     testImplementation(Libs.mockito_kotlin)
-    implementation("org.threeten:threetenbp:1.3.8:no-tzdb")
+    api(Libs.threetenbp)
 }
 
 kapt {

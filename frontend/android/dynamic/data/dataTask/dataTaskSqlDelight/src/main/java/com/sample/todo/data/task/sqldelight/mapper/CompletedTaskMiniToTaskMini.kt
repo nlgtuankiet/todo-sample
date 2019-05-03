@@ -3,7 +3,7 @@ package com.sample.todo.data.task.sqldelight.mapper
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.data.core.Mapper
 import com.sample.todo.data.task.sqldelight.CompletedTaskMiniEntity
-import com.sample.todo.domain.model.TaskMini
+import com.sample.todo.main.tasks.library.domain.entity.TaskMini
 import javax.inject.Inject
 
 @DataScope

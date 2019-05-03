@@ -64,7 +64,7 @@ dependencies {
     implementation(Libs.room_rxjava2)
     implementation(Libs.timber)
     implementation(project(":frontend:android:app"))
-    implementation(project(":frontend:android:ui:main"))
+    implementation(project(":frontend:android:main"))
     implementation(project(":frontend:android:data"))
     implementation(project(":frontend:android:data:dataPreference"))
     implementation(project(":frontend:android:domain"))

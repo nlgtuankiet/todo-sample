@@ -4,9 +4,9 @@ import androidx.paging.PageKeyedDataSource
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.HttpsCallableResult
-import com.sample.todo.domain.model.SearchResult
 import com.sample.todo.dynamic.data.task.firestore.FireStore
 import com.sample.todo.dynamic.data.task.firestore.function.entity.SearchResponce
+import com.sample.todo.main.search.library.domain.entity.SearchResult
 import com.squareup.moshi.JsonAdapter
 import timber.log.Timber
 

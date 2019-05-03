@@ -56,8 +56,8 @@ dependencies {
     kapt(Libs.dagger_compiler)
     // todo trim
     testImplementation("org.threeten:threetenbp:1.3.8")
-    api("org.threeten:threetenbp:1.3.8:no-tzdb")
-    api("com.jakewharton.threetenabp:threetenabp:1.2.0")
+//    api("org.threeten:threetenbp:1.3.8:no-tzdb")
+//    api("com.jakewharton.threetenabp:threetenabp:1.2.0")
 }
 
 kapt {

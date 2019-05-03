@@ -6,9 +6,9 @@ import com.sample.todo.data.task.sqldelight.SelectCompletedTaskMini
 import com.sample.todo.data.task.sqldelight.SelectTaskMini
 import com.sample.todo.data.task.sqldelight.TaskEntity
 import com.sample.todo.data.task.sqldelight.TaskStatisticsEntity
-import com.sample.todo.domain.model.Task
-import com.sample.todo.domain.model.TaskMini
-import com.sample.todo.domain.model.TaskStatistics
+import com.sample.todo.domain.entity.Task
+import com.sample.todo.main.statistics.domain.entity.TaskStatistics
+import com.sample.todo.main.tasks.library.domain.entity.TaskMini
 import dagger.Binds
 import dagger.Module
 

@@ -1,11 +1,11 @@
 package com.sample.todo.data
 
 import androidx.paging.PagedList
-import com.sample.todo.domain.model.SearchResult
-import com.sample.todo.domain.model.SearchResultStatistics
-import com.sample.todo.domain.model.Task
-import com.sample.todo.domain.model.TaskMini
-import com.sample.todo.domain.model.TaskStatistics
+import com.sample.todo.domain.entity.Task
+import com.sample.todo.main.search.library.domain.entity.SearchResult
+import com.sample.todo.main.search.library.domain.entity.SearchResultStatistics
+import com.sample.todo.main.statistics.domain.entity.TaskStatistics
+import com.sample.todo.main.tasks.library.domain.entity.TaskMini
 import io.reactivex.Observable
 
 interface TaskDataSource {

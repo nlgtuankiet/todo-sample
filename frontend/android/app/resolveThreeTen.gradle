@@ -1,0 +1,7 @@
+configurations.all {
+    resolutionStrategy {
+        dependencySubstitution {
+            substitute module('org.threeten:threetenbp:1.3.8') with module('com.jakewharton.threetenabp:threetenabp:1.2.0')
+        }
+    }
+}

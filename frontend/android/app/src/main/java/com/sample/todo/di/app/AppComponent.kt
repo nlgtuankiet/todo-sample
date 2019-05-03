@@ -3,13 +3,12 @@ package com.sample.todo.di.app
 import com.sample.todo.TodoApplication
 import com.sample.todo.data.DataComponent
 import com.sample.todo.di.android.AndroidComponent
-import com.sample.todo.domain.di.DomainComponent
 import com.sample.todo.main.about.AboutComponent
 import com.sample.todo.main.addedit.AddEditComponent
 import com.sample.todo.main.search.SearchComponent
 import com.sample.todo.main.statistics.StatisticsComponent
 import com.sample.todo.main.taskdetail.TaskDetailComponent
-import com.sample.todo.main.tasks.TasksComponent
+import com.sample.todo.main.tasks.ui.TasksComponent
 import dagger.android.AndroidInjector
 
 interface AppComponent : AndroidInjector<TodoApplication> {
@@ -23,12 +22,10 @@ interface AppComponent : AndroidInjector<TodoApplication> {
     companion object {
         operator fun invoke(
             androidComponent: AndroidComponent,
-            dataComponent: DataComponent,
-            domainComponent: DomainComponent
+            dataComponent: DataComponent
         ): AppComponent = DaggerAppComponentImpl.factory().create(
             androidComponent,
-            dataComponent,
-            domainComponent
+            dataComponent
         )
     }
 }

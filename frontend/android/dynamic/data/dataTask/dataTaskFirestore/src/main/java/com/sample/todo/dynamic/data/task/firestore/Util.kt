@@ -2,7 +2,7 @@ package com.sample.todo.dynamic.data.task.firestore
 
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
-import com.sample.todo.domain.model.Task
+import com.sample.todo.domain.entity.Task
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.withContext

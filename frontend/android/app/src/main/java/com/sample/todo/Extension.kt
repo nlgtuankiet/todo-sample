@@ -4,16 +4,12 @@ import android.content.Context
 import com.sample.todo.data.DataComponent
 import com.sample.todo.di.android.AndroidComponent
 import com.sample.todo.di.app.AppComponent
-import com.sample.todo.domain.di.DomainComponent
 
 val Context.androidComponent: AndroidComponent
     get() = todoApplication.androidComponent
 
 val Context.dataComponent: DataComponent
     get() = todoApplication.dataComponent
-
-val Context.domainComponent: DomainComponent
-    get() = todoApplication.domainComponent
 
 val Context.appComponent: AppComponent
     get() = todoApplication.appComponent

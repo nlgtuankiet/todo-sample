@@ -2,8 +2,8 @@ package com.sample.todo.dynamic.data.task.firestore.function
 
 import androidx.paging.DataSource
 import com.google.firebase.functions.FirebaseFunctions
-import com.sample.todo.domain.model.SearchResult
 import com.sample.todo.dynamic.data.task.firestore.function.entity.SearchResponce
+import com.sample.todo.main.search.library.domain.entity.SearchResult
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.squareup.moshi.JsonAdapter

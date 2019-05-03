@@ -67,7 +67,8 @@ dependencies {
     testImplementation(Libs.rxjava)
     testImplementation(Libs.sqlite_driver)
     testImplementation(Libs.sqlite_jdbc)
-    implementation("org.threeten:threetenbp:1.3.8:no-tzdb")
+    implementation(Libs.threetenbp)
+//    implementation("org.threeten:threetenbp:1.3.8:no-tzdb")
     implementation("com.google.firebase:firebase-firestore:18.1.0")
     implementation("com.squareup.retrofit2:retrofit:2.5.0")
     implementation("com.squareup.moshi:moshi:1.8.0")
@@ -75,6 +76,14 @@ dependencies {
     compileOnly(Libs.assisted_inject_annotations_dagger2)
     kapt(Libs.assisted_inject_processor_dagger2)
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.8.0")
+    api(project(":frontend:android:main:tasks:library"))
+    api(project(":frontend:android:main:taskDetail:library"))
+    api(project(":frontend:android:main:addedit:library"))
+    api(project(":frontend:android:main:search:library"))
+    api(project(":frontend:android:main:statistics:library"))
+    api(project(":frontend:android:downloadModule:library"))
+    implementation(project(":frontend:android:downloadModule:library"))
+    implementation(Libs.com_google_android_play_core)
 }
 
 kapt {

@@ -2,7 +2,7 @@ package com.sample.todo.data.task.room.mapper
 
 import com.sample.todo.data.core.Mapper
 import com.sample.todo.data.task.room.entity.SearchResultEntity
-import com.sample.todo.domain.model.SearchResult
+import com.sample.todo.main.search.library.domain.entity.SearchResult
 import javax.inject.Inject
 
 class SearchResultEntityToSearchResult @Inject constructor() : Mapper<SearchResultEntity, SearchResult> {

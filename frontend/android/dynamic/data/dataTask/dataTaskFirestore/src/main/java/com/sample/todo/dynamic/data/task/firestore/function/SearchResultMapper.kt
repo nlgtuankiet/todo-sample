@@ -2,8 +2,8 @@ package com.sample.todo.dynamic.data.task.firestore.function
 
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.data.core.Mapper
-import com.sample.todo.domain.model.SearchResult
 import com.sample.todo.dynamic.data.task.firestore.function.entity.SearchResponce
+import com.sample.todo.main.search.library.domain.entity.SearchResult
 import javax.inject.Inject
 
 @DataScope

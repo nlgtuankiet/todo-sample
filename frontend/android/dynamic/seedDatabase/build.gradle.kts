@@ -52,6 +52,7 @@ dependencies {
     implementation(Libs.work_runtime_ktx)
     implementation(Libs.work_testing)
     implementation(project(":frontend:android:work"))
+    implementation(project(":frontend:android:dynamic:seedDatabase:library"))
     implementation("com.google.guava:listenablefuture:1.0")
 }
 

@@ -2,7 +2,7 @@ package com.sample.todo.data.task.sqldelight.mapper
 
 import com.sample.todo.data.core.Mapper
 import com.sample.todo.data.task.sqldelight.TaskStatisticsEntity
-import com.sample.todo.domain.model.TaskStatistics
+import com.sample.todo.main.statistics.domain.entity.TaskStatistics
 import javax.inject.Inject
 
 class TaskStatisticsEntityToTaskStatistics @Inject constructor() : Mapper<TaskStatisticsEntity, TaskStatistics> {

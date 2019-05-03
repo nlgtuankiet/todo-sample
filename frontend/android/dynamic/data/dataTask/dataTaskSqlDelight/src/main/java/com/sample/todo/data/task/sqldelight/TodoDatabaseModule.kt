@@ -2,7 +2,7 @@ package com.sample.todo.data.task.sqldelight
 
 import android.content.Context
 import com.sample.sqldelight.todo.data.createDatabase
-import com.sample.todo.data.TaskRepositoryBindingModule
+import com.sample.todo.data.RepositoryBindingModule
 import com.sample.todo.data.core.DataScope
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import dagger.Module
@@ -11,7 +11,7 @@ import dagger.Provides
 @Module(
     includes = [
         TaskDataSourceBindingModule::class,
-        TaskRepositoryBindingModule::class
+        RepositoryBindingModule::class
     ]
 )
 object TodoDatabaseModule {

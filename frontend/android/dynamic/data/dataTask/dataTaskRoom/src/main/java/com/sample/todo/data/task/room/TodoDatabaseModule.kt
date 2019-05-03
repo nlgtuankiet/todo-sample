@@ -2,7 +2,7 @@ package com.sample.todo.data.task.room
 
 import android.content.Context
 import androidx.room.Room
-import com.sample.todo.data.TaskRepositoryBindingModule
+import com.sample.todo.data.RepositoryBindingModule
 import com.sample.todo.data.core.DataScope
 import dagger.Module
 import dagger.Provides
@@ -10,7 +10,7 @@ import dagger.Provides
 @Module(
     includes = [
         TaskDataSourceBindingModule::class,
-        TaskRepositoryBindingModule::class
+        RepositoryBindingModule::class
     ]
 )
 object TodoDatabaseModule {

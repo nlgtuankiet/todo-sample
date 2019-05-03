@@ -1,7 +1,7 @@
 package com.sample.todo.dynamic.data.task.firestore
 
 import com.sample.todo.data.DataComponent
-import com.sample.todo.data.TaskRepositoryBindingModule
+import com.sample.todo.data.RepositoryBindingModule
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.data.preference.PreferenceModule
 import com.sample.todo.dynamic.data.task.firestore.function.FirebaseCloudFunctionModule
@@ -14,7 +14,7 @@ import dagger.Component
         FirestoreModule::class,
         MapperBindingModule::class,
         TaskDataSourceBindingModule::class,
-        TaskRepositoryBindingModule::class,
+        RepositoryBindingModule::class,
         PreferenceModule::class,
         MoshiModule::class,
         FirebaseCloudFunctionModule::class,

@@ -3,7 +3,7 @@ package com.sample.todo.data.task.sqldelight.mapper
 import com.sample.todo.data.core.Mapper
 import com.sample.todo.data.task.sqldelight.TaskEntity
 import com.sample.todo.data.task.sqldelight.TaskEntityImp
-import com.sample.todo.domain.model.Task
+import com.sample.todo.domain.entity.Task
 import javax.inject.Inject
 
 class TaskToTaskEntity @Inject constructor() : Mapper<Task, TaskEntity> {

@@ -5,11 +5,11 @@ import androidx.paging.toObservable
 import com.sample.todo.data.TaskDataSource
 import com.sample.todo.data.core.DataScope
 import com.sample.todo.data.core.Mapper
-import com.sample.todo.domain.model.SearchResult
-import com.sample.todo.domain.model.SearchResultStatistics
-import com.sample.todo.domain.model.Task
-import com.sample.todo.domain.model.TaskMini
-import com.sample.todo.domain.model.TaskStatistics
+import com.sample.todo.main.search.library.domain.entity.SearchResult
+import com.sample.todo.main.search.library.domain.entity.SearchResultStatistics
+import com.sample.todo.main.statistics.domain.entity.TaskStatistics
+import com.sample.todo.main.tasks.library.domain.entity.TaskMini
+import com.sample.todo.domain.entity.Task
 import com.squareup.sqldelight.Transacter
 import com.squareup.sqldelight.android.paging.QueryDataSourceFactory
 import com.squareup.sqldelight.runtime.rx.asObservable

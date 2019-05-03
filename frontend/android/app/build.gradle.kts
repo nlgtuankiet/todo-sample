@@ -6,13 +6,29 @@ plugins {
     id("kotlin-kapt")
     id("io.fabric")
     id("kotlin-allopen")
+    id("com.vanniktech.dependency.graph.generator")
 }
 
 allOpen {
     enableIfInUnitTest(gradle)
 }
 
+repositories {
+    google()
+    mavenCentral()
+    maven("https://maven.fabric.io/public")
+    maven("https://dl.bintray.com/kotlin/kotlin-eap")
+    maven("https://plugins.gradle.org/m2/")
+    maven("https://dl.bintray.com/mockito/maven")
+    maven("https://oss.sonatype.org/content/repositories/snapshots/")
+    maven("https://kotlin.bintray.com/kotlinx/")
+}
+
 android {
+    packagingOptions {
+        exclude("META-INF/library.kotlin_module")
+        exclude("META-INF/atomicfu.kotlin_module")
+    }
     dexOptions {
         javaMaxHeapSize = "4g"
     }
@@ -178,18 +194,18 @@ dependencies {
     testImplementation(Libs.robolectric)
     testImplementation(Libs.rxjava)
 
-    implementation(project(":frontend:android:ui:main"))
+    implementation(project(":frontend:android:main"))
     implementation(project(":frontend:android:navigation"))
-    implementation(project(":frontend:android:ui:main:mainNavigation"))
-    implementation(project(":frontend:android:ui:splash"))
+    implementation(project(":frontend:android:main:mainNavigation"))
+    implementation(project(":frontend:android:splash"))
     implementation(project(":frontend:android:work"))
     implementation(project(":frontend:android:base"))
-    implementation(project(":frontend:android:ui"))
     implementation(project(":frontend:android:data"))
     implementation(project(":frontend:android:data:dataPreference"))
 
     implementation(project(":frontend:android:domain"))
     implementation(project(":frontend:android:downloadModule"))
+    implementation(project(":frontend:android:downloadModule:library"))
 
     implementation("androidx.multidex:multidex:2.0.1")
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.0-alpha-1")
@@ -229,4 +245,3 @@ android.buildTypes.all {
         }
     }
 }
-

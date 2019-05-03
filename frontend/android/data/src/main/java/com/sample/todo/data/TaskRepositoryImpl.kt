@@ -1,15 +1,21 @@
 package com.sample.todo.data
 
 import androidx.paging.PagedList
-import com.sample.todo.domain.util.checkAllMatched
 import com.sample.todo.data.core.DataScope
-import com.sample.todo.domain.model.SearchResult
-import com.sample.todo.domain.model.SearchResultStatistics
-import com.sample.todo.domain.model.Task
-import com.sample.todo.domain.model.TaskFilterType
-import com.sample.todo.domain.model.TaskMini
-import com.sample.todo.domain.model.TaskStatistics
+import com.sample.todo.domain.entity.Task
+import com.sample.todo.domain.repository.PreferenceRepository
 import com.sample.todo.domain.repository.TaskRepository
+import com.sample.todo.domain.util.checkAllMatched
+import com.sample.todo.main.about.library.repository.AddEditRepository
+import com.sample.todo.main.search.library.domain.entity.SearchResult
+import com.sample.todo.main.search.library.domain.entity.SearchResultStatistics
+import com.sample.todo.main.search.library.domain.repository.SearchRepository
+import com.sample.todo.main.statistics.domain.entity.TaskStatistics
+import com.sample.todo.main.statistics.domain.repository.StatisticsRepository
+import com.sample.todo.main.taskdetail.library.domain.repository.TaskDetailRepository
+import com.sample.todo.main.tasks.library.domain.entity.TaskFilterType
+import com.sample.todo.main.tasks.library.domain.entity.TaskMini
+import com.sample.todo.main.tasks.library.domain.repository.TasksRepository
 import io.reactivex.Observable
 import kotlinx.coroutines.delay
 import timber.log.Timber
@@ -20,8 +26,30 @@ import javax.inject.Inject
  */
 @DataScope
 class TaskRepositoryImpl @Inject constructor(
-    private val taskDataSource: TaskDataSource
-) : TaskRepository {
+    private val taskDataSource: TaskDataSource,
+    private val preferenceRepository: PreferenceRepository
+) : TasksRepository,
+    TaskDetailRepository,
+    AddEditRepository,
+    SearchRepository,
+    StatisticsRepository,
+    TaskRepository {
+    override suspend fun insertAll(tasks: List<com.sample.todo.domain.entity.Task>): Long {
+        return taskDataSource.insertAll(tasks)
+    }
+
+    override fun getTaskFilterTypeOrdinalObservable(): Observable<Int> {
+        return preferenceRepository.getTaskFilterTypeOrdinalObservable()
+    }
+
+    override suspend fun setTaskFilterTypeOrdinal(value: Int) {
+        return preferenceRepository.setTaskFilterTypeOrdinal(value)
+    }
+
+    override suspend fun getTaskFilterTypeOrdinal(): Int {
+        return preferenceRepository.getTaskFilterTypeOrdinal()
+    }
+
     override fun getSearchResultStatisticsObservable(query: String): Observable<SearchResultStatistics> {
         return taskDataSource.getSearchResultStatisticsObservable(query)
     }
@@ -54,20 +82,12 @@ class TaskRepositoryImpl @Inject constructor(
         return taskDataSource.getSearchResultObservablePaged(query, pageSize)
     }
 
-    override fun getTaskCount(): Observable<Long> {
-        return taskDataSource.tasksCountObservable()
-    }
-
     override fun getTaskStatisticsObservable(): Observable<TaskStatistics> {
         return taskDataSource.getTaskStatisticsObservable()
     }
 
     override suspend fun update(task: Task): Long {
         return taskDataSource.update(task)
-    }
-
-    override suspend fun insertAll(entities: List<Task>): Long {
-        return taskDataSource.insertAll(entities)
     }
 
     override suspend fun updateComplete(taskId: String, completed: Boolean, updateTime: Long): Long {

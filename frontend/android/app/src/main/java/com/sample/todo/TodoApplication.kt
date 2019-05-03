@@ -6,12 +6,11 @@ import android.content.Context
 import androidx.multidex.MultiDex
 import com.google.android.play.core.splitcompat.SplitCompat
 import com.google.firebase.FirebaseApp
-import com.jakewharton.threetenabp.AndroidThreeTen
+//import com.jakewharton.threetenabp.AndroidThreeTen
 import com.sample.todo.data.DataComponent
 import com.sample.todo.di.android.AndroidComponent
 import com.sample.todo.di.app.AppComponent
 import com.sample.todo.di.application.ApplicationComponent
-import com.sample.todo.domain.di.DomainComponent
 import com.sample.todo.initializer.AppInitializer
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -24,7 +23,6 @@ open class TodoApplication : DaggerApplication() {
     lateinit var androidComponent: AndroidComponent
     lateinit var applicationComponent: ApplicationComponent
     lateinit var dataComponent: DataComponent
-    lateinit var domainComponent: DomainComponent
     lateinit var appComponent: AppComponent
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
@@ -36,18 +34,13 @@ open class TodoApplication : DaggerApplication() {
         androidComponent = AndroidComponent(this)
         applicationComponent = ApplicationComponent(androidComponent)
         dataComponent = applicationComponent.provideGetDataComponent()()
-        domainComponent = DomainComponent(
-            taskRepository = dataComponent.provideTaskRepository(),
-            preferenceRepository = dataComponent.providePreferenceRepository()
-        )
         appComponent = AppComponent(
             androidComponent = androidComponent,
-            domainComponent = domainComponent,
             dataComponent = dataComponent
         )
         super.onCreate()
         appInitializer.initialize(this)
-        AndroidThreeTen.init(this)
+//        AndroidThreeTen.init(this)
     }
 
     override fun attachBaseContext(base: Context?) {

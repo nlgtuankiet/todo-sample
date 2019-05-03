@@ -1,4 +1,5 @@
 import org.gradle.kotlin.dsl.*
+import org.jetbrains.kotlin.gradle.internal.KaptTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -21,6 +22,7 @@ buildscript {
         classpath(Libs.google_services)
         classpath(Libs.io_fabric_tools_gradle)
         classpath("org.jetbrains.kotlin:kotlin-allopen:${Versions.org_jetbrains_kotlin}")
+        classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:0.5.0")
     }
 }
 
@@ -28,7 +30,7 @@ plugins {
     id("de.fayard.buildSrcVersions") version "0.3.2"
     id("project-report")
     id("com.diffplug.gradle.spotless") version "3.22.0"
-//    `build-scan`
+   `build-scan`
 }
 
 allprojects {
@@ -43,17 +45,8 @@ allprojects {
         maven("https://kotlin.bintray.com/kotlinx/")
 
     }
-
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-        kotlinOptions {
-            freeCompilerArgs = listOf(
-                "-Adagger.formatGeneratedSource=disabled",
-                "-AFORMAT_GENERATED_SOURCE=DISABLED"
-
-            )
-        }
-    }
 }
+apply(from = File("./dagger.gradle"))
 subprojects {
     repositories {
         google()
@@ -67,11 +60,11 @@ subprojects {
     }
 }
 
-//buildScan {
-//    termsOfServiceUrl = "https://gradle.com/terms-of-service"
-//    termsOfServiceAgree = "yes"
-////    publishAlways()
-//}
+buildScan {
+   termsOfServiceUrl = "https://gradle.com/terms-of-service"
+   termsOfServiceAgree = "yes"
+   publishAlways()
+}
 
 subprojects {
     apply(plugin = "com.diffplug.gradle.spotless")
