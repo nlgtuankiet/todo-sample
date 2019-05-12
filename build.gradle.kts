@@ -1,3 +1,6 @@
+import org.gradle.kotlin.dsl.*
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
     repositories {
         google()
@@ -26,7 +29,7 @@ plugins {
     id("de.fayard.buildSrcVersions") version "0.3.2"
     id("project-report")
     id("com.diffplug.gradle.spotless") version "3.22.0"
-   `build-scan`
+    `build-scan`
 }
 
 allprojects {
@@ -55,12 +58,12 @@ subprojects {
         maven("https://kotlin.bintray.com/kotlinx/")
     }
 }
-//
-//buildScan {
-//   termsOfServiceUrl = "https://gradle.com/terms-of-service"
-//   termsOfServiceAgree = "yes"
-//   publishAlways()
-//}
+
+buildScan {
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+    termsOfServiceAgree = "yes"
+    publishAlways()
+}
 
 subprojects {
     apply(plugin = "com.diffplug.gradle.spotless")
