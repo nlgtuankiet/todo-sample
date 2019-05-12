@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.*
-import org.jetbrains.kotlin.gradle.internal.KaptTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 buildscript {
     repositories {
         google()
@@ -22,7 +18,7 @@ buildscript {
         classpath(Libs.google_services)
         classpath(Libs.io_fabric_tools_gradle)
         classpath("org.jetbrains.kotlin:kotlin-allopen:${Versions.org_jetbrains_kotlin}")
-        classpath("com.vanniktech:gradle-dependency-graph-generator-plugin:0.5.0")
+        classpath("com.google.firebase:perf-plugin:1.2.0")
     }
 }
 
@@ -59,12 +55,12 @@ subprojects {
         maven("https://kotlin.bintray.com/kotlinx/")
     }
 }
-
-buildScan {
-   termsOfServiceUrl = "https://gradle.com/terms-of-service"
-   termsOfServiceAgree = "yes"
-   publishAlways()
-}
+//
+//buildScan {
+//   termsOfServiceUrl = "https://gradle.com/terms-of-service"
+//   termsOfServiceAgree = "yes"
+//   publishAlways()
+//}
 
 subprojects {
     apply(plugin = "com.diffplug.gradle.spotless")

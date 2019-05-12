@@ -1,5 +1,6 @@
 package com.sample.todo.model
 
+import com.sample.todo.domain.entity.TaskId
 import org.junit.Assert
 import org.junit.Test
 

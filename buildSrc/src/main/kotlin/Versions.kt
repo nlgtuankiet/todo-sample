@@ -1,5 +1,3 @@
-import kotlin.String
-
 /**
  * Find which updates are available by running
  *     `$ ./gradlew buildSrcVersions`
@@ -31,15 +29,15 @@ object Versions {
 
     const val androidx_room: String = "2.1.0-alpha04"
 
-    const val espresso_core: String = "3.1.0" // available: "3.1.1"
+    const val espresso_core: String = "3.1.1" // available: "3.1.1"
 
-    const val androidx_test_ext_junit: String = "1.0.0" // available: "1.1.0"
+    const val androidx_test_ext_junit: String = "1.1.0" // available: "1.1.0"
 
-    const val androidx_test_core: String = "1.0.0" // available: "1.1.0"
+    const val androidx_test_core: String = "1.1.0" // available: "1.1.0"
 
-    const val androidx_test_rules: String = "1.1.0" // available: "1.1.1"
+    const val androidx_test_rules: String = "1.1.1" // available: "1.1.1"
 
-    const val androidx_test_runner: String = "1.1.0" // available: "1.1.1"
+    const val androidx_test_runner: String = "1.1.1" // available: "1.1.1"
 
     const val epoxy_databinding: String = "3.3.1" 
 
@@ -49,11 +47,11 @@ object Versions {
 
     const val epoxy: String = "3.3.1" 
 
-    const val mvrx: String = "0.7.2" 
+    const val mvrx: String = "0.7.2"
 
-    const val aapt2: String = "3.3.2-5309881" 
+    const val aapt2: String = "3.3.2-5309881"
 
-    const val com_android_tools_build_gradle: String = "3.5.0-alpha12"
+    const val com_android_tools_build_gradle: String = "3.2.1"
 
     const val lint_gradle: String = "26.3.2" 
 
@@ -97,11 +95,11 @@ object Versions {
 
     const val com_squareup_sqldelight: String = "1.0.3" // available: "1.1.1"
 
-    const val lorem: String = "2.1" 
+    const val lorem: String = "2.1"
 
-    const val de_fayard_buildsrcversions_gradle_plugin: String = "0.3.2" 
+    const val de_fayard_buildsrcversions_gradle_plugin: String = "0.3.2"
 
-    const val io_fabric_tools_gradle: String = "1.27.0" // available: "1.28.1"
+    const val io_fabric_tools_gradle: String = "1.28.1" // available: "1.28.1"
 
     const val rxandroid: String = "2.1.0" // available: "2.1.1"
 

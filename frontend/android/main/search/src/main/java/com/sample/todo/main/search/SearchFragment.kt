@@ -11,7 +11,6 @@ import com.airbnb.mvrx.MvRxViewModelStore
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.sample.todo.base.extension.hideKeyboard
-import com.sample.todo.domain.repository.MessageManager
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.base.widget.LinearOffsetsItemDecoration
 import com.sample.todo.main.search.databinding.SearchFragmentBinding
@@ -35,7 +34,7 @@ class SearchFragment(
     ): View? {
         binding = SearchFragmentBinding.inflate(inflater, container, false).apply {
             viewModel = searchViewModel
-            lifecycleOwner = viewLifecycleOwner
+            setLifecycleOwner(viewLifecycleOwner)
             searchResultRecyclerView.apply {
                 setController(controller)
                 addItemDecoration(LinearOffsetsItemDecoration())

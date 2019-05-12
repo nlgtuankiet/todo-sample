@@ -54,7 +54,7 @@ class TasksFragment(
     ): View? {
         binding = TasksFragmentBinding.inflate(inflater, container, false).apply {
             viewModel = tasksViewModel
-            lifecycleOwner = viewLifecycleOwner
+            setLifecycleOwner(viewLifecycleOwner)
             tasksRecyclerView.apply {
                 adapter = tasksController.adapter
                 addOnScrollListener(object : RecyclerView.OnScrollListener() {

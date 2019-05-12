@@ -27,7 +27,7 @@ class SettingsActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@SettingsActivity, R.layout.settings_activity)
         binding.apply {
-            lifecycleOwner = this@SettingsActivity
+            setLifecycleOwner(this@SettingsActivity)
         }
     }
 }

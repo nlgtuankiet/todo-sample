@@ -28,7 +28,7 @@ class AddEditFragment(
     ): View? {
         binding = AddEditFragmentBinding.inflate(inflater, container, false).apply {
             viewModel = addEditViewModel
-            lifecycleOwner = viewLifecycleOwner
+            setLifecycleOwner(viewLifecycleOwner)
         }
         setUpSnackbar(
             messageManager = messageManager,

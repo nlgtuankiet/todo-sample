@@ -6,7 +6,7 @@ plugins {
     id("kotlin-kapt")
     id("io.fabric")
     id("kotlin-allopen")
-    id("com.vanniktech.dependency.graph.generator")
+    id("com.google.firebase.firebase-perf")
 }
 
 allOpen {
@@ -66,7 +66,7 @@ android {
             }
         }
         minSdkVersion(Android.minSdkVersion)
-        if (minSdk != Android.minSdkVersion) {
+        if (minSdk != Android.minSdkVersion && minSdk > 5) {
             minSdkVersion(minSdk)
         }
         targetSdkVersion(Android.targetSdkVersion)
@@ -136,6 +136,8 @@ play {
 
 // TODO Assisted Inject compileOnly or implementation?
 dependencies {
+    androidTestImplementation(Libs.espresso_core)
+    androidTestImplementation("androidx.annotation:annotation:1.1.0-beta01")
     androidTestImplementation(Libs.androidx_test_core)
     androidTestImplementation(Libs.androidx_test_ext_junit)
     androidTestImplementation(Libs.androidx_test_rules)
@@ -209,6 +211,7 @@ dependencies {
 
     implementation("androidx.multidex:multidex:2.0.1")
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.0-alpha-1")
+    implementation("com.google.firebase:firebase-perf:16.2.5")
 }
 
 kapt {

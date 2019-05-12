@@ -33,7 +33,7 @@ class TaskDetailFragment(
     ): View? {
         binding = TaskDetailFragmentBinding.inflate(inflater, container, false).apply {
             viewModel = taskDetailViewModel
-            lifecycleOwner = viewLifecycleOwner
+            setLifecycleOwner(viewLifecycleOwner)
         }
         taskDetailViewModel.apply {
             navigateUpEvent.observeEvent(viewLifecycleOwner) {

@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProviders
 import androidx.work.WorkManager
 import com.sample.todo.base.Holder
-import com.sample.todo.main.about.databinding.AboutFragmentBinding
 import com.sample.todo.base.extension.observeEvent
 import com.sample.todo.downloadmodule.domain.entity.DynamicFeatureModule
+import com.sample.todo.main.about.databinding.AboutFragmentBinding
 import com.sample.todo.work.downloadmodule.DownloadModuleWorker
 
 class AboutFragment(
@@ -36,7 +35,7 @@ class AboutFragment(
     ): View? {
         binding = AboutFragmentBinding.inflate(inflater, container, false).apply {
             viewModel = aboutViewModel
-            lifecycleOwner = viewLifecycleOwner
+            setLifecycleOwner(viewLifecycleOwner)
             seedDatabaseButton.setOnClickListener {
                 navigator.toSeedDatabaseActivity()
             }

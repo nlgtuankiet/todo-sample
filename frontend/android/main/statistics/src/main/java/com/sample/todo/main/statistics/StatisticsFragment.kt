@@ -22,7 +22,7 @@ class StatisticsFragment(
     ): View? {
         binding = StatisticsFragmentBinding.inflate(inflater, container, false).apply {
             viewModel = statisticsViewModel
-            lifecycleOwner = viewLifecycleOwner
+            setLifecycleOwner(viewLifecycleOwner)
         }
         return binding.root
     }

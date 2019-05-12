@@ -6,6 +6,10 @@ plugins {
 }
 
 android {
+    packagingOptions {
+        exclude("META-INF/library.kotlin_module")
+        exclude("META-INF/atomicfu.kotlin_module")
+    }
     compileSdkVersion(Android.compileSdkVersion)
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -15,7 +19,17 @@ android {
         isEnabled = true
     }
     defaultConfig {
-
+        val minSdk = run {
+            if (project.hasProperty("minSdk")) {
+                project.property("minSdk").toString().toIntOrNull() ?: Android.minSdkVersion
+            } else {
+                Android.minSdkVersion
+            }
+        }
+        minSdkVersion(Android.minSdkVersion)
+        if (minSdk != Android.minSdkVersion && minSdk > 5) {
+            minSdkVersion(minSdk)
+        }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

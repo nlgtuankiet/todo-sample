@@ -9,6 +9,9 @@ dependencies {
     implementation(Libs.javax_inject)
     implementation(Libs.rxjava)
     implementation(project(":frontend:android:domain"))
+    testImplementation(Libs.junit_junit)
+    testImplementation(Libs.mockito_kotlin)
+    testImplementation(Libs.kotlinx_coroutines_core)
 }
 
 kapt {

@@ -11,6 +11,9 @@ dependencies {
     implementation(Libs.kotlinx_coroutines_core)
     implementation(Libs.paging_runtime_ktx)
     implementation(Libs.threetenbp)
+    testImplementation(Libs.junit_junit)
+    testImplementation(Libs.mockito_kotlin)
+    testImplementation(Libs.kotlinx_coroutines_core)
 }
 
 kapt {
