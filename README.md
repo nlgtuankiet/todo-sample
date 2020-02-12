@@ -38,4 +38,7 @@ Make sure to apply the style that described in the Coding style section
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="25%" />](https://play.google.com/store/apps/details?id=com.sample.todo)
 
-<img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/Screenshot_20190216-125802.png" width="23%" />  <img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/Screenshot_20190216-125831.png" width="23%" />  <img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/Screenshot_20190216-125835.png" width="23%" />  <img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/Screenshot_20190216-125854.png" width="23%" />
+<img src="frontend/android/app/src/main/play/listings/en-US/graphics/phone-screenshots/Screenshot_20190216-125802.png" width="23%" />  
+<img src="frontend/android/app/src/main/play/listings/en-US/graphics/phone-screenshots/Screenshot_20190216-125831.png" width="23%" />  
+<img src="frontend/android/app/src/main/play/listings/en-US/graphics/phone-screenshots/Screenshot_20190216-125835.png" width="23%" />  
+<img src="frontend/android/app/src/main/play/listings/en-US/graphics/phone-screenshots/Screenshot_20190216-125854.png" width="23%" />
